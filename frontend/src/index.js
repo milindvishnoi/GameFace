@@ -5,11 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme'
+import Navbar from './Navbar';
+import { CssBaseline } from '@material-ui/core';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={ theme }>
-      <App />
+    <ThemeProvider theme={theme}>
+      <CssBaseline>
+        <Navbar />
+        <App />
+      </CssBaseline>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
