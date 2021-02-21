@@ -6,9 +6,9 @@ export class SearchBar extends Component {
     return (
       <div>
         <InputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            /> 
+            placeholder="Search…"
+            inputProps={{ 'aria-label': 'search' }}
+          /> 
       </div>
     )
   }

@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core'
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 export class LoginButton extends Component {
   state = {
@@ -10,7 +11,7 @@ export class LoginButton extends Component {
     return (
       <div>
         { this.state.login ?
-          <div></div> : <Button>Login</Button>
+          <div></div> : <Link to="/login"><Button>Login</Button></Link>
         }
       </div>
     )
