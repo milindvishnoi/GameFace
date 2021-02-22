@@ -11,7 +11,7 @@ export class LoginPage extends Component {
            height="88vh">
         <Box mb={4}>
           <Typography variant="h5">
-            Sign in
+            Sign In
           </Typography>
         </Box>
         <form noValidate>

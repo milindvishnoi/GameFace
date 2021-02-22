@@ -11,7 +11,11 @@ export class LoginButton extends Component {
     return (
       <div>
         { this.state.login ?
-          <div></div> : <Link to="/login"><Button>Login</Button></Link>
+          <div></div> : 
+          <div>
+            <Link to="/login"><Button>Login</Button></Link>
+            <Link to="/signup"><Button>Sign up</Button></Link>
+          </div>
         }
       </div>
     )
