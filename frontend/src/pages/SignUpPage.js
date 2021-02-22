@@ -1,8 +1,36 @@
 import React, { Component } from 'react'
-import { Box, Typography, TextField, Grid, Container, Button } from '@material-ui/core'
+import { Box, 
+         Typography, 
+         TextField, 
+         Grid, 
+         Container, 
+         Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
 export class SignUpPage extends Component {
+  state={
+    email: '',
+    emailError: false,
+    emailErrorMessage: ''
+  }
+
+  validate = (event) => {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+    let reg = new RegExp(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/).test(value)
+    console.log(reg)
+    reg ? this.setState({
+        [name]: value,
+        emailErrorMessage: "",
+        error: false
+      }) : this.setState({
+        [name]: value,
+        emailErrorMessage: "Please fill in a valid email.",
+        error: true
+      })
+  }
+
   render() {
     return (
       <Container maxWidth="xs">
@@ -17,7 +45,7 @@ export class SignUpPage extends Component {
             Sign Up
           </Typography>
         </Box>
-        <form noValidate>
+        <form>
         <Grid 
           container
           spacing={1}
@@ -55,6 +83,10 @@ export class SignUpPage extends Component {
                     margin="normal"
                     fullWidth
                     required
+                    onChange={this.validate}
+                    value={this.state.email}
+                    error={this.state.error}
+                    helperText={ this.state.emailErrorMessage }
                     id="email"
                     label="Email Address"
                     name="email"
@@ -82,6 +114,7 @@ export class SignUpPage extends Component {
                 fullWidth
                 variant="contained"
                 color="primary"
+                disabled={!this.state.error}
             >
                 Sign In
             </Button>
