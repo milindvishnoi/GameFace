@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { ButtonBase, Grid, Typography } from '@material-ui/core'
+import './topGames.css'
 
 export default class TopGames extends Component {
   static propTypes = {
@@ -16,7 +17,7 @@ export default class TopGames extends Component {
           focusRipple
           key={name}
         >
-          <img src={process.env.PUBLIC_URL + imgSrc} />
+          <img className="image" src={process.env.PUBLIC_URL + imgSrc} />
           <Typography variant="h5">{name}</Typography>
         </ButtonBase>
       </Grid>

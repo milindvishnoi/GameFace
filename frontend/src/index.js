@@ -8,6 +8,7 @@ import theme from './theme'
 import Navbar from './Navbar';
 import { CssBaseline } from '@material-ui/core';
 import { BrowserRouter as Router } from 'react-router-dom'
+import Footer from './Footer';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.render(
         <CssBaseline>
           <Navbar />
           <App />
+          <Footer />
         </CssBaseline>
       </ThemeProvider>
     </Router>

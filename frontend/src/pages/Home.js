@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import TopGames from '../components/TopGames';
 // import nba from '../public/topGames/nba2k22.jpg'
 
+// will be called from API
 const topGames = [
   {
     name: "NBA 2K22",
