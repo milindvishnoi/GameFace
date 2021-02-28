@@ -8,14 +8,17 @@ const topGames = [
   {
     name: "NBA 2K22",
     imgSrc: "/topGames/nba2k22.jpg",
+    link: "nba2k22"
   },
   {
     name: "NBA 2K22",
     imgSrc: "/topGames/nba2k22.jpg",
+    link: "nba2k22"
   },
   {
     name: "NBA 2K22",
     imgSrc: "/topGames/nba2k22.jpg",
+    link: "nba2k22"
   }
 ]
 
@@ -23,12 +26,24 @@ export class Home extends Component {
   render() {
     return (
       <div>
-        <Box height="88vh" display="flex" alignItems="center" justifyContent="center">
-          <Typography variant='h2'>Website Name</Typography>
+        <Box 
+          height="88vh" 
+          display="flex" 
+          alignItems="center" 
+          justifyContent="center"
+          >
+          <Typography variant='h1'>
+            Website Name
+          </Typography>
         </Box>
 
-        <Typography variant='h3'>Top 10 Games</Typography>
-        <Grid container spacing={4}>
+        <Box
+          mb={4}>
+          <Typography variant='h3'>
+            Top 10 Games
+          </Typography>
+        </Box>
+        <Grid container spacing={2}>
           {topGames.map((row) => (
             <TopGames imgSrc={row.imgSrc}
                       name={row.name}
