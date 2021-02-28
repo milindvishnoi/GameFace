@@ -5,10 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme'
-import Navbar from './Navbar';
+import Navbar from './global/header/Navbar';
 import { CssBaseline } from '@material-ui/core';
 import { BrowserRouter as Router } from 'react-router-dom'
-import Footer from './Footer';
+import Footer from './global/footer/Footer';
 
 ReactDOM.render(
   <React.StrictMode>

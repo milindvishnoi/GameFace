@@ -1,7 +1,6 @@
 import { Box, Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import TopGames from '../components/TopGames';
-// import nba from '../public/topGames/nba2k22.jpg'
 
 // will be called from API
 const topGames = [
@@ -47,10 +46,10 @@ export class Home extends Component {
           {topGames.map((row) => (
             <TopGames imgSrc={row.imgSrc}
                       name={row.name}
+                      link={row.link}
                       key={row.name} />
           ))}
         </Grid>
-        {/* <img src={nba} /> */}
       </div>
     )
   }

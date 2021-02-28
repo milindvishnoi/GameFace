@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { AppBar, Toolbar, Typography, Container, Link } from '@material-ui/core'
-import { SearchBar } from './components/SearchBar'
+import { SearchBar } from '../../components/SearchBar'
 import Box from '@material-ui/core/Box';
-import LoginButton from './components/LoginButton';
+import { LoginButton }from '../../components/LoginButton';
 
 export default class Navbar extends Component {
   render() {
