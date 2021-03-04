@@ -1,0 +1,15 @@
+.bar {
+  width: 600px;
+}
+
+.search-results-container {
+  border-radius: 0.375rem;
+  border: 1px solid #e2e8f0;
+}
+
+.search-results {
+  width: 600px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: font-weight 0.3ms ease-out;
+}

@@ -27,12 +27,12 @@ export default class TopGames extends Component {
               src={process.env.PUBLIC_URL + imgSrc}
               alt={name + "'s Image Button"} 
               />
-            <div 
+            <span
               className="title-container"
               alignCenter
             >
               {name}
-            </div>
+            </span>
           </ButtonBase>
         </Link>
       </Grid>
