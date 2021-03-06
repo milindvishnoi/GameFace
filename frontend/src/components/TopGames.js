@@ -29,7 +29,6 @@ export default class TopGames extends Component {
               />
             <span
               className="title-container"
-              alignCenter
             >
               {name}
             </span>

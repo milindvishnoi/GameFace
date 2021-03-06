@@ -28,7 +28,6 @@ const darkTheme = createMuiTheme({
 
 const lightTheme = createMuiTheme({
   palette: {
-    type: 'light',
     background: {
       default: '#eae0cc'
     },

@@ -9,16 +9,6 @@ const topGames = [
     name: "NBA 2K22",
     imgSrc: "/topGames/nba2k22.jpg",
     link: "nba2k22"
-  },
-  {
-    name: "NBA 2K22",
-    imgSrc: "/topGames/nba2k22.jpg",
-    link: "nba2k22"
-  },
-  {
-    name: "NBA 2K22",
-    imgSrc: "/topGames/nba2k22.jpg",
-    link: "nba2k22"
   }
 ]
 
@@ -41,7 +31,7 @@ export class Home extends Component {
             <Typography variant='h1' color='primary'>
               GameFace
             </Typography>
-            <Typography variant='h4' align='center' color='navbar'>
+            <Typography variant='h4' align='center'>
               Find your game!
             </Typography>
         </Box>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AppBar, Toolbar, Typography, Container, Link, Icon, IconButton, Button } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, Container, Link, Switch } from '@material-ui/core'
 import { SearchBar } from '../../SearchBar'
 import Box from '@material-ui/core/Box';
 import { LoginButton }from '../../LoginButton';
@@ -35,9 +35,9 @@ export default class Navbar extends Component {
               <SearchBar ml='auto' />
             </Box>
 
-            <Button 
-              className='logo'
-              onClick={console.log(this.props.toggleTheme)} />
+            <Switch 
+              checked={this.props.theme}
+              onChange={this.props.toggleTheme} />
 
             <Box ml="auto">
               <LoginButton />

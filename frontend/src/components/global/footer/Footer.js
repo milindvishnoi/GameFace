@@ -34,7 +34,7 @@ export class Footer extends Component {
                   </Box>
                 </Box>
               </Link>
-              <p className='footer-text'>
+              <div className='footer-text'>
                 <Box maxWidth="420px" mb={3}>
                     The GameFace is a website dedicated to help consumers identify 
                     good games currently on the market and see what games other people 
@@ -48,12 +48,12 @@ export class Footer extends Component {
                 <Box mt={1}>
                   © GameFace - 2021
                 </Box>
-              </p>
+              </div>
             </Grid>
             
             <Grid item xs={12} sm={4}>
               <Box display='flex' alignContent='left'>
-                <Typography variant='h6' alignLeft>
+                <Typography variant='h6'>
                   More Links
                 </Typography>
               </Box>
