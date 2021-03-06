@@ -4,18 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@material-ui/core/styles';
-import theme from './theme'
-import Navbar from './global/header/Navbar';
+import { darkTheme, lightTheme } from './theme'
+import Navbar from './components/global/header/Navbar';
 import { CssBaseline } from '@material-ui/core';
 import { BrowserRouter as Router } from 'react-router-dom'
-import Footer from './global/footer/Footer';
+import Footer from './components/global/footer/Footer';
+
+let theme = darkTheme
+
+const toggleTheme = () => {
+  theme = theme === darkTheme ? lightTheme : darkTheme
+  return theme
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <ThemeProvider theme={theme}>
         <CssBaseline>
-          <Navbar />
+          <Navbar currentTheme={theme} />
           <App />
           <Footer />
         </CssBaseline>
