@@ -1,6 +1,5 @@
-import { Button } from '@material-ui/core'
+import { Box, Button } from '@material-ui/core'
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 
 export class LoginButton extends Component {
   state = {
@@ -12,10 +11,24 @@ export class LoginButton extends Component {
       <div>
         { this.state.login ?
           <div></div> : 
-          <div>
-            <Link to="/login"><Button>Login</Button></Link>
-            <Link to="/signup"><Button>Sign up</Button></Link>
-          </div>
+          <Box display='flex'>
+            <Box mr={1}>
+              <Button 
+                href="/login"
+                color='inherit'
+                size='large'
+                >
+                Login
+              </Button>
+            </Box>
+            <Button 
+              href="/signup" 
+              color='inherit'
+              size='large'
+              >
+              Sign up
+            </Button>
+          </Box>
         }
       </div>
     )

@@ -1,0 +1,28 @@
+.image {
+  position: relative;
+  width: 97%;
+  min-width: 250px;
+  opacity: 70%;
+  -webkit-transition: opacity .2s ease-in-out;
+  -moz-transition: opacity .2s ease-in-out;
+  -ms-transition: opacity .2s ease-in-out;
+  -o-transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in-out;
+}
+
+.image:hover {
+  opacity: 100%;
+  bottom: 5px;
+  zoom: 1;
+}
+
+.title-container {
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-weight: 530;
+  color: white;
+  font-size: 40px;
+}

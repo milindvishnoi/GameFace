@@ -1,24 +1,39 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { ButtonBase, Grid, Typography } from '@material-ui/core'
+import { ButtonBase,
+        Grid }
+        from '@material-ui/core'
+import './topGames.css'
+import { Link } from 'react-router-dom'
 
 export default class TopGames extends Component {
   static propTypes = {
     name: PropTypes.string,
-    imgSrc: PropTypes.string
+    imgSrc: PropTypes.string,
+    link: PropTypes.string
   }
 
   render() {
-    const {name, imgSrc} = this.props
+    const {name, imgSrc, link} = this.props
     return (
-      <Grid item xs={12} sm={6}>
-        <ButtonBase
-          focusRipple
-          key={name}
-        >
-          <img src={process.env.PUBLIC_URL + imgSrc} />
-          <Typography variant="h5">{name}</Typography>
-        </ButtonBase>
+      <Grid item xs={12} sm={6} md={4}>
+        <Link to={`/games/${link}`}>
+          <ButtonBase
+            focusRipple
+            key={name}
+          >
+            <img 
+              className="image" 
+              src={process.env.PUBLIC_URL + imgSrc}
+              alt={name + "'s Image Button"} 
+              />
+            <span
+              className="title-container"
+            >
+              {name}
+            </span>
+          </ButtonBase>
+        </Link>
       </Grid>
     )
   }

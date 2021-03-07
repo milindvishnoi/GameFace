@@ -1,6 +1,8 @@
 import { TextField, FormControlLabel, Checkbox, Button, Typography, Box } from '@material-ui/core'
 import React, { Component } from 'react'
 
+
+// Inspired by (URL)
 export class LoginPage extends Component {
   render() {
     return (
