@@ -12,21 +12,26 @@ export class LoginButton extends Component {
         { this.state.login ?
           <div></div> : 
           <Box display='flex'>
-            <Box mr={1}>
-              <Button 
+            <Button 
                 href="/login"
                 color='inherit'
                 size='large'
                 >
                 Login
               </Button>
-            </Box>
-            <Button 
-              href="/signup" 
-              color='inherit'
-              size='large'
+              <Button 
+                href="/signup" 
+                color='inherit'
+                size='large'
+                >
+                Sign up
+              </Button>
+              <Button 
+                href="/personal" 
+                color='inherit'
+                size='large'
               >
-              Sign up
+                Personal Page
             </Button>
           </Box>
         }

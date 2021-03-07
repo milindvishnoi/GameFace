@@ -1,0 +1,11 @@
+.Box {
+    align-items: center;
+}
+
+.personal-picture {
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+    width: 15vw;
+    border-radius: 50%;
+    border: 5px solid white;
+}
