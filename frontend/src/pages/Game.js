@@ -1,4 +1,4 @@
-import { Box, Button, DialogTitle, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Chip, DialogTitle, Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import './GamePage.css'
 import Post from '../components/post'
@@ -67,20 +67,26 @@ export class Game extends Component {
                 <img class="gameIcon" src={process.env.PUBLIC_URL + displayGame.imgSrc} />
                 <div align="center">
                   <Typography>Rating: { rating }%</Typography>
-                  <button>Upvote</button>
+                  <Button variant='outlined'>Upvote</Button>
                 </div>
               </Grid>
               <Grid id="descriptionPanel" item xs={8}>
-                <Typography variant='h2'>{ gameTitle }</Typography>
+                <Typography variant='h1' color='primary'>
+                  { gameTitle }
+                </Typography>
                 <Typography><br/>{ description() }<br/></Typography>
                 {/* For Game Admin and above only:
                   <div style={{marginTop: 2}}>
                     <Button>Create Tag</Button>
                   </div>
                 */}
-                <Grid container spacing={2}>
-                  {displayGame.tags.map((tagContent) => (<Tag content={tagContent}/>))}
-                </Grid>
+                <Box display='flex'>
+                  {displayGame.tags.map((tagContent) => (
+                    <Box mr={1}>
+                      <Chip label={tagContent} size='medium' />
+                    </Box>
+                  ))}
+                </Box>
               </Grid>
             </Grid>
           </Box>
