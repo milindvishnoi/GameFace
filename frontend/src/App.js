@@ -1,4 +1,4 @@
-import { Container, CssBaseline, Switch as Swap } from '@material-ui/core'
+import { Container, CssBaseline } from '@material-ui/core'
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Home from './pages/Home'
@@ -30,7 +30,7 @@ export class App extends Component {
     return (
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <CssBaseline>
-          <Navbar theme={darkMode} toggleTheme={this.toggleTheme} />
+          <Navbar currentTheme={darkMode} toggleTheme={this.toggleTheme} />
             <Container>
               <Switch>
                 <Route exact path='/games/nba2k22' render={ () => <Game />} />

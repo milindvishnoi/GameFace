@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { TextField, List, Box, ListItem, ListItemText } from '@material-ui/core'
-import AutoComplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import { List, ListItem, ListItemText } from '@material-ui/core'
+// import AutoComplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import './searchBar.css'
 import { Link } from 'react-router-dom';
 
-const filterOptions = createFilterOptions({
-  matchFrom: 'start',
-  stringify: game => game.name,
-});
+// const filterOptions = createFilterOptions({
+//   matchFrom: 'start',
+//   stringify: game => game.name,
+// });
 
 export class SearchBar extends Component {
   state = {

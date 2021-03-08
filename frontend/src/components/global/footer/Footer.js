@@ -2,8 +2,7 @@ import { Box,
         Container, 
         Grid, 
         Typography,
-        Link,
-        Icon } from '@material-ui/core'
+        Link } from '@material-ui/core'
 import React, { Component } from 'react'
 import './footer.css'
 
@@ -25,7 +24,8 @@ export class Footer extends Component {
                   <Box mr={1}>
                     <img 
                       className='footer-logo' 
-                      src={process.env.PUBLIC_URL + 'gamepad.svg'} /> {/* Add image of the website */}
+                      src={process.env.PUBLIC_URL + 'gamepad.svg'}
+                      alt="Company's Logo" />
                   </Box>
                   <Box mt={1}>
                     <Typography variant='h3' color='primary'>
@@ -41,9 +41,10 @@ export class Footer extends Component {
                     like.
                 </Box>
                 <Box display='flex'>
-                  <a href='https://www.instagram.com'>
-                  {/* <InstagramIcon fontSize='large' /> */}
-                  </a>
+                  {/* To add social media presence */}
+                  {/* <a href='https://www.instagram.com'>
+                  <InstagramIcon fontSize='large' />
+                  </a> */}
                 </Box>
                 <Box mt={1}>
                   © GameFace - 2021
