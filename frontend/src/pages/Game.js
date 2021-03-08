@@ -2,26 +2,11 @@ import { Box, Button, DialogTitle, Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import './GamePage.css'
 import Post from '../components/post'
-
 // The appropriate game data to be imported from a server (description is from the PS4 website for 2K21)
-const gameData = [
-  {
-    title: "NBA2K22",
-    score: "77",
-    description: "NBA 2K22 is the latest title in the world-renowned, \
-                  best-selling NBA 2K series, delivering an industry-leading \
-                  sports video game experience on console.\n\n \
-                  With extensive improvements upon its best-in-class \
-                  graphics and gameplay, competitive and community \
-                  online features, and deep, varied game modes, NBA \
-                  2K22 offers one-of-a-kind immersion into all facets \
-                  of NBA basketball and culture - where Everything is Game.",
-    tags: ["Sports", "2K", "Single Player", "Multiplayer", "PS4", "XBox"]
-  }
-]
+import { games } from '../data'
 
 //The game selected to display
-const displayGame = gameData[0];
+const displayGame = games[0];
 
 // Sample Post Content
 const username = "some_user_1234"
@@ -56,7 +41,9 @@ export class Game extends Component {
                       description={ () => splitDescription(displayGame.description)}/> 
           </Box>
           <Box textAlign="right">
-            <Button>Create New Review</Button>
+            <Button variant='contained' color='primary'>
+              Create New Review
+            </Button>
           </Box>
           <Box style={{marginLeft: 180, marginRight: 180}}>
             <Post username={username}
@@ -77,7 +64,7 @@ export class Game extends Component {
           <Box marginTop="2vh">
             <Grid container spacing={5} justify="center">
               <Grid item xs={3}>
-                <img class="gameIcon" src="/topGames/nba2k22.jpg" />
+                <img class="gameIcon" src={process.env.PUBLIC_URL + displayGame.imgSrc} />
                 <div align="center">
                   <Typography>Rating: { rating }%</Typography>
                   <button>Upvote</button>

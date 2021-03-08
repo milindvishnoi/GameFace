@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Box, Typography, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { user } from '../data'
 import './PersonalPage.css';
 
 // Inspired by (URL)
@@ -36,13 +37,13 @@ export class PersonalPage extends Component {
             <Box>
               <img 
                 className='personal-picture'
-                src={process.env.PUBLIC_URL + 'gamepad.svg'} />
+                src={ process.env.PUBLIC_URL + user.profilePic } />
             </Box>
           <Typography variant="h5">
-            @username
+            { user.username }
           </Typography>
           <Typography variant="h5">
-            This is a bio
+            { user.bio }
           </Typography>
           <Link to='/'>
             <Button onClick={ logout }>Logout</Button>

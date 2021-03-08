@@ -1,8 +1,4 @@
-.image {
-  position: relative;
-  width: 97%;
-  min-width: 250px;
-  opacity: 70%;
+.button-transition {
   -webkit-transition: opacity .2s ease-in-out;
   -moz-transition: opacity .2s ease-in-out;
   -ms-transition: opacity .2s ease-in-out;
@@ -10,16 +6,24 @@
   transition: opacity .2s ease-in-out;
 }
 
-.image:hover {
-  opacity: 100%;
+.button-transition:hover {
   bottom: 5px;
   zoom: 1;
 }
 
+.image {
+  position: relative;
+  width: 97%;
+  min-width: 250px;
+  filter: brightness(70%);
+}
+
 .title-container {
   z-index: 1;
+  opacity: 100%;
   position: absolute;
   display: flex;
+  background: rgba(0, 0, 0, 0.3);
   justify-content: center;
   align-content: center;
   font-weight: 530;

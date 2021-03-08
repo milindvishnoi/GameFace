@@ -1,10 +1,13 @@
 import { TextField, FormControlLabel, Checkbox, Button, Typography, Box } from '@material-ui/core'
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 
 // Inspired by (URL)
 export class LoginPage extends Component {
   render() {
+    const { login } = this.props
+
     return (
       <Box display="flex" 
            flexDirection="column"
@@ -43,14 +46,16 @@ export class LoginPage extends Component {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-          >
-            Sign In
-          </Button>
+          <Link to='/'>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={ login }
+            >
+                Sign In
+            </Button>
+          </Link>
         </form>
       </Box>
     )

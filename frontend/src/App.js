@@ -55,7 +55,6 @@ export class App extends Component {
           <Navbar 
             adminLogin={ adminLogin }
             userLogin={ userLogin }
-            logout={ this.logout }
             currentTheme={ darkMode } 
             toggleTheme={ this.toggleTheme } />
             <Container>
@@ -63,8 +62,7 @@ export class App extends Component {
                 <Route exact path='/games/nba2k22' render={ () => <Game /> } />
                 <Route exact path='/' render={ () => <Home /> } />
                 <Route exact path='/login' render={ () => <LoginPage 
-                                                            adminLogin={ adminLogin }
-                                                            userLogin={ userLogin }
+                                                            login={ this.login }
                                                              /> } />
                 <Route exact path='/signup' render={ () => <SignUpPage /> } />
                 <Route exact path='/personal' render={ () => <PersonalPage logout={ this.logout } /> } />

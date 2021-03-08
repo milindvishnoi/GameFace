@@ -1,7 +1,7 @@
-import { Box, Button, IconButton } from '@material-ui/core'
+import { Box, Button, ButtonBase } from '@material-ui/core'
 import React, { Component } from 'react'
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom';
+import './loginButton.css'
 
 export class LoginButton extends Component {
   render() {
@@ -10,13 +10,15 @@ export class LoginButton extends Component {
     return (
       <div>
         { (adminLogin || userLogin) ?
-          <div>
+          <div className='user'>
             <Link to='/personal'>
-              <IconButton 
+              <ButtonBase 
                 size='medium'
                 color="inherit">
-                  <AccountCircle />
-              </IconButton>
+                  <img 
+                    className='user' 
+                    src={ process.env.PUBLIC_URL + '/images/user.jpeg' } />
+              </ButtonBase>
             </Link>
           </div> 
           : 

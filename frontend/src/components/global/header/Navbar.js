@@ -41,7 +41,11 @@ export default class Navbar extends Component {
             </Box>
 
             <Box ml="auto" display='flex'>
-              <Box display='flex' justifyContent='center' alignItems='center'>
+              <Box 
+                display='flex' 
+                justifyContent='center' 
+                alignItems='center'
+                mr={2} >
                 <Brightness5Icon />
                   <Switch 
                     color='default'

@@ -2,15 +2,8 @@ import { Box, Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import TopGames from '../components/TopGames';
 import './home.css';
-
 // will be called from API
-const topGames = [
-  {
-    name: "NBA 2K22",
-    imgSrc: "/topGames/nba2k22.jpg",
-    link: "nba2k22"
-  }
-]
+import { games } from '../data'
 
 export class Home extends Component {
   render() {
@@ -44,11 +37,12 @@ export class Home extends Component {
           </Typography>
         </Box>
         <Grid container spacing={2}>
-          {topGames.map((row) => (
-            <TopGames imgSrc={row.imgSrc}
-                      name={row.name}
-                      link={row.link}
-                      key={row.name} />
+          {games.map((game, index) => (
+            <TopGames imgSrc={game.imgSrc}
+                      title={game.title}
+                      link={game.link}
+                      gameIndex={index}
+                      key={index} />
           ))}
         </Grid>
       </div>
