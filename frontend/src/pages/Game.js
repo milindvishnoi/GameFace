@@ -1,6 +1,7 @@
 import { Box, Button, DialogTitle, Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import './GamePage.css'
+import Post from '../components/post'
 
 // The appropriate game data to be imported from a server (description is from the PS4 website for 2K21)
 const gameData = [
@@ -22,10 +23,25 @@ const gameData = [
 //The game selected to display
 const displayGame = gameData[0];
 
+// Sample Post Content
+const username = "some_user_1234"
+const content = "Lorem ipsum dolor sit amet, \
+consectetur adipiscing elit, sed do \
+eiusmod tempor incididunt ut labore \
+et dolore magna aliqua. Ut enim ad \
+minim veniam, quis nostrud exercitation \
+ullamco laboris nisi ut aliquip ex ea \
+commodo consequat. Duis aute irure dolor \
+ in reprehenderit in voluptate velit esse \
+  cillum dolore eu fugiat nulla pariatur. \
+   Excepteur sint occaecat cupidatat non \
+   proident, sunt in culpa qui officia \
+   deserunt mollit anim id est laborum."
+
 export class Game extends Component {
     render() {
       const splitDescription = (str) => {
-        {/* Splits <str> appropriatley depending on where \n is in the text */}
+        /* Splits <str> appropriatley depending on where \n is in the text */
         return(
           <div>
             {str.split("\n").map((pargph) => (<Typography>{pargph}<br/></Typography>))}
@@ -39,6 +55,12 @@ export class Game extends Component {
                       description={ () => splitDescription(displayGame.description)}/> 
           <Box textAlign="right">
             <Button>Create New Review</Button>
+          </Box>
+          <Box style={{marginLeft: 180, marginRight: 180}}>
+            <Post username={username}
+                  content={content}/>
+            <Post username={username}
+                  content={content}/>
           </Box>
         </div>
       )

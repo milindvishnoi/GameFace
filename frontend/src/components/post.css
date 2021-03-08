@@ -1,0 +1,18 @@
+#postContainer {
+    margin-top: 5vh;
+    background-color: grey;
+    border-radius: 25px;
+}
+
+.textWrapper {
+    margin-top: 7px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.opProfilePic {
+    margin-left: 20px;
+    border-radius: 50%;
+    width: 50px;
+    border: 2px solid white;
+}
