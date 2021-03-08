@@ -33,20 +33,25 @@ export class PersonalPage extends Component {
     const { logout } = this.props
 
     return (
-        <Box>
+        <Box className='personal-profile'>
+            <Box>
+              <img 
+                className='cover-image'
+                src={ process.env.PUBLIC_URL + user.coverPic } />
+            </Box>
             <Box>
               <img 
                 className='personal-picture'
                 src={ process.env.PUBLIC_URL + user.profilePic } />
             </Box>
-          <Typography variant="h5">
-            { user.username }
+          <Typography className="userName" variant="h3">
+            @{ user.username }
           </Typography>
-          <Typography variant="h5">
+          <Typography className="userBio" variant="h5">
             { user.bio }
           </Typography>
           <Link to='/'>
-            <Button onClick={ logout }>Logout</Button>
+            <Button className="logout-button" onClick={ logout }>Logout</Button>
           </Link>
         </Box>
     )

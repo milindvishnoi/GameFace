@@ -23,7 +23,8 @@ const user = {
         love to play with you. Although my favourite game is Madien 2k22.",
   games: [games[0]],
   discussions: [],
-  profilePic: "/images/user.jpeg"
+  profilePic: "/images/user.jpeg",
+  coverPic: "/images/user-cover.jpg",
 }
 
 export { games, user }

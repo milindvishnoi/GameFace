@@ -1,11 +1,27 @@
-.Box {
-    align-items: center;
+.cover-image {
+    height: 40vh;
+    width: 100%;
+}
+
+.userName {
+    padding-left: 5vw;
+}
+
+.userBio {
+    margin-top: 2vh;
+    padding-left: 10vw;
+    padding-right: 10vw;
 }
 
 .personal-picture {
-    margin-top: 10vh;
-    margin-bottom: 5vh;
+    margin-top: -15vh;
+    margin-left: 5vw;
+    margin-bottom: 2vh;
     width: 15vw;
     border-radius: 50%;
     border: 5px solid white;
+}
+
+.logout-button {
+    margin-left: 5vw;
 }
