@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { AppBar, Toolbar, Typography, Container, Link, Switch } from '@material-ui/core'
 import { SearchBar } from '../../SearchBar'
 import Box from '@material-ui/core/Box';
+import Brightness5Icon from '@material-ui/icons/Brightness5';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 import { LoginButton }from '../../LoginButton';
 import './navbar.css';
 
@@ -35,11 +37,15 @@ export default class Navbar extends Component {
               <SearchBar ml='auto' />
             </Box>
 
-            <Switch 
-              checked={this.props.theme}
-              onChange={this.props.toggleTheme} />
-
-            <Box ml="auto">
+            <Box ml="auto" display='flex'>
+              <Box display='flex' justifyContent='center' alignItems='center'>
+                <Brightness5Icon />
+                  <Switch 
+                    color='inherit'
+                    checked={this.props.currentTheme}
+                    onChange={this.props.toggleTheme} />
+                <Brightness4Icon />
+              </Box>
               <LoginButton />
             </Box>
           </Toolbar>
