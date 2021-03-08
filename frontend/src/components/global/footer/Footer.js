@@ -24,7 +24,7 @@ export class Footer extends Component {
                   <Box mr={1}>
                     <img 
                       className='footer-logo' 
-                      src={process.env.PUBLIC_URL + 'gamepad.svg'}
+                      src={process.env.PUBLIC_URL + '/gamepad.svg'}
                       alt="Company's Logo" />
                   </Box>
                   <Box mt={1}>

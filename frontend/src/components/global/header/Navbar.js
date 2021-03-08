@@ -44,6 +44,7 @@ export default class Navbar extends Component {
               <Box display='flex' justifyContent='center' alignItems='center'>
                 <Brightness5Icon />
                   <Switch 
+                    color='default'
                     checked={this.props.currentTheme}
                     onChange={this.props.toggleTheme} />
                 <Brightness4Icon />

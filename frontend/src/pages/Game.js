@@ -50,9 +50,11 @@ export class Game extends Component {
       }
       return (
         <div>
+          <Box mb={4}>
           <GameHeader gameTitle={displayGame.title}
                       rating={displayGame.score}
                       description={ () => splitDescription(displayGame.description)}/> 
+          </Box>
           <Box textAlign="right">
             <Button>Create New Review</Button>
           </Box>
@@ -73,15 +75,15 @@ export class Game extends Component {
 
       return (
           <Box marginTop="2vh">
-            <Grid container spacing={5}>
-              <Grid item>
+            <Grid container spacing={5} justify="center">
+              <Grid item xs={3}>
                 <img class="gameIcon" src="/topGames/nba2k22.jpg" />
                 <div align="center">
                   <Typography>Rating: { rating }%</Typography>
                   <button>Upvote</button>
                 </div>
               </Grid>
-              <Grid id="descriptionPanel" item>
+              <Grid id="descriptionPanel" item xs={8}>
                 <Typography variant='h2'>{ gameTitle }</Typography>
                 <Typography><br/>{ description() }<br/></Typography>
                 {/* For Game Admin and above only:
