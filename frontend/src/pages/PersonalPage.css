@@ -1,16 +1,27 @@
+.personal-profile {
+    background-color: white;
+}
+
 .cover-image {
     height: 40vh;
     width: 100%;
 }
 
 .userName {
-    padding-left: 5vw;
+    padding-left: 6vw;
+    color: black;
 }
 
 .userBio {
-    margin-top: 2vh;
+    padding-top: 2vh;
     padding-left: 10vw;
     padding-right: 10vw;
+    color: black;
+}
+
+#Container {
+    display: flex;
+    align-items: center;
 }
 
 .personal-picture {
@@ -19,7 +30,15 @@
     margin-bottom: 2vh;
     width: 15vw;
     border-radius: 50%;
-    border: 5px solid white;
+    border: 5px solid red;
+}
+
+#AppBar {
+    margin-top: 5vh;
+}
+
+.personal-navbar {
+    padding-right: 3vw;
 }
 
 .logout-button {
