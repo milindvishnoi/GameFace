@@ -1,0 +1,20 @@
+#tag {
+    background-color: gray;
+    border-radius: 30%;
+    margin: 5px;
+}
+
+#descriptionPanel {
+    width: 43vw;
+}
+
+#ratings {
+    text-align: center;
+    width: 23vw;
+}
+
+.gameIcon {
+    border-radius: 50%;
+    width: 18vw;
+    border: 5px solid white;
+}
