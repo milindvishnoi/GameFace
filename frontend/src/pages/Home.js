@@ -26,7 +26,7 @@ export class Home extends Component {
             <Box mr={2}>
               <img 
                 className='home-logo'
-                src={process.env.PUBLIC_URL + 'gamepad.svg'}
+                src={ process.env.PUBLIC_URL + 'gamepad.svg' }
                 alt="Company's Logo" />
             </Box>
             <Typography variant='h1' color='primary'>

@@ -1,20 +1,23 @@
 import React, { Component } from 'react'
-import { AppBar, Toolbar, Typography, Container, Link, Switch } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, Container, Switch } from '@material-ui/core'
 import { SearchBar } from '../../SearchBar'
 import Box from '@material-ui/core/Box';
 import Brightness5Icon from '@material-ui/icons/Brightness5';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
-import { LoginButton }from '../../LoginButton';
+import { LoginButton } from '../../LoginButton';
 import './navbar.css';
+import { Link } from 'react-router-dom';
 
 
 export default class Navbar extends Component {
   render() {
+    const { userLogin, adminLogin } = this.props
+
     return (
       <AppBar position='static'>
         <Container>
           <Toolbar>
-            <Link href='/' color="inherit" underline="none">
+            <Link to='/'>
               <Box display='flex'>
                 <Box mr={1}>
                   <img 
@@ -41,12 +44,11 @@ export default class Navbar extends Component {
               <Box display='flex' justifyContent='center' alignItems='center'>
                 <Brightness5Icon />
                   <Switch 
-                    color='inherit'
                     checked={this.props.currentTheme}
                     onChange={this.props.toggleTheme} />
                 <Brightness4Icon />
               </Box>
-              <LoginButton />
+              <LoginButton adminLogin={adminLogin} userLogin={userLogin} />
             </Box>
           </Toolbar>
         </Container>

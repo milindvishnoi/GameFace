@@ -118,7 +118,7 @@ export class SearchBar extends Component {
           {this.state.searchedGame.map(game => {
             return (
               <ListItem button to={game.link} key={game.name}>
-                <Link href={`/${game.link}`} underline='none' color='inherit' variant='body1'>
+                <Link to={`/${game.link}`}>
                   <ListItemText>{ game.name }</ListItemText>
                 </Link>
               </ListItem>

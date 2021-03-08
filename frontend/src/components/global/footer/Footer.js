@@ -1,10 +1,10 @@
 import { Box, 
         Container, 
         Grid, 
-        Typography,
-        Link } from '@material-ui/core'
+        Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import './footer.css'
+import { Link } from 'react-router-dom'
 
 export class Footer extends Component {
   render() {
@@ -19,7 +19,7 @@ export class Footer extends Component {
             justify="center"
           >
             <Grid item sm={8} xs={12}>
-            <Link href='/' color="inherit" underline="none">
+            <Link to='/'>
                 <Box display='flex' mb={3}>
                   <Box mr={1}>
                     <img 

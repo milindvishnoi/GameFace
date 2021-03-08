@@ -1,10 +1,5 @@
 import React, { Component } from 'react'
-import { Box, 
-         Typography, 
-         TextField, 
-         Grid, 
-         Container, 
-         Button } from '@material-ui/core'
+import { Box, Typography, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import './PersonalPage.css';
 
@@ -34,6 +29,8 @@ export class PersonalPage extends Component {
   }
 
   render() {
+    const { logout } = this.props
+
     return (
         <Box>
             <Box>
@@ -47,6 +44,9 @@ export class PersonalPage extends Component {
           <Typography variant="h5">
             This is a bio
           </Typography>
+          <Link to='/'>
+            <Button onClick={ logout }>Logout</Button>
+          </Link>
         </Box>
     )
   }

@@ -10,11 +10,14 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { darkTheme, lightTheme } from './theme'
 import Navbar from './components/global/header/Navbar';
 import Footer from './components/global/footer/Footer';
+import './App.css'
 
 
 export class App extends Component {
   state = {
-    darkMode: true
+    darkMode: true,
+    adminLogin: true,
+    userLogin: false
   }
 
   toggleTheme = () => {
@@ -24,20 +27,47 @@ export class App extends Component {
     console.log(this.state.darkMode)
   }
 
+  login = (username, password) => {
+    if (username === 'admin' && password === 'password')
+      this.setState({
+        adminLogin: true
+      })
+    else if (username === 'user' && password === 'password')
+      this.setState({
+        userLogin: true
+      })
+  }
+
+  logout = () => {
+    this.setState({
+      userLogin: false,
+      adminLogin: false
+    })
+    console.log(this.state.userLogin, this.state.adminLogin)
+  }
+
   render() {
-    const { darkMode } = this.state
+    const { darkMode, adminLogin, userLogin } = this.state
 
     return (
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <ThemeProvider theme={ darkMode ? darkTheme : lightTheme }>
         <CssBaseline>
-          <Navbar currentTheme={darkMode} toggleTheme={this.toggleTheme} />
+          <Navbar 
+            adminLogin={ adminLogin }
+            userLogin={ userLogin }
+            logout={ this.logout }
+            currentTheme={ darkMode } 
+            toggleTheme={ this.toggleTheme } />
             <Container>
               <Switch>
-                <Route exact path='/games/nba2k22' render={ () => <Game />} />
-                <Route exact path='/' render={ () => <Home />} />
-                <Route exact path='/login' render={ () => <LoginPage />} />
-                <Route exact path='/signup' render={ () => <SignUpPage />} />
-                <Route exact path='/personal' render={ () => <PersonalPage />} />
+                <Route exact path='/games/nba2k22' render={ () => <Game /> } />
+                <Route exact path='/' render={ () => <Home /> } />
+                <Route exact path='/login' render={ () => <LoginPage 
+                                                            adminLogin={ adminLogin }
+                                                            userLogin={ userLogin }
+                                                             /> } />
+                <Route exact path='/signup' render={ () => <SignUpPage /> } />
+                <Route exact path='/personal' render={ () => <PersonalPage logout={ this.logout } /> } />
               </Switch>
             </Container>
           <Footer />
