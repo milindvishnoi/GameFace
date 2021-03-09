@@ -1,4 +1,4 @@
-import { Box, Button, Chip, DialogTitle, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Chip, DialogTitle, Dialog, DialogContent, DialogContentText, TextField, DialogActions, Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import './GamePage.css'
 import Post from '../components/post'
@@ -25,6 +25,7 @@ commodo consequat. Duis aute irure dolor \
 
 export class Game extends Component {
     render() {
+
       const splitDescription = (str) => {
         /* Splits <str> appropriatley depending on where \n is in the text */
         return(
@@ -41,9 +42,12 @@ export class Game extends Component {
                       description={ () => splitDescription(displayGame.description)}/> 
           </Box>
           <Box textAlign="right">
+            {/*
             <Button variant='contained' color='primary'>
               Create New Review
             </Button>
+            */}
+            <CreatePostForm />
           </Box>
           <Box style={{marginLeft: 180, marginRight: 180}}>
             <Post username={username}
@@ -62,10 +66,10 @@ export class Game extends Component {
 
       return (
           <Box marginTop="2vh">
-            <Grid container spacing={5} justify="center">
-              <Grid item xs={3}>
-                <img class="gameIcon" src={process.env.PUBLIC_URL + displayGame.imgSrc} />
+            <Grid container spacing={2} justify="center">
+              <Grid item xs={4}>
                 <div align="center">
+                  <img class="gameIcon" src={process.env.PUBLIC_URL + displayGame.imgSrc} />
                   <Typography>Rating: { rating }%</Typography>
                   <Button variant='outlined'>Upvote</Button>
                 </div>
@@ -93,6 +97,70 @@ export class Game extends Component {
           
       )
     }
+  }
+
+  class CreatePostForm extends Component {
+      state = { 
+        showPopup: false 
+      }
+
+      closePopup = () => {
+        this.setState({
+          showPopup: false
+        })
+      }
+
+      openPopup = () => {
+        this.setState({
+          showPopup: true
+        })
+      }
+
+      render() {
+        return (
+          <div>
+              <Button variant='contained' color='primary' onClick={this.openPopup}>
+                Create New Review
+              </Button>
+              <Dialog open={this.state.showPopup} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Create a New Post</DialogTitle>
+                <DialogContent className="createForm">
+                  <Box id="formItem">
+                    <DialogContentText>
+                      Make an interesting Title
+                    </DialogContentText>
+                    <TextField
+                      id="outlined-basic" 
+                      label="" 
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Box>
+                  <Box id="formItem">
+                    <DialogContentText>
+                      Write a review
+                    </DialogContentText>
+                    <TextField
+                      label=""
+                      id="outlined-multiline-static"
+                      multiline
+                      rows={10}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Box>
+                </DialogContent>
+                <DialogActions>
+                  <Button color="primary" onClick={this.closePopup}>
+                    Cancel
+                  </Button>
+                  <Button color="primary" onClick={this.closePopup}>
+                    Post
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+        )}
   }
 
   class Tag extends Component {

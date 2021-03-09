@@ -4,6 +4,14 @@
     margin: 5px;
 }
 
+.createForm {
+    width: 30vw;
+}
+
+#formItem {
+    margin-top: 3vh;
+}
+ 
 #descriptionPanel {
     width: 43vw;
 }
