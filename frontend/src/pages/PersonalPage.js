@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Box, Typography, Button } from '@material-ui/core'
+import { Box, Typography, Button, Container, AppBar, Toolbar } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { user } from '../data'
 import './PersonalPage.css';
@@ -35,25 +35,58 @@ export class PersonalPage extends Component {
     return (
         <Box className='personal-profile'>
             <Box>
-              <img 
-                className='cover-image'
-                src={ process.env.PUBLIC_URL + user.coverPic } />
+                <img 
+                  className='cover-image'
+                  src={ process.env.PUBLIC_URL + user.coverPic } />
             </Box>
-            <Box>
-              <img 
-                className='personal-picture'
-                src={ process.env.PUBLIC_URL + user.profilePic } />
-            </Box>
+            <Container>
+              <Box>
+                <img 
+                  className='personal-picture'
+                  src={ process.env.PUBLIC_URL + user.profilePic } />
+              </Box>
+            </Container>
           <Typography className="userName" variant="h3">
             @{ user.username }
           </Typography>
           <Typography className="userBio" variant="h5">
             { user.bio }
           </Typography>
+
+          <AppBar position='static'>
+            <Container>
+              <Toolbar>
+                <Box>
+                  <Typography className="personal-navbar"
+                    variant="h4" 
+                    noWrap 
+                  >
+                    Profile
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography className="personal-navbar"
+                    variant="h4" 
+                    noWrap 
+                  >
+                    Discussion 
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography className="personal-navbar"
+                    variant="h4" 
+                    noWrap 
+                  >
+                    Games
+                  </Typography>
+                </Box>
+              </Toolbar>
+            </Container>
+          </AppBar>
           <Link to='/'>
             <Button className="logout-button" onClick={ logout }>Logout</Button>
           </Link>
-        </Box>
+      </Box>
     )
   }
 }
