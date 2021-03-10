@@ -28,16 +28,20 @@ export class App extends Component {
   }
 
   login = (username, password) => {
-    if (username === 'admin' && password === 'password')
+    if (username === 'admin@admin.com' && password === 'admin') {
       this.setState({
         adminLogin: true,
         userLogin: false
       })
-    else if (username === 'user' && password === 'password')
+      return;
+    }
+    else if (username === 'user@user.com' && password === 'user') {
       this.setState({
         userLogin: true,
         adminLogin: false
       })
+      return;
+    }
   }
 
   logout = () => {
