@@ -38,12 +38,20 @@ export class PersonalPage extends Component {
                 { user.bio }
               </Typography>
               <Box mb={2} />
-              <Link to='/'>
-                <Button variant='outlined' className="logout-button" onClick={ logout }>Logout</Button>
-              </Link>
             </Box>
 
           <ProfileTab />
+          <Box
+            my={3}
+            display='flex' 
+            flexDirection='column' 
+            justifyContent='center' 
+            alignItems='center'
+          >
+            <Link to='/'>
+              <Button variant='outlined' className="logout-button" onClick={ logout }>Logout</Button>
+            </Link>
+          </Box>
       </Box>
     )
   }
