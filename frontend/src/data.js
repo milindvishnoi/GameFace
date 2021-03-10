@@ -56,7 +56,7 @@ const games = [
   {
     title: "CYBERPUNK 2077",
     score: "84",
-    link: "/games/cyberpunk2077",
+    link: "/games/cyberpunk_2077",
     imgSrc: "/games/cyberpunk.jpg",
     description: "Lorem ipsum dolor sit amet, \
                   consectetur adipiscing elit, sed do \
@@ -94,7 +94,7 @@ const games = [
   {
     title: "FOOTBALL MANAGER",
     score: "82",
-    link: "/games/footballmanager",
+    link: "/games/football_manager",
     imgSrc: "/games/fm2021.jpeg",
     description: "Lorem ipsum dolor sit amet, \
                   consectetur adipiscing elit, sed do \
