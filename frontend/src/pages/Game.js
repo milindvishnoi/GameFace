@@ -7,12 +7,10 @@ import TextForm from '../components/textform'
 import { games, posts } from '../data'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 
-//The game selected to display
-const displayGame = games[0];
-
 export class Game extends Component {
     state = {
-      gamePosts: posts
+      gamePosts: posts,
+      displayGame: games[0]
     }
 
     // Requires a server call to update Posts list
@@ -66,9 +64,11 @@ export class Game extends Component {
       return (
         <div>
           <Box mb={4}>
-          <GameHeader gameTitle={displayGame.title}
-                      rating={displayGame.score}
-                      description={ () => splitDescription(displayGame.description)}
+          <GameHeader gameTitle={this.state.displayGame.title}
+                      rating={this.state.displayGame.score}
+                      description={ () => splitDescription(this.state.displayGame.description)}
+                      gTags={this.state.displayGame.tags}
+                      imgUrl={this.state.displayGame.imgSrc}
                       gameAdminLoggedIn={gameAdminLoggedIn}
                       siteAdminLoggedIn={siteAdminLoggedIn}
                       isLoggedIn={isLoggedIn}/> 
@@ -96,7 +96,7 @@ export class Game extends Component {
   class GameHeader extends Component {
     render() {
       const { gameTitle, description, rating, isLoggedIn, 
-              siteAdminLoggedIn, gameAdminLoggedIn} = this.props;
+              siteAdminLoggedIn, gameAdminLoggedIn, gTags, imgUrl} = this.props;
 
       const addEditGameInfoButton = () => {
         if (siteAdminLoggedIn === true) {
@@ -123,7 +123,7 @@ export class Game extends Component {
         if (siteAdminLoggedIn === true || gameAdminLoggedIn === true) {
           return (
             <Box display='flex'>
-              {displayGame.tags.map((tagContent) => (
+              {gTags.map((tagContent) => (
                 <Box mr={1}>
                   <Chip label={tagContent} onDelete={() => {}} size='medium' />
                 </Box>
@@ -140,7 +140,7 @@ export class Game extends Component {
         } else {
           return (
             <Box display='flex'>
-              {displayGame.tags.map((tagContent) => (
+              {gTags.map((tagContent) => (
                   <Box mr={1}>
                     <Chip label={tagContent} size='medium' />
                   </Box>
@@ -155,7 +155,7 @@ export class Game extends Component {
             <Grid container spacing={2} justify="center">
               <Grid item xs={4}>
                 <div align="center">
-                  <img class="gameIcon" src={process.env.PUBLIC_URL + displayGame.imgSrc} />
+                  <img class="gameIcon" src={process.env.PUBLIC_URL + imgUrl} />
                   <Typography>Rating: { rating }%</Typography>
                   <Button variant='outlined' disabled={!isLoggedIn}>Upvote</Button>
                 </div>
