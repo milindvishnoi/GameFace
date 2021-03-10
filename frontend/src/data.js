@@ -166,7 +166,50 @@ const posts = [
         replyContent: "What is actually Going on here??!!?? I regret coming up with the idea for this site"
       }
     ]
-  }
+  },
+  {
+    username: "TKS2000",
+    title: "This is a great game",
+    postContent: "Lorem ipsum dolor sit amet, \
+                  consectetur adipiscing elit, sed do \
+                  eiusmod tempor incididunt ut labore \
+                  et dolore magna aliqua. Ut enim ad \
+                  minim veniam, quis nostrud exercitation \
+                  ullamco laboris nisi ut aliquip ex ea \
+                  commodo consequat. Duis aute irure dolor \
+                  in reprehenderit in voluptate velit esse \
+                  cillum dolore eu fugiat nulla pariatur. \
+                  Excepteur sint occaecat cupidatat non \
+                  proident, sunt in culpa qui officia \
+                  deserunt mollit anim id est laborum.",
+    likes: "318",
+    dislikes: "165",
+    replies: []
+  }, 
+  {
+    username: "t40",
+    title: "What is this about????",
+    postContent: "Lorem ipsum dolor sit amet, \
+                  consectetur adipiscing elit, sed do \
+                  eiusmod tempor incididunt ut labore \
+                  et dolore magna aliqua. Ut enim ad \
+                  minim veniam, quis nostrud exercitation \
+                  ullamco laboris nisi ut aliquip ex ea \
+                  commodo consequat. Duis aute irure dolor \
+                  in reprehenderit in voluptate velit esse \
+                  cillum dolore eu fugiat nulla pariatur. \
+                  Excepteur sint occaecat cupidatat non \
+                  proident, sunt in culpa qui officia \
+                  deserunt mollit anim id est laborum.",
+    likes: "485",
+    dislikes: "301",
+    replies: [
+      {
+        username: "themarkyone",
+        replyContent: "Everything messed up here. There are so many problems that need to be fix and the ddl is nearby."
+      }
+    ]
+  }, 
 ]
 
 const user = {
