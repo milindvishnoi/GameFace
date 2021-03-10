@@ -7,11 +7,15 @@ import './textform.css'
 export class TextForm extends Component {
     state = { 
       showPopup: false, 
+      title: "",
+      content: ""
     }
 
     closePopup = () => {
       this.setState({
-        showPopup: false
+        showPopup: false, 
+        title: "",
+        content: ""
       })
     }
 
@@ -21,10 +25,24 @@ export class TextForm extends Component {
       })
     }
 
+    handleTextMod = (event) => {
+        const value = event.target.value;
+        const name = event.target.name;
+        if (name === "formTitleIn") {
+            this.setState({
+                title: value
+            })
+        } else {
+            this.setState({
+                content: value
+            })
+        }
+    }
+
     render() {
         const {buttonName, buttonVar, buttonColor, formTitle, siconType, 
                 eiconType, formInstructions, formLabel, formRows, 
-                sendFormName, hasTitle} = this.props;
+                sendFormName, hasTitle, onSubmit} = this.props;
 
         const addTitle = () => {
             if (hasTitle === true) {
@@ -34,15 +52,28 @@ export class TextForm extends Component {
                         Make an interesting Title:
                       </DialogContentText>
                       <TextField
+                        name="formTitleIn"
+                        value={this.state.title}
                         id="outlined-basic" 
                         label="" 
                         variant="outlined"
                         fullWidth
+                        onChange={ this.handleTextMod }
                       />
                     </Box>
                 )
             } 
         }
+
+        const handleSubmit = () => {
+            if (hasTitle && this.state.title !== "" && this.state.content !== "") {
+                onSubmit("sample_username", this.state.title, this.state.content);
+            } else if (buttonName === "Reply" && this.state.content !== "") {
+                onSubmit("sample_username", this.state.content);
+            }
+            this.closePopup();
+        }
+
         // Created from Dialag Form template found on material ui documentation website
       return (
         <div>
@@ -64,12 +95,14 @@ export class TextForm extends Component {
                     {formInstructions}
                   </DialogContentText>
                   <TextField
+                    value={this.state.content}
                     label={formLabel}
                     id="outlined-multiline-static"
                     multiline
                     rows={formRows}
                     variant="outlined"
                     fullWidth
+                    onChange={ this.handleTextMod }
                   />
                 </Box>
               </DialogContent>
@@ -79,7 +112,7 @@ export class TextForm extends Component {
                 </Button>
                 <Button variant="contained" 
                         color="primary" 
-                        onClick={this.closePopup}
+                        onClick={handleSubmit}
                         startIcon={siconType} 
                         endIcon={eiconType}>
                   {sendFormName}

@@ -8,8 +8,31 @@ import './post.css'
 import TextForm from './textform'
 
 export class Post extends Component {
+    state = {
+        postReplies: []
+    }
+
+    // Requires a server call to update reply list
+    pushReply = (user, reply) => {
+        const copy = this.state.postReplies.map((item) => item);
+        copy.push({
+            username: user,
+            replyContent: reply
+        });
+        this.setState({
+            postReplies: copy
+        });
+    }
+
     render() {
         const { username, title, likes, dislikes, content, replies} = this.props;
+
+        if (this.state.postReplies.length === 0 && replies.length !== 0) {
+            this.setState({
+                postReplies: replies
+            });
+        }
+
         return(
             <Paper elevation={3} square={false} className="postContainer">
             <Box className="postContentContainer">
@@ -44,10 +67,11 @@ export class Post extends Component {
                         formRows={10} 
                         sendFormName="Reply"
                         siconType={<Reply>Reply</Reply>}
+                        onSubmit={this.pushReply}
                     />
                 </Box>
                 <Box className='repliesSection'>
-                    {replies.map((post) => {
+                    {this.state.postReplies.map((post) => {
                         return(
                             <ReplyPost 
                                 username={post.username}

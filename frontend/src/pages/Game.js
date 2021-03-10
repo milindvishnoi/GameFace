@@ -9,11 +9,27 @@ import { games, posts } from '../data'
 //The game selected to display
 const displayGame = games[0];
 
-// Sample Post Content
-const post1 = posts[0];
-const post2 = posts[1];
-
 export class Game extends Component {
+    state = {
+      gamePosts: posts
+    }
+
+    // Requires a server call to update Posts list
+    pushPost = (user, title_, content) => {
+      const copy = this.state.gamePosts.map((item) => item);
+      copy.push({
+          username: user,
+          title: title_,
+          postContent: content,
+          likes: "0",
+          dislikes: "0",
+          replies: []
+      });
+      this.setState({
+        gamePosts: copy
+      });
+  }
+
     render() {
 
       const splitDescription = (str) => {
@@ -47,21 +63,20 @@ export class Game extends Component {
                 formRows={10} 
                 sendFormName="Post"
                 hasTitle={true}
+                onSubmit={this.pushPost}
               />
           </Box>
           <Box id="postsSection">
-            <Post username={post1.username}
-                  content={post1.postContent}
-                  title={post1.title}
-                  likes={post1.likes}
-                  dislikes={post1.dislikes}
-                  replies={post1.replies}/>
-            <Post username={post2.username}
-                  content={post2.postContent}
-                  title={post2.title}
-                  likes={post2.likes}
-                  dislikes={post2.dislikes}
-                  replies={post2.replies}/>
+            {this.state.gamePosts.map((post) => {
+              return (
+                <Post username={post.username}
+                      content={post.postContent}
+                      title={post.title}
+                      likes={post.likes}
+                      dislikes={post.dislikes}
+                      replies={post.replies}/>
+              )
+            })}
           </Box>
         </div>
       )
