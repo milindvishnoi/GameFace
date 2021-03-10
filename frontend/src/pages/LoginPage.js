@@ -21,6 +21,10 @@ export class LoginPage extends Component {
     })
   }
 
+  handleClick = () => {
+    this.props.login(this.state.email, this.state.password)
+  }
+
   render() {
     const { login } = this.props
     const { email, password } = this.state
@@ -72,7 +76,7 @@ export class LoginPage extends Component {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={ login(email, password) }
+              onClick={ this.handleClick }
             >
               Sign In
             </Button>
