@@ -5,6 +5,7 @@ import Post from '../components/post'
 import TextForm from '../components/textform'
 // The appropriate game data to be imported from a server (description is from the PS4 website for 2K21)
 import { games, posts } from '../data'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 
 //The game selected to display
 const displayGame = games[0];
@@ -31,6 +32,7 @@ export class Game extends Component {
   }
 
     render() {
+      const {userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn} = this.props;
 
       const splitDescription = (str) => {
         /* Splits <str> appropriatley depending on where \n is in the text */
@@ -40,19 +42,11 @@ export class Game extends Component {
           </div>
         )
       }
-      return (
-        <div>
-          <Box mb={4}>
-          <GameHeader gameTitle={displayGame.title}
-                      rating={displayGame.score}
-                      description={ () => splitDescription(displayGame.description)}/> 
-          </Box>
-          <Box textAlign="right">
-            {/*
-            <Button variant='contained' color='primary'>
-              Create New Review
-            </Button>
-            */}
+
+      const isLoggedIn = userLoggedIn || gameAdminLoggedIn || siteAdminLoggedIn;
+      const addPostMaker = () => {if (isLoggedIn) {
+        return (
+          <Box className="rightBox">
             <TextForm
                 buttonName="Create New Post"
                 buttonVar="contained"
@@ -63,9 +57,23 @@ export class Game extends Component {
                 formRows={10} 
                 sendFormName="Post"
                 hasTitle={true}
+                titleInstr="Make an interesting title:"
                 onSubmit={this.pushPost}
               />
           </Box>
+        )}} 
+
+      return (
+        <div>
+          <Box mb={4}>
+          <GameHeader gameTitle={displayGame.title}
+                      rating={displayGame.score}
+                      description={ () => splitDescription(displayGame.description)}
+                      gameAdminLoggedIn={gameAdminLoggedIn}
+                      siteAdminLoggedIn={siteAdminLoggedIn}
+                      isLoggedIn={isLoggedIn}/> 
+          </Box>
+          {addPostMaker()}
           <Box id="postsSection">
             {this.state.gamePosts.map((post) => {
               return (
@@ -74,7 +82,9 @@ export class Game extends Component {
                       title={post.title}
                       likes={post.likes}
                       dislikes={post.dislikes}
-                      replies={post.replies}/>
+                      replies={post.replies}
+                      loggedIn={isLoggedIn}
+                      isAdmin={ gameAdminLoggedIn || siteAdminLoggedIn }/>
               )
             })}
           </Box>
@@ -85,7 +95,60 @@ export class Game extends Component {
 
   class GameHeader extends Component {
     render() {
-      const { gameTitle, description, rating } = this.props;
+      const { gameTitle, description, rating, isLoggedIn, 
+              siteAdminLoggedIn, gameAdminLoggedIn} = this.props;
+
+      const addEditGameInfoButton = () => {
+        if (siteAdminLoggedIn === true) {
+          return (
+            <Box className="rightBox">
+            <TextForm
+                buttonName="Edit"
+                buttonVar="outlined"
+                buttonColor="primary"
+                formTitle="Edit Game Info"
+                formInstructions="New Description: " 
+                formLabel="" 
+                formRows={10} 
+                sendFormName="Edit"
+                hasTitle={true}
+                titleInstr="New Game Title: "
+              />
+            </Box>
+          )
+        }
+      }
+
+      const addTags = () => {
+        if (siteAdminLoggedIn === true || gameAdminLoggedIn === true) {
+          return (
+            <Box display='flex'>
+              {displayGame.tags.map((tagContent) => (
+                <Box mr={1}>
+                  <Chip label={tagContent} onDelete={() => {}} size='medium' />
+                </Box>
+              ))}
+              <Box mr={1}>
+                  <Chip variant="outlined"
+                        label="Add Tag" 
+                        onDelete={() => {}} 
+                        deleteIcon={<AddCircleOutlineIcon />}
+                        size='medium' />
+              </Box>
+            </Box>
+          )
+        } else {
+          return (
+            <Box display='flex'>
+              {displayGame.tags.map((tagContent) => (
+                  <Box mr={1}>
+                    <Chip label={tagContent} size='medium' />
+                  </Box>
+                ))}
+            </Box>
+          )
+        }
+      }
 
       return (
           <Box marginTop="2vh">
@@ -94,7 +157,7 @@ export class Game extends Component {
                 <div align="center">
                   <img class="gameIcon" src={process.env.PUBLIC_URL + displayGame.imgSrc} />
                   <Typography>Rating: { rating }%</Typography>
-                  <Button variant='outlined'>Upvote</Button>
+                  <Button variant='outlined' disabled={!isLoggedIn}>Upvote</Button>
                 </div>
               </Grid>
               <Grid id="descriptionPanel" item xs={8}>
@@ -102,18 +165,8 @@ export class Game extends Component {
                   { gameTitle }
                 </Typography>
                 <Typography><br/>{ description() }<br/></Typography>
-                {/* For Game Admin and above only:
-                  <div style={{marginTop: 2}}>
-                    <Button>Create Tag</Button>
-                  </div>
-                */}
-                <Box display='flex'>
-                  {displayGame.tags.map((tagContent) => (
-                    <Box mr={1}>
-                      <Chip label={tagContent} size='medium' />
-                    </Box>
-                  ))}
-                </Box>
+                {addEditGameInfoButton()}
+                {addTags()}
               </Grid>
             </Grid>
           </Box>

@@ -2,7 +2,7 @@ import { Box,
     IconButton,  
     Paper,
     Typography} from '@material-ui/core'
-import {Reply, ThumbUp, ThumbDown} from '@material-ui/icons';
+import {Reply, ThumbUp, ThumbDown, Delete, StarOutline} from '@material-ui/icons';
 import React, { Component } from 'react'
 import './post.css'
 import TextForm from './textform'
@@ -25,7 +25,7 @@ export class Post extends Component {
     }
 
     render() {
-        const { username, title, likes, dislikes, content, replies} = this.props;
+        const { username, title, likes, dislikes, content, replies, loggedIn, isAdmin} = this.props;
 
         if (this.state.postReplies.length === 0 && replies.length !== 0) {
             this.setState({
@@ -33,9 +33,35 @@ export class Post extends Component {
             });
         }
 
+        const addReplyButton = () => {
+            if (loggedIn) {
+                return (
+                    <TextForm
+                        buttonName="Reply"
+                        buttonVar="outlined"
+                        formTitle="Reply to this post"
+                        formInstructions="Your Reply:" 
+                        formLabel="" 
+                        formRows={10} 
+                        sendFormName="Reply"
+                        siconType={<Reply>Reply</Reply>}
+                        onSubmit={this.pushReply}
+                    />
+            )} 
+        }
+
+        const addAdminCommands = () => {if (isAdmin) {
+            return (
+                <Box className="adminCommands">
+                    <IconButton><StarOutline /></IconButton>
+                    <IconButton><Delete /></IconButton>
+                </Box>
+            )}}
+
         return(
             <Paper elevation={3} square={false} className="postContainer">
             <Box className="postContentContainer">
+                {addAdminCommands()}
                 <Box className="opUserInfo">
                     <img className='opProfilePic' 
                          src={process.env.PUBLIC_URL + '/images/user.jpeg'}/>
@@ -51,24 +77,14 @@ export class Post extends Component {
                     <Box className="upvoteButtonsPanel">
                         <Box className="upvoteButton">
                             <Typography>{ likes }</Typography>
-                            <IconButton><ThumbUp/></IconButton>
+                            <IconButton disabled={!loggedIn}><ThumbUp/></IconButton>
                         </Box>
                         <Box className="upvoteButton">
                             <Typography>{ dislikes }</Typography>
-                            <IconButton><ThumbDown/></IconButton>
+                            <IconButton disabled={!loggedIn}><ThumbDown/></IconButton>
                         </Box>
                     </Box>
-                    <TextForm
-                        buttonName="Reply"
-                        buttonVar="outlined"
-                        formTitle="Reply to this post"
-                        formInstructions="Your Reply:" 
-                        formLabel="" 
-                        formRows={10} 
-                        sendFormName="Reply"
-                        siconType={<Reply>Reply</Reply>}
-                        onSubmit={this.pushReply}
-                    />
+                    {addReplyButton()}
                 </Box>
                 <Box className='repliesSection'>
                     {this.state.postReplies.map((post) => {
@@ -84,6 +100,7 @@ export class Post extends Component {
         )
     }
 }
+
 
 class ReplyPost extends Component {
     render() {

@@ -59,7 +59,9 @@ export class App extends Component {
             toggleTheme={ this.toggleTheme } />
             <Container>
               <Switch>
-                <Route exact path='/games/nba2k22' render={ () => <Game /> } />
+                <Route exact path='/games/nba2k22' render={ () => <Game userLoggedIn={this.state.userLogin}  
+                                                                        gameAdminLoggedIn={this.state.adminLogin} 
+                                                                        siteAdminLoggedIn={this.state.adminLogin}/> } />
                 <Route exact path='/' render={ () => <Home /> } />
                 <Route exact path='/login' render={ () => <LoginPage 
                                                             login={ this.login }

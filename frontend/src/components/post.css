@@ -1,5 +1,6 @@
-.MuiPaper-rounded {
-    border-radius: 25px;
+.rightBox {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .postContainer {
@@ -68,4 +69,9 @@
 .replyContent {
     margin-top: 3px;
     margin-left: 12px;
+}
+
+.adminCommands {
+    display: flex;
+    justify-content: flex-end;
 }

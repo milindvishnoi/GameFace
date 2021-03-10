@@ -42,14 +42,14 @@ export class TextForm extends Component {
     render() {
         const {buttonName, buttonVar, buttonColor, formTitle, siconType, 
                 eiconType, formInstructions, formLabel, formRows, 
-                sendFormName, hasTitle, onSubmit} = this.props;
+                sendFormName, hasTitle, titleInstr, onSubmit} = this.props;
 
         const addTitle = () => {
             if (hasTitle === true) {
                 return (
                     <Box id='formEditTitle'>
                       <DialogContentText>
-                        Make an interesting Title:
+                        {titleInstr}
                       </DialogContentText>
                       <TextField
                         name="formTitleIn"
