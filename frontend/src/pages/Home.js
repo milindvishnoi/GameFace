@@ -12,17 +12,17 @@ export class Home extends Component {
       {
         title: 'Building a Community',
         imgSrc: '/images/community.svg',
-        desc: 'Hi'
+        desc: 'A discussion board where you could just share your opinion'
       },
       {
         title: 'Top 10 Games',
         imgSrc: '/images/sign.svg',
-        desc: 'Hi'
+        desc: '10 most popular games in all categories and regions'
       },
       {
         title: 'Get a unbiased review',
         imgSrc: '/images/review.svg',
-        desc: 'HI'
+        desc: 'Checkout how other people feel about a game'
       }
     ]
   }
