@@ -13,7 +13,8 @@
 
 .image {
   position: relative;
-  width: 97%;
+  width: 400px;
+  height: 400px;
   min-width: 250px;
   filter: brightness(70%);
 }

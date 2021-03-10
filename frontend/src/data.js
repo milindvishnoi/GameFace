@@ -2,7 +2,7 @@
 const games = [
   {
     title: "NBA2K22",
-    score: "77",
+    score: "90",
     link: "/games/nba2k22",
     imgSrc: "/games/nba2k22.jpg",
     description: "NBA 2K22 is the latest title in the world-renowned, \
@@ -13,8 +13,103 @@ const games = [
                   online features, and deep, varied game modes, NBA \
                   2K22 offers one-of-a-kind immersion into all facets \
                   of NBA basketball and culture - where Everything is Game.",
-    tags: ["Sports", "2K", "Single Player", "Multiplayer", "PS4", "XBox"]
-  }
+    tags: ["Sports", "2K", "Basketball", "Single Player", "Multiplayer", "PS4", "XBox"]
+  },
+  {
+    title: "FIFA21",
+    score: "87",
+    link: "/games/fifa21",
+    imgSrc: "/games/fifa21.jpg",
+    description: "Lorem ipsum dolor sit amet, \
+                  consectetur adipiscing elit, sed do \
+                  eiusmod tempor incididunt ut labore \
+                  et dolore magna aliqua. Ut enim ad \
+                  minim veniam, quis nostrud exercitation \
+                  ullamco laboris nisi ut aliquip ex ea \
+                  commodo consequat. Duis aute irure dolor \
+                  in reprehenderit in voluptate velit esse \
+                  cillum dolore eu fugiat nulla pariatur. \
+                  Excepteur sint occaecat cupidatat non \
+                  proident, sunt in culpa qui officia \
+                  deserunt mollit anim id est laborum.",
+    tags: ["Sports", "FIFA", "Soccer", "Single Player", "Multiplayer", "PS4", "XBox"]
+  },
+  {
+    title: "FORTNITE",
+    score: "85",
+    link: "/games/fortnite",
+    imgSrc: "/games/fortnite.jpeg",
+    description: "Lorem ipsum dolor sit amet, \
+                  consectetur adipiscing elit, sed do \
+                  eiusmod tempor incididunt ut labore \
+                  et dolore magna aliqua. Ut enim ad \
+                  minim veniam, quis nostrud exercitation \
+                  ullamco laboris nisi ut aliquip ex ea \
+                  commodo consequat. Duis aute irure dolor \
+                  in reprehenderit in voluptate velit esse \
+                  cillum dolore eu fugiat nulla pariatur. \
+                  Excepteur sint occaecat cupidatat non \
+                  proident, sunt in culpa qui officia \
+                  deserunt mollit anim id est laborum.",
+    tags: ["SHOOTING", "Single Player", "Multiplayer", "PS4", "XBox"]
+  },
+  {
+    title: "CYBERPUNK 2077",
+    score: "84",
+    link: "/games/cyberpunk2077",
+    imgSrc: "/games/cyberpunk.jpg",
+    description: "Lorem ipsum dolor sit amet, \
+                  consectetur adipiscing elit, sed do \
+                  eiusmod tempor incididunt ut labore \
+                  et dolore magna aliqua. Ut enim ad \
+                  minim veniam, quis nostrud exercitation \
+                  ullamco laboris nisi ut aliquip ex ea \
+                  commodo consequat. Duis aute irure dolor \
+                  in reprehenderit in voluptate velit esse \
+                  cillum dolore eu fugiat nulla pariatur. \
+                  Excepteur sint occaecat cupidatat non \
+                  proident, sunt in culpa qui officia \
+                  deserunt mollit anim id est laborum.",
+    tags: ["SHOOTING", "Cyberpunk", "2K", "Single Player", "PS4", "XBox"]
+  },
+  {
+    title: "ASSASSINS",
+    score: "84",
+    link: "/games/assiassins",
+    imgSrc: "/games/assassins.jpeg",
+    description: "Lorem ipsum dolor sit amet, \
+                  consectetur adipiscing elit, sed do \
+                  eiusmod tempor incididunt ut labore \
+                  et dolore magna aliqua. Ut enim ad \
+                  minim veniam, quis nostrud exercitation \
+                  ullamco laboris nisi ut aliquip ex ea \
+                  commodo consequat. Duis aute irure dolor \
+                  in reprehenderit in voluptate velit esse \
+                  cillum dolore eu fugiat nulla pariatur. \
+                  Excepteur sint occaecat cupidatat non \
+                  proident, sunt in culpa qui officia \
+                  deserunt mollit anim id est laborum.",
+    tags: ["MOVEMENT", "Single Player", "PS4", "XBox"]
+  },
+  {
+    title: "FOOTBALL MANAGER",
+    score: "82",
+    link: "/games/footballmanager",
+    imgSrc: "/games/fm2021.jpeg",
+    description: "Lorem ipsum dolor sit amet, \
+                  consectetur adipiscing elit, sed do \
+                  eiusmod tempor incididunt ut labore \
+                  et dolore magna aliqua. Ut enim ad \
+                  minim veniam, quis nostrud exercitation \
+                  ullamco laboris nisi ut aliquip ex ea \
+                  commodo consequat. Duis aute irure dolor \
+                  in reprehenderit in voluptate velit esse \
+                  cillum dolore eu fugiat nulla pariatur. \
+                  Excepteur sint occaecat cupidatat non \
+                  proident, sunt in culpa qui officia \
+                  deserunt mollit anim id est laborum.",
+    tags: ["Sports", "Soccer", "Football", "Single Player", "Multiplayer", "PS4", "XBox"]
+  },
 ]
 
 const posts = [
