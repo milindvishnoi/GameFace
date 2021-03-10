@@ -27,7 +27,39 @@ export class Game extends Component {
       this.setState({
         gamePosts: copy
       });
-  }
+    }
+
+    addLike = (post) => {
+      console.log(post == this.state.gamePosts[1])
+      const copy = this.state.gamePosts.filter((item) => item !== post);
+
+      const index = this.state.gamePosts.indexOf(post);
+      let count = parseInt(post.likes) 
+      count += 1
+      post.likes = count.toString()
+      console.log(copy, post.likes, count)
+      copy.splice(index, 0, post)
+
+      this.setState({
+        gamePosts: copy
+      })
+    }
+
+    disLike = (post) => {
+      console.log(post == this.state.gamePosts[1])
+      const copy = this.state.gamePosts.filter((item) => item !== post);
+
+      const index = this.state.gamePosts.indexOf(post);
+      let count = parseInt(post.dislikes) 
+      count += 1
+      post.dislikes = count.toString()
+      console.log(copy, post.likes, count)
+      copy.splice(index, 0, post)
+
+      this.setState({
+        gamePosts: copy
+      })
+    }
 
     render() {
       const {userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn} = this.props;
@@ -77,13 +109,10 @@ export class Game extends Component {
           <Box id="postsSection">
             {this.state.gamePosts.map((post) => {
               return (
-                <Post username={post.username}
-                      content={post.postContent}
-                      title={post.title}
-                      likes={post.likes}
-                      dislikes={post.dislikes}
-                      replies={post.replies}
+                <Post post={post}
                       loggedIn={isLoggedIn}
+                      addLike={this.addLike}
+                      disLike={this.disLike}
                       isAdmin={ gameAdminLoggedIn || siteAdminLoggedIn }/>
               )
             })}
