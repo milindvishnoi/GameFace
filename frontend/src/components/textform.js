@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { user } from '../data'
 import './textform.css'
 
+const _name = user.username;
 export class TextForm extends Component {
     state = { 
       showPopup: false, 
@@ -78,9 +79,9 @@ export class TextForm extends Component {
 
         const handleSubmit = () => {
             if (hasTitle && this.state.title !== "" && this.state.content !== "") {
-                onSubmit("sample_username", this.state.title, this.state.content);
+                onSubmit(_name, this.state.title, this.state.content);
             } else if (buttonName === "Reply" && this.state.content !== "") {
-                onSubmit("sample_username", this.state.content);
+                onSubmit(_name, this.state.content);
             }
             this.closePopup();
         }

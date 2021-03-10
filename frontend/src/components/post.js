@@ -25,7 +25,8 @@ export class Post extends Component {
     }
 
     render() {
-        const { username, title, likes, dislikes, content, replies, loggedIn, isAdmin} = this.props;
+        const { username, title, likes, dislikes, content, 
+                replies, onDelete, loggedIn, isAdmin} = this.props;
 
         if (this.state.postReplies.length === 0 && replies.length !== 0) {
             this.setState({
@@ -54,7 +55,7 @@ export class Post extends Component {
             return (
                 <Box className="adminCommands">
                     <IconButton><StarOutline /></IconButton>
-                    <IconButton><Delete /></IconButton>
+                    <IconButton onClick={onDelete}><Delete /></IconButton>
                 </Box>
             )}}
 
@@ -63,7 +64,8 @@ export class Post extends Component {
             <Box className="postContentContainer">
                 {addAdminCommands()}
                 <Box className="opUserInfo">
-                    <img className='opProfilePic' 
+                    <img className='opProfilePic'
+                         alt='' 
                          src={process.env.PUBLIC_URL + '/images/user.jpeg'}/>
                     <Box className='opUsername'>
                         <Typography variant="h5">@{ username }</Typography>

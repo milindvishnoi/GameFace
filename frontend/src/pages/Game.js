@@ -5,6 +5,7 @@ import Post from '../components/post'
 import TextForm from '../components/textform'
 // The appropriate game data to be imported from a server (description is from the PS4 website for 2K21)
 import { games, posts } from '../data'
+import { uid } from 'react-uid'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 
 export class Game extends Component {
@@ -27,19 +28,17 @@ export class Game extends Component {
       this.setState({
         gamePosts: copy
       });
-  }
+    }
+
+    deletePost = (post) => {
+      const copy = this.state.gamePosts.filter((gpost) => gpost !== post)
+      this.setState({
+        gamePosts: copy
+      });
+    }
 
     render() {
       const {userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn} = this.props;
-
-      const splitDescription = (str) => {
-        /* Splits <str> appropriatley depending on where \n is in the text */
-        return(
-          <div>
-            {str.split("\n").map((pargph) => (<Typography>{pargph}<br/></Typography>))}
-          </div>
-        )
-      }
 
       const isLoggedIn = userLoggedIn || gameAdminLoggedIn || siteAdminLoggedIn;
       const addPostMaker = () => {if (isLoggedIn) {
@@ -66,7 +65,7 @@ export class Game extends Component {
           <Box mb={4}>
           <GameHeader gameTitle={this.state.displayGame.title}
                       rating={this.state.displayGame.score}
-                      description={ () => splitDescription(this.state.displayGame.description)}
+                      description={ this.state.displayGame.description}
                       gTags={this.state.displayGame.tags}
                       imgUrl={this.state.displayGame.imgSrc}
                       gameAdminLoggedIn={gameAdminLoggedIn}
@@ -84,7 +83,8 @@ export class Game extends Component {
                       dislikes={post.dislikes}
                       replies={post.replies}
                       loggedIn={isLoggedIn}
-                      isAdmin={ gameAdminLoggedIn || siteAdminLoggedIn }/>
+                      isAdmin={ gameAdminLoggedIn || siteAdminLoggedIn }
+                      onDelete={ () => this.deletePost(post)}/>
               )
             })}
           </Box>
@@ -94,9 +94,55 @@ export class Game extends Component {
   }
 
   class GameHeader extends Component {
+    state = {
+      title: "",
+      desc: "",
+      hTags: []
+    }
+
+    // Require Server Calls to update data
+    deleteTag = (tag) => {
+      const copy = this.state.hTags.filter((ntag) => ntag !== tag);
+      this.setState({
+        hTags: copy
+      });
+    }
+
+    changeInfo = (dummyVar, newTitle, newDesc) => {
+      this.setState({
+        title: newTitle,
+        desc: newDesc
+      });
+    }
+
     render() {
       const { gameTitle, description, rating, isLoggedIn, 
               siteAdminLoggedIn, gameAdminLoggedIn, gTags, imgUrl} = this.props;
+
+      if (this.state.hTags.length === 0 && gTags.length !== 0) {
+        this.setState({
+          hTags: gTags
+        });
+      }
+      if (this.state.desc === "" && description !== "") {
+        this.setState({
+          desc: description
+        });
+      }
+      if (this.state.title === "" && gameTitle !== "") {
+        this.setState({
+          title: gameTitle
+        });
+      }
+
+      const splitDescription = (str) => {
+      /* Splits <str> appropriatley depending on where \n is in the text */
+      return(
+          <div>
+            {str.split("\n").map((pargph) => (<Typography>{pargph}<br/></Typography>))}
+          </div>
+        )
+      }
 
       const addEditGameInfoButton = () => {
         if (siteAdminLoggedIn === true) {
@@ -107,12 +153,15 @@ export class Game extends Component {
                 buttonVar="outlined"
                 buttonColor="primary"
                 formTitle="Edit Game Info"
-                formInstructions="New Description: " 
+                formInstructions="Description: " 
                 formLabel="" 
                 formRows={10} 
                 sendFormName="Edit"
                 hasTitle={true}
-                titleInstr="New Game Title: "
+                titleInstr="Game Title: "
+                defaultText={this.state.desc}
+                defaultTitle={this.state.title}
+                onSubmit={this.changeInfo}
               />
             </Box>
           )
@@ -123,9 +172,9 @@ export class Game extends Component {
         if (siteAdminLoggedIn === true || gameAdminLoggedIn === true) {
           return (
             <Box display='flex'>
-              {gTags.map((tagContent) => (
+              {this.state.hTags.map((tagContent) => (
                 <Box mr={1}>
-                  <Chip label={tagContent} onDelete={() => {}} size='medium' />
+                  <Chip key={uid(tagContent)} label={tagContent} onDelete={() => this.deleteTag(tagContent)} size='medium' />
                 </Box>
               ))}
               <Box mr={1}>
@@ -155,16 +204,16 @@ export class Game extends Component {
             <Grid container spacing={2} justify="center">
               <Grid item xs={4}>
                 <div align="center">
-                  <img class="gameIcon" src={process.env.PUBLIC_URL + imgUrl} />
+                  <img class="gameIcon" src={process.env.PUBLIC_URL + imgUrl} alt=''/>
                   <Typography>Rating: { rating }%</Typography>
                   <Button variant='outlined' disabled={!isLoggedIn}>Upvote</Button>
                 </div>
               </Grid>
               <Grid id="descriptionPanel" item xs={8}>
                 <Typography variant='h1' color='primary'>
-                  { gameTitle }
+                  { this.state.title }
                 </Typography>
-                <Typography><br/>{ description() }<br/></Typography>
+                <Typography><br/>{ splitDescription(this.state.desc) }<br/></Typography>
                 {addEditGameInfoButton()}
                 {addTags()}
               </Grid>
