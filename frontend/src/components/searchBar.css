@@ -4,6 +4,8 @@
 
 .relative-pos {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .search-results-container {

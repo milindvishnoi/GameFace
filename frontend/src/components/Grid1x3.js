@@ -41,9 +41,11 @@ class GridItem extends Component {
               alt={this.props.imgSrc + "'s Image"}
               />
             </Box>
-            <Typography align='center' variant='h4' color='primary'>
-              { this.props.title }
-            </Typography>
+            <Box mb={2}>
+              <Typography align='center' variant='h4' color='primary'>
+                { this.props.title }
+              </Typography>
+            </Box>
             <Typography variant='body1'>
               { this.props.desc }
             </Typography>
