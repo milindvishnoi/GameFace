@@ -1,27 +1,17 @@
-import { Box, Button, Chip, DialogTitle, Dialog, DialogContent, DialogContentText, TextField, DialogActions, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Chip,  Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import './GamePage.css'
 import Post from '../components/post'
+import TextForm from '../components/textform'
 // The appropriate game data to be imported from a server (description is from the PS4 website for 2K21)
-import { games } from '../data'
+import { games, posts } from '../data'
 
 //The game selected to display
 const displayGame = games[0];
 
 // Sample Post Content
-const username = "some_user_1234"
-const content = "Lorem ipsum dolor sit amet, \
-consectetur adipiscing elit, sed do \
-eiusmod tempor incididunt ut labore \
-et dolore magna aliqua. Ut enim ad \
-minim veniam, quis nostrud exercitation \
-ullamco laboris nisi ut aliquip ex ea \
-commodo consequat. Duis aute irure dolor \
- in reprehenderit in voluptate velit esse \
-  cillum dolore eu fugiat nulla pariatur. \
-   Excepteur sint occaecat cupidatat non \
-   proident, sunt in culpa qui officia \
-   deserunt mollit anim id est laborum."
+const post1 = posts[0];
+const post2 = posts[1];
 
 export class Game extends Component {
     render() {
@@ -47,13 +37,31 @@ export class Game extends Component {
               Create New Review
             </Button>
             */}
-            <CreatePostForm />
+            <TextForm
+                buttonName="Create New Post"
+                buttonVar="contained"
+                buttonColor="primary"
+                formTitle="Create New Post"
+                formInstructions="Start an engaging discussion:" 
+                formLabel="" 
+                formRows={10} 
+                sendFormName="Post"
+                hasTitle={true}
+              />
           </Box>
-          <Box style={{marginLeft: 180, marginRight: 180}}>
-            <Post username={username}
-                  content={content}/>
-            <Post username={username}
-                  content={content}/>
+          <Box id="postsSection">
+            <Post username={post1.username}
+                  content={post1.postContent}
+                  title={post1.title}
+                  likes={post1.likes}
+                  dislikes={post1.dislikes}
+                  replies={post1.replies}/>
+            <Post username={post2.username}
+                  content={post2.postContent}
+                  title={post2.title}
+                  likes={post2.likes}
+                  dislikes={post2.dislikes}
+                  replies={post2.replies}/>
           </Box>
         </div>
       )
@@ -95,81 +103,6 @@ export class Game extends Component {
             </Grid>
           </Box>
           
-      )
-    }
-  }
-
-  class CreatePostForm extends Component {
-      state = { 
-        showPopup: false 
-      }
-
-      closePopup = () => {
-        this.setState({
-          showPopup: false
-        })
-      }
-
-      openPopup = () => {
-        this.setState({
-          showPopup: true
-        })
-      }
-
-      render() {
-        return (
-          <div>
-              <Button variant='contained' color='primary' onClick={this.openPopup}>
-                Create New Review
-              </Button>
-              <Dialog open={this.state.showPopup} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Create a New Post</DialogTitle>
-                <DialogContent className="createForm">
-                  <Box id="formItem">
-                    <DialogContentText>
-                      Make an interesting Title
-                    </DialogContentText>
-                    <TextField
-                      id="outlined-basic" 
-                      label="" 
-                      variant="outlined"
-                      fullWidth
-                    />
-                  </Box>
-                  <Box id="formItem">
-                    <DialogContentText>
-                      Write a review
-                    </DialogContentText>
-                    <TextField
-                      label=""
-                      id="outlined-multiline-static"
-                      multiline
-                      rows={10}
-                      variant="outlined"
-                      fullWidth
-                    />
-                  </Box>
-                </DialogContent>
-                <DialogActions>
-                  <Button color="primary" onClick={this.closePopup}>
-                    Cancel
-                  </Button>
-                  <Button color="primary" onClick={this.closePopup}>
-                    Post
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
-        )}
-  }
-
-  class Tag extends Component {
-    render () {
-      const { content } = this.props;
-      return (
-        <Grid id="tag" item>
-          <Typography>{ content }</Typography>
-        </Grid>
       )
     }
   }

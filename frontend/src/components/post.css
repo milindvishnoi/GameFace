@@ -1,18 +1,71 @@
-#postContainer {
-    margin-top: 5vh;
-    background-color: grey;
+.MuiPaper-rounded {
     border-radius: 25px;
 }
 
-.textWrapper {
-    margin-top: 7px;
-    margin-left: 25px;
-    margin-right: 25px;
+.postContainer {
+    color: whitesmoke;
+    margin-top: 5vh;
+    background-color: grey;
+}
+
+.postContentContainer {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    padding-top: 2vh;
+    padding-bottom: 17px;
+}
+
+.opUserInfo {
+    display: flex;
+    align-items: center;
 }
 
 .opProfilePic {
-    margin-left: 20px;
     border-radius: 50%;
     width: 50px;
     border: 2px solid white;
+    margin-bottom: 2vh;
+}
+
+.opUsername {
+    margin-left: 10px;
+    margin-bottom: 2vh;
+}
+
+.postTextContent {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+#responsesSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.upvoteButtonsPanel {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.upvoteButton {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.repliesSection {
+    border-left: 2px solid;
+    padding-left: 1vw;
+}
+
+.reply {
+    margin-top: 2vh;
+}
+
+.replyContent {
+    margin-top: 3px;
+    margin-left: 12px;
 }

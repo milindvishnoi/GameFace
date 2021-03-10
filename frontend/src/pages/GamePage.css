@@ -1,24 +1,23 @@
-#tag {
-    background-color: gray;
-    border-radius: 20px;
-    margin: 5px;
-}
-
 .createForm {
     width: 30vw;
 }
 
-#formItem {
+.formItem {
     margin-top: 3vh;
 }
  
-#descriptionPanel {
+.descriptionPanel {
     width: 43vw;
 }
 
 #ratings {
     text-align: center;
     width: 23vw;
+}
+
+#postsSection {
+    margin-left: 10vw;
+    margin-right: 10vw;
 }
 
 .gameIcon {
