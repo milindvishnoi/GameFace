@@ -8,7 +8,6 @@
 }
 
 .userName {
-    padding-left: 6vw;
     color: black;
 }
 
@@ -16,19 +15,13 @@
     padding-top: 2vh;
     padding-left: 10vw;
     padding-right: 10vw;
+    text-align: center;
     color: black;
 }
 
-#Container {
-    display: flex;
-    align-items: center;
-}
-
 .personal-picture {
-    margin-top: -15vh;
-    margin-left: 5vw;
-    margin-bottom: 2vh;
-    width: 15vw;
+    margin-top: -150px;
+    width: 300px;
     border-radius: 50%;
     border: 5px solid red;
 }

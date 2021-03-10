@@ -39,19 +39,17 @@ export class PersonalPage extends Component {
                   className='cover-image'
                   src={ process.env.PUBLIC_URL + user.coverPic } />
             </Box>
-            <Container>
-              <Box>
-                <img 
-                  className='personal-picture'
-                  src={ process.env.PUBLIC_URL + user.profilePic } />
-              </Box>
-            </Container>
-          <Typography className="userName" variant="h3">
-            @{ user.username }
-          </Typography>
-          <Typography className="userBio" variant="h5">
-            { user.bio }
-          </Typography>
+            <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+              <img 
+                className='personal-picture'
+                src={ process.env.PUBLIC_URL + user.profilePic } />
+              <Typography className="userName" variant="h3">
+                @{ user.username }
+              </Typography>
+              <Typography className="userBio" variant="h5">
+                { user.bio }
+              </Typography>
+            </Box>
 
           <AppBar position='static'>
             <Container>
