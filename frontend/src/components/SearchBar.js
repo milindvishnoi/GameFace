@@ -97,7 +97,7 @@ export class SearchBar extends Component {
                 })
                 }
               }
-              closeIcon={null}
+              popupIcon={null}
               noOptionsText='No more games!'
             />
           </Box>
