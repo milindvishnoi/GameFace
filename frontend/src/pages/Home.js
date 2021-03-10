@@ -1,11 +1,31 @@
 import { Box, Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
+import Grid1x3 from '../components/Grid1x3';
 import TopGames from '../components/TopGames';
 import './home.css';
 // will be called from API
 import { games } from '../data'
 
 export class Home extends Component {
+  state = {
+    gridObject: [
+      {
+        title: 'Building a Community',
+        imgSrc: '/images/community.svg',
+        desc: 'Hi'
+      },
+      {
+        title: 'Top 10 Games',
+        imgSrc: '/images/sign.svg',
+        desc: 'Hi'
+      },
+      {
+        title: 'Get a unbiased review',
+        imgSrc: '/images/review.svg',
+        desc: 'HI'
+      }
+    ]
+  }
   render() {
     return (
       <div>
@@ -29,6 +49,8 @@ export class Home extends Component {
               Find your game!
             </Typography>
         </Box>
+
+        <Grid1x3 gridObject={this.state.gridObject} />
 
         <Box
           mb={4}>

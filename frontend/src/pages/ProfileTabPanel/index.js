@@ -24,13 +24,13 @@ export class ProfileTabPanel extends Component {
           index === page && (
           <div>
               <div className="infoTitle" variant="h3">
-              Username: <span className="content">{this.state.username}</span>
+              Username: {this.state.username}
               </div>
               <div className="infoTitle" variant="h3">
-              Nickname: <span className="content">{this.state.nickname}</span>
+              Nickname: {this.state.nickname}
               </div>
               <div className="infoTitle" variant="h3">
-              Country: <span className="content">{this.state.country}</span>
+              Country: {this.state.country}
               </div>
               
           </div>
