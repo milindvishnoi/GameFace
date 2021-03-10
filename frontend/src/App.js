@@ -16,8 +16,8 @@ import './App.css'
 export class App extends Component {
   state = {
     darkMode: true,
-    adminLogin: true,
-    userLogin: false
+    adminLogin: false,
+    userLogin: true
   }
 
   toggleTheme = () => {
@@ -28,14 +28,18 @@ export class App extends Component {
   }
 
   login = (username, password) => {
-    if (username === 'admin' && password === 'password')
+    if (username === 'admin@admin.com' && password === 'admin') 
       this.setState({
-        adminLogin: true
+        adminLogin: true,
+        userLogin: false
       })
-    else if (username === 'user' && password === 'password')
+    else if (username === 'user@user.com' && password === 'user') {
       this.setState({
-        userLogin: true
+        userLogin: true,
+        adminLogin: false
       })
+      return;
+    }
   }
 
   logout = () => {
@@ -56,7 +60,8 @@ export class App extends Component {
             adminLogin={ adminLogin }
             userLogin={ userLogin }
             currentTheme={ darkMode } 
-            toggleTheme={ this.toggleTheme } />
+            toggleTheme={ this.toggleTheme }
+            logout={ this.logout } />
             <Container>
               <Switch>
                 <Route exact path='/games/nba2k22' render={ () => <Game userLoggedIn={this.state.userLogin}  

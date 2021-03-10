@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 export default class Navbar extends Component {
   render() {
-    const { userLogin, adminLogin } = this.props
+    const { userLogin, adminLogin, logout } = this.props
 
     return (
       <AppBar position='static'>
@@ -53,7 +53,7 @@ export default class Navbar extends Component {
                     onChange={this.props.toggleTheme} />
                 <Brightness4Icon />
               </Box>
-              <LoginButton adminLogin={adminLogin} userLogin={userLogin} />
+              <LoginButton logout={logout} adminLogin={adminLogin} userLogin={userLogin} />
             </Box>
           </Toolbar>
         </Container>

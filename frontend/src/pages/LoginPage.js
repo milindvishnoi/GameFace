@@ -5,8 +5,25 @@ import { Link } from 'react-router-dom'
 
 // Inspired by (URL)
 export class LoginPage extends Component {
+  state = {
+    email: '',
+    password: ''
+  }
+
+  handelInput = (event) => {
+    const id = event.target.id
+    const value = event.target.value
+
+    console.log(id, value)
+
+    this.setState({
+      [id]: value
+    })
+  }
+
   render() {
     const { login } = this.props
+    const { email, password } = this.state
 
     return (
       <Box display="flex" 
@@ -30,6 +47,8 @@ export class LoginPage extends Component {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={this.handelInput}
           />
           <TextField
             variant="outlined"
@@ -41,6 +60,8 @@ export class LoginPage extends Component {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={this.handelInput}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -51,9 +72,9 @@ export class LoginPage extends Component {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={ login }
+              onClick={ login(email, password) }
             >
-                Sign In
+              Sign In
             </Button>
           </Link>
         </form>

@@ -1,9 +1,11 @@
 .bar {
-  width: 600px;
+  width: 450px;
 }
 
 .relative-pos {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .search-results-container {
