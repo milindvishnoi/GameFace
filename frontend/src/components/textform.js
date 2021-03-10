@@ -2,18 +2,21 @@ import { Box, Button, DialogTitle, Dialog,
     DialogContent, DialogContentText, 
     TextField, DialogActions } from '@material-ui/core'
 import React, { Component } from 'react'
+import { user } from '../data'
 import './textform.css'
 
 export class TextForm extends Component {
     state = { 
       showPopup: false, 
+      readProps: false, 
       title: "",
       content: ""
     }
 
     closePopup = () => {
       this.setState({
-        showPopup: false, 
+        showPopup: false,
+        readProps: false, 
         title: "",
         content: ""
       })
@@ -42,7 +45,15 @@ export class TextForm extends Component {
     render() {
         const {buttonName, buttonVar, buttonColor, formTitle, siconType, 
                 eiconType, formInstructions, formLabel, formRows, 
-                sendFormName, hasTitle, titleInstr, onSubmit} = this.props;
+                sendFormName, hasTitle, titleInstr, defaultTitle, defaultText, onSubmit} = this.props;
+
+        if (this.state.readProps === false) {
+          this.setState({
+            readProps: true, 
+            title: defaultTitle,
+            content: defaultText
+          })
+        }
 
         const addTitle = () => {
             if (hasTitle === true) {
