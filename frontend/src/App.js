@@ -28,16 +28,28 @@ export class App extends Component {
   }
 
   login = (username, password) => {
+<<<<<<< HEAD
     if (username === 'admin@admin.com' && password === 'admin')
+=======
+    if (username === 'admin@admin.com' && password === 'admin') {
+>>>>>>> f0833fc4c0846f9d432cc9a771a196543a645096
       this.setState({
         adminLogin: true,
         userLogin: false
       })
+<<<<<<< HEAD
     else if (username === 'user@user.com' && password === 'user')
+=======
+      return;
+    }
+    else if (username === 'user@user.com' && password === 'user') {
+>>>>>>> f0833fc4c0846f9d432cc9a771a196543a645096
       this.setState({
         userLogin: true,
         adminLogin: false
       })
+      return;
+    }
   }
 
   logout = () => {
