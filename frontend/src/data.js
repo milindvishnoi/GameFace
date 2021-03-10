@@ -17,71 +17,23 @@ const games = [
   }
 ]
 
-const posts = [
-  {
-    username: "user1",
-    title: "An Original Title",
-    postContent: "Lorem ipsum dolor sit amet, \
-                  consectetur adipiscing elit, sed do \
-                  eiusmod tempor incididunt ut labore \
-                  et dolore magna aliqua. Ut enim ad \
-                  minim veniam, quis nostrud exercitation \
-                  ullamco laboris nisi ut aliquip ex ea \
-                  commodo consequat. Duis aute irure dolor \
-                  in reprehenderit in voluptate velit esse \
-                  cillum dolore eu fugiat nulla pariatur. \
-                  Excepteur sint occaecat cupidatat non \
-                  proident, sunt in culpa qui officia \
-                  deserunt mollit anim id est laborum.",
-    likes: "309",
-    dislikes: "309",
-    replies: []
-  }, 
-  {
-    username: "xx__the_U1timate_G8meR__xx",
-    title: "I'm Sorry",
-    // postContent taken from r/copypasta
-    postContent: "Pardon for my inexcusably poor understanding of \
-                  the Anglo-Frisian-Germanic language, and thus regional \
-                  dialects, known by native speakers as \"English\". Indeed \
-                  I do give my upmost effort to educate myself and better my \
-                  understanding and thus comprehension of such an unusual yet \
-                  widely used modern foreign language, but alas my efforts have \
-                  so far encountered nothing but limited success. The combinations \
-                  of both Latin and Germanic lexis have so far proved to be a serious\
-                  tribulation for my progress. Before we continue, it is of upmost \
-                  importance that I state my location of residence as to clarify why my \
-                  linguistic skills are so substandard. I reside in the sovereign state \
-                  recognised by the United Nations, and thus the international diplomatic \
-                  sphere, as \"The French Republic\", colloquially our title is simplified to \
-                  just \"France\" for ease of use purposes.",
-    likes: "69",
-    dislikes: "100",
-    replies: [
-      {
-        username: "blue_rogue1714",
-        replyContent: "In all my time, I have never seen somebody make such a bold and varacious claim. I understand \
-                      that this ,ay be hard for you in this pressing time but I would invite you to please consider \
-                      what your english can do to the significance of this amazing game. NBA2K is a legend of a game with \
-                      excellent graphics yet you stand here and berate it? No, That is unacceptable. Get out of this site \
-                      now before I call grandmaster @mills1020 to ban you. Good Day to You Sir!!!"
-      }, 
-      {
-        username: "anoverga17",
-        replyContent: "What is actually Going on here??!!?? I regret coming up with the idea for this site"
-      }
-    ]
-  }
-]
-
 const user = {
   username: "mills1020",
+  country: "country1",
+  nickname: "nickname1",
   bio: "I am a gamer who loves to play Sport games from FIFA to NBA, I would \
         love to play with you. Although my favourite game is Madien 2k22.",
-  games: [games[0]],
-  discussions: [],
+  games: [{gameName: "NBA2K22", ign: "LBJ"},
+          {gameName: "game2", ign: "bestplayer"},
+          {gameName: "game3", ign: "worstplayer"}],
+  discussions: [{gameName: "NBA2K22", content: "I could just copy-paste my NBA 2k20 review, but that would be hypocritical."},
+                {gameName: "game2", content: "Comment test Comment test Comment test Comment test Comment test \
+                                              Comment test Comment test Comment test Comment test Comment test \
+                                              Comment test Comment test Comment test Comment test Comment test."},
+                {gameName: "game3", content: "I highly recommend buying this game, it's a blast! It has \
+                                             appealing visuals and designs, and has plenty of stars and stamps to collect!"}],
   profilePic: "/images/user.jpeg",
   coverPic: "/images/user-cover.jpg",
 }
 
-export { games, user, posts }
+export { games, user }
