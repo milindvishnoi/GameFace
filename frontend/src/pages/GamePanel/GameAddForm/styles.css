@@ -1,0 +1,16 @@
+.game-form {
+    justify-content: center;
+}
+  
+.game-form .MuiGrid-root {
+    text-align: center;
+}
+  
+.MuiButton-root.game-form__submit-button {
+    margin-top: 20px;
+    background-color: #181212;
+}
+  
+.game-form__button-grid {
+    line-height: 5;
+}
