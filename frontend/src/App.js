@@ -11,6 +11,7 @@ import { darkTheme, lightTheme } from './theme'
 import Navbar from './components/global/header/Navbar';
 import Footer from './components/global/footer/Footer';
 import './App.css'
+import { games } from './data'
 
 
 export class App extends Component {
@@ -64,6 +65,13 @@ export class App extends Component {
             logout={ this.logout } />
             <Container>
               <Switch>
+              <Route exact path='/games/:gameTitle' render={ ({ match }) => (<Game
+                                                                        userLoggedIn={this.state.userLogin}  
+                                                                        displayGame={games.find(g => 
+                                                                          '/games/'.concat(match.params.gameTitle) === g.link
+                                                                        )}
+                                                                        gameAdminLoggedIn={this.state.adminLogin} 
+                                                                        siteAdminLoggedIn={this.state.adminLogin}/>) } />
                 <Route exact path='/games/nba2k22' render={ () => <Game userLoggedIn={this.state.userLogin}  
                                                                         gameAdminLoggedIn={this.state.adminLogin} 
                                                                         siteAdminLoggedIn={this.state.adminLogin}/> } />
