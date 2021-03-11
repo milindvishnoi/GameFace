@@ -11,7 +11,6 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 export class Game extends Component {
     state = {
       gamePosts: posts,
-      displayGame: games[0]
     }
 
     // Requires a server call to update Posts list
@@ -37,8 +36,40 @@ export class Game extends Component {
       });
     }
 
+    addLike = (post) => {
+      console.log(post == this.state.gamePosts[1])
+      const copy = this.state.gamePosts.filter((item) => item !== post);
+
+      const index = this.state.gamePosts.indexOf(post);
+      let count = parseInt(post.likes) 
+      count += 1
+      post.likes = count.toString()
+      console.log(copy, post.likes, count)
+      copy.splice(index, 0, post)
+
+      this.setState({
+        gamePosts: copy
+      })
+    }
+
+    disLike = (post) => {
+      console.log(post == this.state.gamePosts[1])
+      const copy = this.state.gamePosts.filter((item) => item !== post);
+
+      const index = this.state.gamePosts.indexOf(post);
+      let count = parseInt(post.dislikes) 
+      count += 1
+      post.dislikes = count.toString()
+      console.log(copy, post.likes, count)
+      copy.splice(index, 0, post)
+
+      this.setState({
+        gamePosts: copy
+      })
+    }
+
     render() {
-      const {userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn} = this.props;
+      const {userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn, displayGame} = this.props;
 
       const isLoggedIn = userLoggedIn || gameAdminLoggedIn || siteAdminLoggedIn;
       const addPostMaker = () => {if (isLoggedIn) {
@@ -63,11 +94,11 @@ export class Game extends Component {
       return (
         <div>
           <Box mb={4}>
-          <GameHeader gameTitle={this.state.displayGame.title}
-                      rating={this.state.displayGame.score}
-                      description={ this.state.displayGame.description}
-                      gTags={this.state.displayGame.tags}
-                      imgUrl={this.state.displayGame.imgSrc}
+          <GameHeader gameTitle={displayGame.title}
+                      rating={displayGame.score}
+                      description={ () => splitDescription(displayGame.description)}
+                      gTags={displayGame.tags}
+                      imgUrl={displayGame.imgSrc}
                       gameAdminLoggedIn={gameAdminLoggedIn}
                       siteAdminLoggedIn={siteAdminLoggedIn}
                       isLoggedIn={isLoggedIn}/> 
@@ -76,15 +107,12 @@ export class Game extends Component {
           <Box id="postsSection">
             {this.state.gamePosts.map((post) => {
               return (
-                <Post username={post.username}
-                      content={post.postContent}
-                      title={post.title}
-                      likes={post.likes}
-                      dislikes={post.dislikes}
-                      replies={post.replies}
+                <Post post={post}
                       loggedIn={isLoggedIn}
                       isAdmin={ gameAdminLoggedIn || siteAdminLoggedIn }
-                      onDelete={ () => this.deletePost(post)}/>
+                      onDelete={ () => this.deletePost(post)}
+                      addLike={this.addLike}
+                      disLike={this.disLike}/>
               )
             })}
           </Box>

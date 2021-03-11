@@ -23,5 +23,6 @@
 .gameIcon {
     border-radius: 50%;
     width: 18vw;
+    height: 18vw;
     border: 5px solid white;
 }

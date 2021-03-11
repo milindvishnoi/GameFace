@@ -4,6 +4,7 @@ import { Box,
     Typography} from '@material-ui/core'
 import {Reply, ThumbUp, ThumbDown, Delete, StarOutline} from '@material-ui/icons';
 import React, { Component } from 'react'
+import { user } from '../data';
 import './post.css'
 import TextForm from './textform'
 
@@ -25,12 +26,11 @@ export class Post extends Component {
     }
 
     render() {
-        const { username, title, likes, dislikes, content, 
-                replies, onDelete, loggedIn, isAdmin} = this.props;
+        const { post, loggedIn, isAdmin, addLike, disLike} = this.props;
 
-        if (this.state.postReplies.length === 0 && replies.length !== 0) {
+        if (this.state.postReplies.length === 0 && post.replies.length !== 0) {
             this.setState({
-                postReplies: replies
+                postReplies: post.replies
             });
         }
 
@@ -68,22 +68,30 @@ export class Post extends Component {
                          alt='' 
                          src={process.env.PUBLIC_URL + '/images/user.jpeg'}/>
                     <Box className='opUsername'>
-                        <Typography variant="h5">@{ username }</Typography>
+                        <Typography variant="h5">@{ post.username }</Typography>
                     </Box>
                 </Box>
-                <Typography variant="h4">{ title }</Typography>
+                <Typography variant="h4">{ post.title }</Typography>
                 <Box className="postTextContent">
-                    <Typography>{ content }</Typography>
+                    <Typography>{ post.postContent }</Typography>
                 </Box>
                 <Box id="responsesSection">
                     <Box className="upvoteButtonsPanel">
                         <Box className="upvoteButton">
-                            <Typography>{ likes }</Typography>
-                            <IconButton disabled={!loggedIn}><ThumbUp/></IconButton>
+                            <Typography>{ post.likes }</Typography>
+                            <IconButton 
+                                disabled={!loggedIn} 
+                                onClick={ () => addLike(post)}>
+                                    <ThumbUp/>
+                            </IconButton>
                         </Box>
                         <Box className="upvoteButton">
-                            <Typography>{ dislikes }</Typography>
-                            <IconButton disabled={!loggedIn}><ThumbDown/></IconButton>
+                            <Typography>{ post.dislikes }</Typography>
+                            <IconButton 
+                                disabled={!loggedIn} 
+                                onClick={ () => disLike(post)}>
+                                    <ThumbDown/>
+                            </IconButton>
                         </Box>
                     </Box>
                     {addReplyButton()}
