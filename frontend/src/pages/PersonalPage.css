@@ -26,5 +26,9 @@
 }
 
 .logout-button {
-    margin-left: 5vw;
+    margin-top: 10vh;
+}
+
+.game__manage-button {
+    margin-bottom: 10px;
 }
