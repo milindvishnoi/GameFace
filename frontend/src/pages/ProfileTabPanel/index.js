@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { Box, Button, Chip,  Grid, Typography } from '@material-ui/core'
+import TextForm from '../../components/textform'
+import EditIcon from '@material-ui/icons/Edit';
 import "./styles.css";
 import { user } from '../../data'
 
@@ -11,31 +14,104 @@ export class ProfileTabPanel extends Component {
     state = {
         username: currentUser.username,
         nickname: currentUser.nickname,
-        country: currentUser.country
-
+        country: currentUser.country,
+        canEditName: true
     }
 
+  updateState = (attr, newAttr) => {
+    if (attr === "user") {
+      this.setState({
+        username: newAttr
+      })
+    } else if (attr === "nick") {
+      this.setState({
+        nickname: newAttr
+      })
+    } else if (attr === "count") {
+      this.setState({
+        country: newAttr
+      })
+    }
+  }
+
   render() {
-    const { index, page } = this.props
+    const { index, page, isSiteAdmin} = this.props
+
+    if (isSiteAdmin === true && this.state.canEditName === true) {
+      this.setState({
+        canEditName: false
+      })
+    }
+
+    const addEditUsername = () => {
+      if (this.state.canEditName === true) {
+        return (
+          <TextForm
+              buttonName="Edit Username"
+              buttonVar="outlined"
+              buttonColor="primary"
+              formTitle="Update Your Old Username"
+              formInstructions="New username:" 
+              formLabel="" 
+              formRows={1} 
+              sendFormName="Edit"
+              defaultText={this.state.username}
+              hasTitle={false}
+              onSubmit={(attr) => this.updateState("user", attr)}
+              siconType={<EditIcon />}
+            />
+        )
+      }
+    }
     
     return (
       <div> 
         {
           index === page && (
           <div>
-              <div className="infoTitle" variant="h3">
-              Username: {this.state.username}
-              </div>
-              <div className="infoTitle" variant="h3">
-              Nickname: {this.state.nickname}
-              </div>
-              <div className="infoTitle" variant="h3">
-              Country: {this.state.country}
-              </div>
-              
+          <Box className="infoPanel">
+                <div className="infoTitle">
+                  <Typography variant='h5'> Username: {this.state.username} </Typography>
+                </div>
+                <div className="infoTitle">
+                  <Typography variant='h5'> Nickname: {this.state.nickname} </Typography>
+                </div>
+                <div className="infoTitle">
+                  <Typography variant='h5'> Country: {this.state.country} </Typography>
+                </div>
+                <Box className="buttonPanel">
+                  {addEditUsername()}
+                  <TextForm
+                    buttonName="Edit Nickname"
+                    buttonVar="outlined"
+                    buttonColor="primary"
+                    formTitle="Update Your Nickname"
+                    formInstructions="New nickname:" 
+                    formLabel="" 
+                    formRows={1} 
+                    sendFormName="Edit"
+                    defaultText={this.state.nickname}
+                    hasTitle={false}
+                    onSubmit={(attr) => this.updateState("nick", attr)}
+                    siconType={<EditIcon />}
+                  />
+                  <TextForm
+                    buttonName="Edit Country"
+                    buttonVar="outlined"
+                    buttonColor="primary"
+                    formTitle="Update Your Country"
+                    formInstructions="New country:" 
+                    formLabel="" 
+                    formRows={1} 
+                    sendFormName="Edit"
+                    defaultText={this.state.country}
+                    hasTitle={false}
+                    onSubmit={(attr) => this.updateState("count", attr)}
+                    siconType={<EditIcon />}
+                  />
+                </Box>
+          </Box>
           </div>
-          
-          
          )
       }  
         

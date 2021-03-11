@@ -81,6 +81,12 @@ export class TextForm extends Component {
                 onSubmit("sample_username", this.state.title, this.state.content);
             } else if (buttonName === "Reply" && this.state.content !== "") {
                 onSubmit("sample_username", this.state.content);
+            } else if (buttonName === "Edit Username" && this.state.content !== "") {
+              onSubmit(this.state.content);
+            } else if (buttonName === "Edit Nickname" && this.state.content !== "") {
+              onSubmit(this.state.content);
+            } else if (buttonName === "Edit Country" && this.state.content !== "") {
+              onSubmit(this.state.content);
             }
             this.closePopup();
         }
