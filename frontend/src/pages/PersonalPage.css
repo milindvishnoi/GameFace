@@ -1,13 +1,22 @@
+.personal-profile {
+    background-color: white;
+}
+
 .cover-image {
     height: 40vh;
     width: 100%;
 }
 
+.userName {
+    color: black;
+}
+
 .userBio {
     padding-top: 2vh;
-    padding-left: 20vw;
-    padding-right: 20vw;
+    padding-left: 10vw;
+    padding-right: 10vw;
     text-align: center;
+    color: black;
 }
 
 .personal-picture {
@@ -26,5 +35,5 @@
 }
 
 .logout-button {
-    margin-top: 10vh;
+    margin-left: 5vw;
 }
