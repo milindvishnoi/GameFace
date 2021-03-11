@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 
-// Inspired by (URL)
+// Inspired by (https://material-ui.com/getting-started/templates/sign-in/)
 export class LoginPage extends Component {
   state = {
     email: '',

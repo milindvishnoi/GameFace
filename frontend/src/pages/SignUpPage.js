@@ -7,7 +7,7 @@ import { Box,
          Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
-// Inspired by (URL)
+// Inspired by (https://material-ui.com/getting-started/templates/sign-up/)
 export class SignUpPage extends Component {
   state={
     email: '',
