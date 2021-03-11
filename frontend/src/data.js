@@ -231,4 +231,19 @@ const user = {
   coverPic: "/images/user-cover.jpg",
 }
 
-export { games, user, posts } 
+const admin = {
+  username: "admin1",
+  country: "country2",
+  nickname: "admin",
+  bio: "Run website nicely",
+  discussions: [{gameName: "NBA2K22", content: "I could just copy-paste my NBA 2k20 review, but that would be hypocritical."},
+                {gameName: "game2", content: "Comment test Comment test Comment test Comment test Comment test \
+                                              Comment test Comment test Comment test Comment test Comment test \
+                                              Comment test Comment test Comment test Comment test Comment test."},
+                {gameName: "game3", content: "I highly recommend buying this game, it's a blast! It has \
+                                             appealing visuals and designs, and has plenty of stars and stamps to collect!"}],
+  profilePic: "/images/user.jpeg",
+  coverPic: "/images/user-cover.jpg",
+}
+
+export { games, user, posts, admin } 

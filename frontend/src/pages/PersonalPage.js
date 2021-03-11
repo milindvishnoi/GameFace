@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Box, Typography, Button, Container, AppBar, Toolbar, Tabs, Tab } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import { user } from '../data'
+import { user, admin } from '../data'
 import './PersonalPage.css';
 import ProfileTab from './ProfileTab';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -17,13 +17,16 @@ export class PersonalPage extends Component {
     const { logout, userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn } = this.props;
     const isLoggedIn = userLoggedIn || gameAdminLoggedIn || siteAdminLoggedIn;
     const isAdmin = gameAdminLoggedIn || siteAdminLoggedIn;
+
+    const profile = isAdmin ? admin : user
+
     const showProfile = () => {if (isLoggedIn) {
       return (
         <Box>
             <Box>
                 <img 
                   className='cover-image'
-                  src={ process.env.PUBLIC_URL + user.coverPic } />
+                  src={ process.env.PUBLIC_URL + profile.coverPic } />
             </Box>
             <Box 
               my={3} 
@@ -34,13 +37,13 @@ export class PersonalPage extends Component {
               >
               <img 
                 className='personal-picture'
-                src={ process.env.PUBLIC_URL + user.profilePic } />
+                src={ process.env.PUBLIC_URL + profile.profilePic } />
               <Typography variant="h4">
-                @{ user.username }
+                @{ profile.username }
                 {(isAdmin) ? <SupervisorAccountIcon /> : ""}
               </Typography>
               <Typography className="userBio" variant="body1">
-                { user.bio }
+                { profile.bio }
               </Typography>
               <Box mb={2} />
             </Box>
