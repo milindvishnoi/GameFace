@@ -46,7 +46,7 @@ class GridItem extends Component {
                 { this.props.title }
               </Typography>
             </Box>
-            <Typography variant='body1'>
+            <Typography variant='body1' align='center'>
               { this.props.desc }
             </Typography>
         </Box>
