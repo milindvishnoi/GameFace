@@ -91,7 +91,9 @@ User could comment on a game, reply to someone else's post, like or dislike the 
 
 ### Game Page - Admin
 
-Admin could delete a post or a reply message in the discussion board for a game, if they thought that it is not apporiate in the community. Admin could also delete a game from the game database if they think that this game against the user standards, but this part is not implemented yet and will be applied in the future staging. 
+Admin could do everything a user could do on a game page, include comment, reply, like and displike. 
+
+In addition, the Admin delete a post or a reply message in the discussion board for a game, if they thought that it is not apporiate in the community. Admin could also delete a game from the game database if they think that this game against the user standards, but this part is not implemented yet and will be applied in the future staging. 
 
 
 ### User Profile - User
