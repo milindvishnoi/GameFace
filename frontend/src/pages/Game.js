@@ -4,13 +4,12 @@ import './GamePage.css'
 import Post from '../components/post'
 import TextForm from '../components/textform'
 // The appropriate game data to be imported from a server (description is from the PS4 website for 2K21)
-import { games, posts } from '../data'
+import { posts } from '../data'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 
 export class Game extends Component {
     state = {
       gamePosts: posts,
-      displayGame: games[0]
     }
 
     // Requires a server call to update Posts list
@@ -62,7 +61,7 @@ export class Game extends Component {
     }
 
     render() {
-      const {userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn} = this.props;
+      const {userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn, displayGame} = this.props;
 
       const splitDescription = (str) => {
         /* Splits <str> appropriatley depending on where \n is in the text */
@@ -96,11 +95,11 @@ export class Game extends Component {
       return (
         <div>
           <Box mb={4}>
-          <GameHeader gameTitle={this.state.displayGame.title}
-                      rating={this.state.displayGame.score}
-                      description={ () => splitDescription(this.state.displayGame.description)}
-                      gTags={this.state.displayGame.tags}
-                      imgUrl={this.state.displayGame.imgSrc}
+          <GameHeader gameTitle={displayGame.title}
+                      rating={displayGame.score}
+                      description={ () => splitDescription(displayGame.description)}
+                      gTags={displayGame.tags}
+                      imgUrl={displayGame.imgSrc}
                       gameAdminLoggedIn={gameAdminLoggedIn}
                       siteAdminLoggedIn={siteAdminLoggedIn}
                       isLoggedIn={isLoggedIn}/> 
