@@ -11,7 +11,6 @@ import { darkTheme, lightTheme } from './theme'
 import Navbar from './components/global/header/Navbar';
 import Footer from './components/global/footer/Footer';
 import './App.css'
-import { games } from './data'
 
 
 export class App extends Component {
@@ -65,19 +64,19 @@ export class App extends Component {
             logout={ this.logout } />
             <Container>
               <Switch>
-              <Route exact path='/games/:gameTitle' render={ ({ match }) => (<Game
-                                                                        userLoggedIn={this.state.userLogin}  
-                                                                        displayGame={games.find(g => 
-                                                                          '/games/'.concat(match.params.gameTitle) === g.link
-                                                                        )}
+                <Route exact path='/games/nba2k22' render={ () => <Game userLoggedIn={this.state.userLogin}  
                                                                         gameAdminLoggedIn={this.state.adminLogin} 
-                                                                        siteAdminLoggedIn={this.state.adminLogin}/>) } />
+                                                                        siteAdminLoggedIn={this.state.adminLogin}/> } />
                 <Route exact path='/' render={ () => <Home /> } />
                 <Route exact path='/login' render={ () => <LoginPage 
                                                             login={ this.login }
                                                              /> } />
                 <Route exact path='/signup' render={ () => <SignUpPage /> } />
-                <Route exact path='/personal' render={ () => <PersonalPage logout={ this.logout } /> } />
+                <Route exact path='/personal' render={ () => <PersonalPage 
+                                                              userLoggedIn={this.state.userLogin}  
+                                                              gameAdminLoggedIn={this.state.adminLogin} 
+                                                              siteAdminLoggedIn={this.state.adminLogin}
+                                                              logout={ this.logout } /> } />
               </Switch>
             </Container>
           <Footer />
