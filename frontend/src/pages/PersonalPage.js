@@ -47,7 +47,7 @@ export class PersonalPage extends Component {
 
           {isAdmin ? manageButton() : ""}
           
-          <ProfileTab />
+          <ProfileTab isAdmin={isAdmin}/>
           <Box
             my={3}
             display='flex' 

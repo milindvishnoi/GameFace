@@ -18,6 +18,7 @@ export class ProfileTab extends Component {
   }
 
   render() {
+    const { isAdmin } = this.props;
     
 
     return (
@@ -35,6 +36,7 @@ export class ProfileTab extends Component {
             </Tabs>
         </AppBar>
         <ProfileTabPanel 
+          isSiteAdmin={isAdmin}
           index={0}
           page={this.state.page}
         />
