@@ -20,6 +20,9 @@ const darkTheme = createMuiTheme({
     h1: {
       fontWeight: 600
     },
+    h2: {
+      fontWeight: 600
+    },
     body1: {
       fontSize: '20px'
     }
@@ -46,6 +49,9 @@ const lightTheme = createMuiTheme({
       fontSize: "20px"
     },
     h1: {
+      fontWeight: 600
+    },
+    h2: {
       fontWeight: 600
     }
   }

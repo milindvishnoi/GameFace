@@ -189,7 +189,7 @@ export class Game extends Component {
                 </div>
               </Grid>
               <Grid id="descriptionPanel" item xs={8}>
-                <Typography variant='h1' color='primary'>
+                <Typography variant='h2' color='primary'>
                   { gameTitle }
                 </Typography>
                 <Typography><br/>{ description() }<br/></Typography>
