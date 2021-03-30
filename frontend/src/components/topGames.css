@@ -17,6 +17,8 @@
   height: 400px;
   min-width: 250px;
   filter: brightness(70%);
+  background-size: cover;
+  object-fit: cover;
 }
 
 .title-container {

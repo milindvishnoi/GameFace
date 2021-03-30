@@ -25,4 +25,6 @@
     width: 18vw;
     height: 18vw;
     border: 5px solid white;
+    background-size: cover;
+    object-fit: cover;
 }

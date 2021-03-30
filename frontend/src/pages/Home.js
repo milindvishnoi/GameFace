@@ -53,7 +53,8 @@ export class Home extends Component {
         <Grid1x3 gridObject={this.state.gridObject} />
 
         <Box
-          mb={4}>
+          mb={6}
+          mt={2}>
           <Typography variant='h1' color='primary'>
             Top Games
           </Typography>

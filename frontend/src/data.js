@@ -57,7 +57,7 @@ const games = [
     title: "CYBERPUNK 2077",
     score: "84",
     link: "/games/cyberpunk2077",
-    imgSrc: "/games/cyberpunk.jpg",
+    imgSrc: "/games/cyberpunk.jpeg",
     description: "Lorem ipsum dolor sit amet, \
                   consectetur adipiscing elit, sed do \
                   eiusmod tempor incididunt ut labore \
