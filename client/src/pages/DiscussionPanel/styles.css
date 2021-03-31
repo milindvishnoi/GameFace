@@ -1,0 +1,26 @@
+.comments {
+    list-style-type: circle;
+    color: darkred;
+
+}
+
+.comment {
+    margin: 10px;
+    list-style-position:inside;
+    border: 3px red;
+    border-style: dotted dashed solid double;
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.gameName {
+    color: darkred;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.content {
+    color: darkorange;
+    font-size: 15px;
+
+}

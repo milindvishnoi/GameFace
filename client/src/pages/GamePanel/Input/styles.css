@@ -1,0 +1,12 @@
+  .input {
+    width: 280px;
+  }
+  
+  .input .MuiInput-underline:after {
+    border-color: darkred;
+  }
+  
+  .input .MuiFormLabel-root,
+  .input .MuiFormLabel-root.Mui-focused {
+    color: darkred;
+  }
