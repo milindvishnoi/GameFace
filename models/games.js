@@ -1,7 +1,7 @@
 /* Games mongoose model */
 const mongoose = require('mongoose')
 
-const Games = mongoose.model('Games', {
+const GameScheme = mongoose.Schema({
 	name: {
 		type: String,
 		required: true,
@@ -27,4 +27,6 @@ const Games = mongoose.model('Games', {
   }
 })
 
-module.exports = { Student }
+// make a model using the User schema
+const Game = mongoose.model('Game', GameScheme)
+module.exports = { Game }
