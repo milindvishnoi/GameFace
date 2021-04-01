@@ -4,8 +4,7 @@ import AutoComplete, { createFilterOptions } from '@material-ui/lab/Autocomplete
 import './searchBar.css'
 import { Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
-import { games } from '../data'
-import { searchGame } from '../actions/games'
+import { searchGame, getAllGames } from '../actions/games'
 
 const filterOptions = createFilterOptions({
   matchFrom: 'start',
@@ -20,12 +19,15 @@ export class SearchBar extends Component {
       currentLink: null
   }
 
+  componentDidMount() {
+    getAllGames(this)
+  }
+
   handleChange = (value) => {
-    this.setState({
-      searchField: value
-    })
-    console.log("New: "+ value)
-    console.log("Updated: " + this.state.searchField)
+    this.setState(
+      {searchField: value}, 
+      () => { searchGame(this) }
+    )
   }
 
   render() {
@@ -59,9 +61,10 @@ export class SearchBar extends Component {
               }
             }
             onInputChange={(e, value) => {
-              e.preventDefault()
-              this.handleChange(value)
-              searchGame(this)
+              this.setState(
+                {searchField: value}, 
+                () => { searchGame(this) }
+              )
             }}
             popupIcon={null}
             noOptionsText='No more games!'
