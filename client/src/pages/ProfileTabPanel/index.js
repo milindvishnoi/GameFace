@@ -69,48 +69,46 @@ export class ProfileTabPanel extends Component {
         {
           index === page && (
           <div>
-          <Box className="infoPanel">
-                <div className="infoTitle">
-                  <Typography variant='h5'> Username: {this.state.username} </Typography>
-                </div>
-                <div className="infoTitle">
-                  <Typography variant='h5'> Nickname: {this.state.nickname} </Typography>
-                </div>
-                <div className="infoTitle">
-                  <Typography variant='h5'> Country: {this.state.country} </Typography>
-                </div>
-                <Box className="buttonPanel">
-                  {addEditUsername()}
-                  <TextForm
-                    buttonName="Edit Nickname"
-                    buttonVar="outlined"
-                    buttonColor="primary"
-                    formTitle="Update Your Nickname"
-                    formInstructions="New nickname:" 
-                    formLabel="" 
-                    formRows={1} 
-                    sendFormName="Edit"
-                    defaultText={this.state.nickname}
-                    hasTitle={false}
-                    onSubmit={(attr) => this.updateState("nick", attr)}
-                    siconType={<EditIcon />}
-                  />
-                  <TextForm
-                    buttonName="Edit Country"
-                    buttonVar="outlined"
-                    buttonColor="primary"
-                    formTitle="Update Your Country"
-                    formInstructions="New country:" 
-                    formLabel="" 
-                    formRows={1} 
-                    sendFormName="Edit"
-                    defaultText={this.state.country}
-                    hasTitle={false}
-                    onSubmit={(attr) => this.updateState("count", attr)}
-                    siconType={<EditIcon />}
-                  />
-                </Box>
-          </Box>
+          <div className="infoPanel">
+            <div className="infoTitle w-100">
+              <Typography variant='h5'> Username: {this.state.username} </Typography>
+              {addEditUsername()}
+            </div>
+            <div className="infoTitle">
+              <Typography variant='h5'> Nickname: {this.state.nickname} </Typography>
+              <TextForm
+                buttonName="Edit Nickname"
+                buttonVar="outlined"
+                buttonColor="primary"
+                formTitle="Update Your Nickname"
+                formInstructions="New nickname:" 
+                formLabel="" 
+                formRows={1} 
+                sendFormName="Edit"
+                defaultText={this.state.nickname}
+                hasTitle={false}
+                onSubmit={(attr) => this.updateState("nick", attr)}
+                siconType={<EditIcon />}
+              />
+            </div>
+            <div className="infoTitle">
+              <Typography variant='h5'> Country: {this.state.country} </Typography>
+              <TextForm
+                buttonName="Edit Country"
+                buttonVar="outlined"
+                buttonColor="primary"
+                formTitle="Update Your Country"
+                formInstructions="New country:" 
+                formLabel="" 
+                formRows={1} 
+                sendFormName="Edit"
+                defaultText={this.state.country}
+                hasTitle={false}
+                onSubmit={(attr) => this.updateState("count", attr)}
+                siconType={<EditIcon />}
+              />
+            </div>
+          </div>
           </div>
          )
       }  
