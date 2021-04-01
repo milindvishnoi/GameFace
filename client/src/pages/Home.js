@@ -1,10 +1,11 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import Grid1x3 from '../components/Grid1x3';
 import TopGames from '../components/TopGames';
 import './home.css';
-// will be called from API
-import { games } from '../data'
+// Importing actions/required methods
+import { getAllGames } from "../actions/games";
+
 
 export class Home extends Component {
   state = {
@@ -24,8 +25,16 @@ export class Home extends Component {
         imgSrc: '/images/review.svg',
         desc: 'Checkout how other people feel about a game'
       }
-    ]
+    ],
+    gameList: []
   }
+
+  componentDidMount() {
+    // send HTTP request
+    // save it to the state
+    getAllGames(this)
+  }
+  
   render() {
     return (
       <div>
@@ -59,8 +68,9 @@ export class Home extends Component {
             Top Games
           </Typography>
         </Box>
+        {/* <Button onClick={() => getAllGames(this)}>GET GAMES</Button> */}
         <Grid container spacing={2}>
-          {games.map((game, index) => (
+          {this.state.gameList.map((game, index) => (
             <TopGames imgSrc={game.imgSrc}
                       title={game.title}
                       link={game.link}
