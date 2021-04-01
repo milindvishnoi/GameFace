@@ -68,7 +68,6 @@ export class Home extends Component {
             Top Games
           </Typography>
         </Box>
-        {/* <Button onClick={() => getAllGames(this)}>GET GAMES</Button> */}
         <Grid container spacing={2}>
           {this.state.gameList.map((game, index) => (
             <TopGames imgSrc={game.imgSrc}

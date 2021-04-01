@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { List, ListItem, ListItemText, TextField, Box, Button } from '@material-ui/core'
+import { TextField, Box, Button } from '@material-ui/core'
 import AutoComplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import './searchBar.css'
 import { Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import { games } from '../data'
+import { searchGame } from '../actions/games'
 
 const filterOptions = createFilterOptions({
   matchFrom: 'start',
@@ -13,13 +14,23 @@ const filterOptions = createFilterOptions({
 
 export class SearchBar extends Component {
   state = {
-      searchField : '',
-      searchedGame: [],
+      searchField: '',
+      gameList: [],
       displaySearch: false,
       currentLink: null
   }
 
+  handleChange = (value) => {
+    this.setState({
+      searchField: value
+    })
+    console.log("New: "+ value)
+    console.log("Updated: " + this.state.searchField)
+  }
+
   render() {
+    const {gameList} = this.state
+
     return (
       <div className='relative-pos'>
         <Box mr={3}>
@@ -27,8 +38,7 @@ export class SearchBar extends Component {
             className='bar'
             id='search-bar'
             clearOnBlur
-            options={games}
-            filterOptions={filterOptions}
+            options={gameList}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -48,6 +58,11 @@ export class SearchBar extends Component {
               })
               }
             }
+            onInputChange={(e, value, reason) => {
+              e.preventDefault()
+              this.handleChange(value)
+              searchGame(this)
+            }}
             popupIcon={null}
             noOptionsText='No more games!'
           />
