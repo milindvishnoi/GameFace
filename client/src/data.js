@@ -114,7 +114,7 @@ const games = [
 
 const posts = [
   {
-    username: "user1",
+    username: "mills1020",
     title: "An Original Title",
     postContent: "Lorem ipsum dolor sit amet, \
                   consectetur adipiscing elit, sed do \
@@ -133,7 +133,7 @@ const posts = [
     replies: []
   }, 
   {
-    username: "xx__the_U1timate_G8meR__xx",
+    username: "mills1020",
     title: "I'm Sorry",
     // postContent taken from r/copypasta
     postContent: "Pardon for my inexcusably poor understanding of \

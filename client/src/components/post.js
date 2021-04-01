@@ -4,7 +4,7 @@ import { Box,
     Typography} from '@material-ui/core'
 import {Reply, ThumbUp, ThumbDown, Delete, StarOutline} from '@material-ui/icons';
 import React, { Component } from 'react'
-import { user } from '../data';
+import { uid } from "react-uid";
 import './post.css'
 import TextForm from './textform'
 
@@ -98,7 +98,8 @@ export class Post extends Component {
                 <Box className='repliesSection'>
                     {this.state.postReplies.map((post) => {
                         return(
-                            <ReplyPost 
+                            <ReplyPost
+                                key={uid(post)}
                                 username={post.username}
                                 content={post.replyContent}/>
                         )

@@ -50,7 +50,10 @@ export class PersonalPage extends Component {
 
           {isAdmin ? manageButton() : ""}
           
-          <ProfileTab isAdmin={isAdmin}/>
+          <ProfileTab 
+            gameAdminLoggedIn={gameAdminLoggedIn} 
+            siteAdminLoggedIn={siteAdminLoggedIn} 
+            userLoggedIn={userLoggedIn}/>
           <Box
             my={3}
             display='flex' 

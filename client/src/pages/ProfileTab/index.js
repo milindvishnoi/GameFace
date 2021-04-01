@@ -7,18 +7,18 @@ import GamePanel from "../GamePanel"
 
 export class ProfileTab extends Component {
   state = {
-      page: 0
+    page: 0
   }
   
   handleChangeTab = (event, val) => {
     this.setState({
-        page: val
+      page: val
     })
 
   }
 
   render() {
-    const { isAdmin } = this.props;
+    const { gameAdminLoggedIn, siteAdminLoggedIn, userLoggedIn } = this.props;
     
 
     return (
@@ -36,7 +36,7 @@ export class ProfileTab extends Component {
             </Tabs>
         </AppBar>
         <ProfileTabPanel 
-          isSiteAdmin={isAdmin}
+          isSiteAdmin={gameAdminLoggedIn || siteAdminLoggedIn}
           index={0}
           page={this.state.page}
         />
@@ -44,6 +44,9 @@ export class ProfileTab extends Component {
         <DiscussionPanel 
           index={1}
           page={this.state.page}
+          userLoggedIn={userLoggedIn}
+          gameAdminLoggedIn={gameAdminLoggedIn} 
+          siteAdminLoggedIn={siteAdminLoggedIn}
         />
         
         <GamePanel
