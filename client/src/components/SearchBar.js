@@ -58,7 +58,7 @@ export class SearchBar extends Component {
               })
               }
             }
-            onInputChange={(e, value, reason) => {
+            onInputChange={(e, value) => {
               e.preventDefault()
               this.handleChange(value)
               searchGame(this)

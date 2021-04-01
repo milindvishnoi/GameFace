@@ -77,6 +77,25 @@ app.get('/api/games', (req, res) => {
 	})
 })
 
+// Search Game
+app.get('/api/search/:game', (req, res) => {
+  Game.find({'title': {$regex: `.*${req.params.game}*.`, $options: 'i'}}).then((g) => {
+		if (!g) {
+			res.status(404).send("Resource Not Found")
+			return
+		}
+		res.send({gameList: g})
+	})
+	.catch((err) => {
+		if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
+      res.status(500).send('Internal server error')
+    } else {
+      log(err)
+      res.status(400).send('Bad Request') // bad request for changing the student.
+    }
+	})
+})
+
 // Delete a game
 app.delete('/api/game', async (req, res) => {
   log(req.body.id)
