@@ -1,6 +1,7 @@
 'use strict';
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcrypt")
 
 const gamerTagSchema = mongoose.Schema({
     game: {
@@ -61,5 +62,13 @@ const UserSchema = mongoose.Schema({
     },
     gamerTags: [gamerTagSchema]
 })
+
+UserSchema.statics.findAndValidate = async function(username, password) {
+    const user = await this.findOne({ username })
+    if (!user)
+        return false
+    const login = await bcrypt.compare(password, user.password)
+    return login ? user : false
+}
 
 module.exports = mongoose.model('User', UserSchema)

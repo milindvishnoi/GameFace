@@ -4,6 +4,7 @@ const env = process.env.NODE_ENV
 const bcrypt = require('bcrypt')
 const path = require('path')
 const express = require("express");
+var session = require('express-session')
 // starting the express server
 const app = express();
 
@@ -44,21 +45,51 @@ const mongoChecker = (req, res, next) => {
   }   
 }
 
-/*** Login **********************************/
-app.post('/api/login', async (req, res) => {
+// Middleware for authenticating
+const authenticate = async (req, res, next) => {
+  if (!res.session.user_id) {
+    res.status(401).send("Unauthorized")
+  }
+
+  try {
+    const user = await User.findById(req.session.user_id)
+    if (!user)
+      res.status(401).send("Unauthorized")
+    else {
+      req.user = user
+      next()
+    }
+  } catch {
+    res.status(401).send("Unauthorized")
+  }
+}
+
+/*** Auth Session **********************************/
+app.use(session({
+  secret: 'Rand Secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      expires: 100000000,
+      httpOnly: true
+  },
+  store: env === 'production' ? new MongoStore({ mongooseConnection: mongoose.connection }) : null  
+}))
+
+app.post('/api/login', mongoChecker, async (req, res) => {
   const { username, password } = req.body
+  
   try {
     // get the user
-    const user = await User.findOne({ username })
-    if (!user)
-      res.send({
-        error: "Your username or password is incorrect"
-      })
-    const validPassword = await bcrypt.compare(password, user.password)
-    if (validPassword)
-      res.send("Welcome")
-    else
-      res.send("Denied")
+    const user = await User.findAndValidate(username, password)
+    if (user) {
+      req.session.user_id = user._id
+      req.session.username = user.username
+      log(req.session)
+      res.send({ currentUser: user.username })
+      return
+    }
+    res.send(404).send('Username or Password is incorrect. Please try again!')
   } catch(err) {
     if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
       res.status(500).send('Internal server error')
@@ -67,6 +98,13 @@ app.post('/api/login', async (req, res) => {
       res.status(400).send('Bad Request') // bad request for changing the student.
     }
   }
+})
+
+app.post('/api/logout', mongoChecker, async (req, res) => {
+  req.session.destroy()
+  log(req.session)
+  res.send('Logged out')
+  // res.redirect('/')
 })
 
 /*** API routes below **********************************/
