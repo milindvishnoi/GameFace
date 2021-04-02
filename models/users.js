@@ -46,11 +46,11 @@ const UserSchema = mongoose.Schema({
         required: true,
         minlength: 3
     },
-    posts: {
-    	type: Array,
-		required: true,
+    discussions: [{
+    	type: mongoose.Schema.Types.ObjectId,
+        ref: "Discussion",
 		default: []
-  	},
+  	}],
     profilePicSrc: {
         type: String,
         required: true,

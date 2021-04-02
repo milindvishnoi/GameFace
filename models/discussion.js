@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const repliesSchema = mongoose.Schema({
     author: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true,
-        minlength: 1
     }, 
     reply: {
         type: String,
@@ -19,7 +19,7 @@ const discussionSchema = mongoose.Schema({
         required: true,
         default: false
     }, 
-    originalPoster: {
+    author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
