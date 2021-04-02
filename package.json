@@ -18,11 +18,14 @@
   },
   "homepage": "https://github.com/csc309-winter-2021/team40#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "mongodb": "^3.6.5",
     "mongoose": "^5.12.3",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "validator": "^13.5.2"
   }
 }

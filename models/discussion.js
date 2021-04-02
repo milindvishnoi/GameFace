@@ -1,15 +1,35 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var discussionSchema = mongoose.Schema({
-    comment: String,
+const repliesSchema = mongoose.Schema({
     author: {
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        username: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    }, 
+    reply: {
+        type: String,
+        required: true,
+        default: ''
+    }
+});
+
+const discussionSchema = mongoose.Schema({
+    pinned: {
+        type: Boolean,
+        required: true,
+        default: false
+    }, 
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     },
-    replies: [discussionSchema]
+    body: {
+        type: String,
+        required: true,
+        default: ''
+    },
+    replies: [repliesSchema]
 });
 
 module.exports = mongoose.model("Discussion", discussionSchema);
