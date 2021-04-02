@@ -1,7 +1,7 @@
 "use strict";
 const log = console.log;
 const env = process.env.NODE_ENV
-
+const bcrypt = require('bcrypt')
 const path = require('path')
 const express = require("express");
 // starting the express server
@@ -43,6 +43,31 @@ const mongoChecker = (req, res, next) => {
       next()  
   }   
 }
+
+/*** Login **********************************/
+app.post('/api/login', async (req, res) => {
+  const { username, password } = req.body
+  try {
+    // get the user
+    const user = await User.findOne({ username })
+    if (!user)
+      res.send({
+        error: "Your username or password is incorrect"
+      })
+    const validPassword = await bcrypt.compare(password, user.password)
+    if (validPassword)
+      res.send("Welcome")
+    else
+      res.send("Denied")
+  } catch(err) {
+    if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
+      res.status(500).send('Internal server error')
+    } else {
+      log(err)
+      res.status(400).send('Bad Request') // bad request for changing the student.
+    }
+  }
+})
 
 /*** API routes below **********************************/
 // Add Game
@@ -133,13 +158,13 @@ app.delete('/api/game', mongoChecker, async (req, res) => {
 
 // Add new user
 app.post('/api/user', mongoChecker, async (req, res) => {
-  log(req.body)
+  const { email, username, password } = req.body
+  const hashedPassword = await bcrypt.hash(password, 12)
 
   const newUser = new User({
-    email: req.body.email,
-    username: req.body.username,
-    password: req.body.password, 
-    gamerTags: []
+    email: email,
+    username: username,
+    password: hashedPassword
   })
 
   try {

@@ -53,12 +53,10 @@ const UserSchema = mongoose.Schema({
   	}],
     profilePicSrc: {
         type: String,
-        required: true,
         default: ''
     },
     backgroundPicSrc: {
         type: String,
-        required: true,
         default: ''
     },
     gamerTags: [gamerTagSchema]
