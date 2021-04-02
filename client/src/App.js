@@ -6,6 +6,8 @@ import Game from './pages/Game'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import PersonalPage from './pages/PersonalPage'
+import AdminPage from './pages/AdminPage'
+import UserPage from './pages/UserPage'
 import { ThemeProvider } from '@material-ui/core/styles';
 import { darkTheme, lightTheme } from './theme'
 import Navbar from './components/global/header/Navbar';
@@ -80,10 +82,12 @@ export class App extends Component {
                                                             login={ this.login }
                                                              /> } />
                 <Route exact path='/signup' render={ () => <SignUpPage /> } />
-                <Route exact path='/personal' render={ () => <PersonalPage 
-                                                              userLoggedIn={this.state.userLogin}  
+                <Route exact path='/personal' render={ () => <PersonalPage
                                                               gameAdminLoggedIn={this.state.adminLogin} 
                                                               siteAdminLoggedIn={this.state.adminLogin}
+                                                              logout={ this.logout } /> } />                                         
+                <Route exact path='/user' render={ () => <UserPage
+                                                              userLoggedIn={this.state.userLogin}  
                                                               logout={ this.logout } /> } />
               </Switch>
             </Container>
