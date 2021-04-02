@@ -196,11 +196,10 @@ app.delete('/api/game', mongoChecker, async (req, res) => {
 
 // Add new user
 app.post('/api/user', mongoChecker, async (req, res) => {
-  const { email, username, password } = req.body
+  const { username, password } = req.body
   const hashedPassword = await bcrypt.hash(password, 12)
 
   const newUser = new User({
-    email: email,
     username: username,
     password: hashedPassword
   })
