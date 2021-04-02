@@ -1,5 +1,6 @@
+'use strict';
 const mongoose = require("mongoose");
-const validator = require('validator');
+const validator = require("validator");
 
 const gamerTagSchema = mongoose.Schema({
     game: {
@@ -42,6 +43,7 @@ const UserSchema = mongoose.Schema({
     },
     password: {
         type: String,
+        required: true,
         minlength: 3
     },
     posts: {
