@@ -31,7 +31,14 @@ export class App extends Component {
   }
 
   login = (username, password) => {
-    if (username === 'admin@admin.com' && password === 'admin') 
+    /* siteAdmin */ 
+    if (username === 'admin1@admin.com' && password === 'admin1') 
+      this.setState({
+        adminLogin: true,
+        userLogin: false
+      })
+    /* gameAdmin */
+    else if (username === 'admin2@admin.com' && password === 'admin2') 
       this.setState({
         adminLogin: true,
         userLogin: false
@@ -83,9 +90,11 @@ export class App extends Component {
                                                              /> } />
                 <Route exact path='/signup' render={ () => <SignUpPage /> } />
                 <Route exact path='/personal' render={ () => <PersonalPage
-                                                              gameAdminLoggedIn={this.state.adminLogin} 
                                                               siteAdminLoggedIn={this.state.adminLogin}
-                                                              logout={ this.logout } /> } />                                         
+                                                              logout={ this.logout } /> } />     
+                <Route exact path='/personal' render={ () => <AdminPage
+                                                              gameAdminLoggedIn={this.state.adminLogin} 
+                                                              logout={ this.logout } /> } />                                      
                 <Route exact path='/user' render={ () => <UserPage
                                                               userLoggedIn={this.state.userLogin}  
                                                               logout={ this.logout } /> } />
