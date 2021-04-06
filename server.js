@@ -8,6 +8,11 @@ var session = require('express-session')
 // starting the express server
 const app = express();
 
+// body-parser: middleware for parsing parts of the request into a usable object (onto req.body)
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()) // parsing JSON body
+app.use(bodyParser.urlencoded({ extended: true })); // parsing URL-encoded form data (from form POST requests)
+
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
 if (env !== 'production') { app.use(cors()) }
@@ -20,14 +25,6 @@ mongoose.set('useFindAndModify', false); // for some deprecation issues
 const Game = require("./models/game");
 const Discussion = require("./models/discussion");
 const User = require("./models/users");
-
-// body-parser: middleware for parsing parts of the request into a usable object (onto req.body)
-const bodyParser = require('body-parser'); 
-const { deleteModel } = require('mongoose');
-const { runInNewContext } = require('vm');
-const { findById } = require('./models/game');
-app.use(bodyParser.json()) // parsing JSON body
-app.use(bodyParser.urlencoded({ extended: true })); // parsing URL-encoded form data (from form POST requests)
 
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
   return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
@@ -137,6 +134,7 @@ app.post('/api/game', mongoChecker, async (req, res) => {
 
 // Get all games
 app.get('/api/games', mongoChecker, (req, res) => {
+  log("Getting to games API")
   Game.find().then((g) => {
 		if (!g) {
 			res.status(404).send("Resource Not Found")
@@ -175,14 +173,15 @@ app.get('/api/search/:game', mongoChecker, (req, res) => {
 
 // Delete a game
 app.delete('/api/game', mongoChecker, async (req, res) => {
-  log(req.body.id)
+  log("In delete Game")
+  log(req.body)
 
   try {
     const delGame = await Game.findByIdAndRemove(req.body.id)
     if (!delGame) {
 			res.status(404).send()
 		} else {   
-			res.send(delGame)
+			res.send({delGame})
 		}
   } catch(err) {
     if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.

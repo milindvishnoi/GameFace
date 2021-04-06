@@ -63,3 +63,41 @@ export const searchGame = (page) => {
       console.log(err);
     });
 };
+
+export const deleteGame = (page) => {
+  const { deleteId, gameList } = page.state
+
+  // Updating url according to searchField
+  const url = `${API_HOST}/api/game`
+  const id = deleteId
+
+  log(url)
+  log(JSON.stringify(id))
+
+  const request = new Request(url, {
+    method: "delete",
+    body: JSON.stringify(id),
+  })
+
+  fetch(request)
+    .then(res => {
+      if (res.status === 200) {
+        // return a promise that resolves with the JSON body
+        return res.json();
+      } else {
+        alert("Could not delete game");
+      }
+    })
+    .then(json => {
+      // the resolved promise with the JSON body
+      if (json) {
+        const updatedGameList = gameList.filter(game => game !== json.delGame)
+        page.setState({ 
+          gameList: updatedGameList
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}

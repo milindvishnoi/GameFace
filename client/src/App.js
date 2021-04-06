@@ -92,8 +92,9 @@ export class App extends Component {
                 <Route exact path='/personal' render={ () => <PersonalPage
                                                               siteAdminLoggedIn={this.state.adminLogin}
                                                               logout={ this.logout } /> } />     
-                <Route exact path='/personal' render={ () => <AdminPage
-                                                              gameAdminLoggedIn={this.state.adminLogin} 
+                <Route exact path='/admin' render={ () => <AdminPage
+                                                              gameAdminLoggedIn={this.state.adminLogin}
+                                                              siteAdminLoggedIn={this.state.adminLogin}
                                                               logout={ this.logout } /> } />                                      
                 <Route exact path='/user' render={ () => <UserPage
                                                               userLoggedIn={this.state.userLogin}  

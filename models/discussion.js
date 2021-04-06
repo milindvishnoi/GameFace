@@ -29,16 +29,16 @@ const discussionSchema = mongoose.Schema({
         required: true,
         default: ''
     },
-    likes: {
-        type: Number,
-        required: true,
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         default: 0
-    },
-    dislikes: {
-        type: Number,
-        required: true,
+    }],
+    dislikes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         default: 0
-    },
+    }],
     replies: [repliesSchema]
 });
 
