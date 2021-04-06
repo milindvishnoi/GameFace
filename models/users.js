@@ -17,21 +17,13 @@ const gamerTagSchema = mongoose.Schema({
 })
 
 const UserSchema = mongoose.Schema({
-    email: {
-        // email attributes taken from react auth express example
-		type: String,
-		required: true,
-		minlength: 1,
-		trim: true,
-		unique: true,
-		validate: {
-			validator: validator.isEmail, 
-			message: 'Not valid email'
-		}
-	},
     username: {
         type: String,
         minlength: 1,
+        required: true,
+		minlength: 1,
+		trim: true,
+		unique: true,
         required: true
     },
     nickname: {
