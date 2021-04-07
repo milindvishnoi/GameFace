@@ -92,15 +92,16 @@ export class App extends Component {
                 <Route exact path='/signup' render={ () => <SignUpPage /> } />
                 <Route exact path='/personal' render={ () => <PersonalPage
                                                               siteAdminLoggedIn={this.state.adminLogin}
+                                                              
                                                               logout={ this.logout } /> } />     
                 <Route exact path='/admin' render={ () => <AdminPage
                                                               gameAdminLoggedIn={this.state.adminLogin}
                                                               siteAdminLoggedIn={this.state.adminLogin}
                                                               logout={ this.logout } /> } />                                      
                 <Route exact path='/user' render={ () => <UserPage
-                                                              userLoggedIn={this.state.userLogin}  
+                                                              userLoggedIn={this.state.userLogin} 
                                                               gameAdminLoggedIn={this.state.adminLogin} 
-                                                              siteAdminLoggedIn={this.state.adminLogin}
+                                                              siteAdminLoggedIn={this.state.adminLogin} 
                                                               logout={ this.logout } /> } />
               </Switch>
             </Container>
