@@ -93,10 +93,11 @@ app.post('/api/login', mongoChecker, async (req, res) => {
     // get the user
     const user = await User.findAndValidate(username, password)
     if (user) {
-      req.session.user_id = user._id
-      req.session.username = user.username
+      req.session.user_id = user._id;
+      req.session.username = user.username;
+      req.session.is_admin = user.isAdmin;
       log(req.session)
-      res.send({ currentUser: user.username })
+      res.send({ currentUser: user.username, adminPriv: user.isAdmin})
       return
     }
     res.send(404).send('Username or Password is incorrect. Please try again!')

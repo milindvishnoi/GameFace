@@ -14,6 +14,7 @@ import Navbar from './components/global/header/Navbar';
 import Footer from './components/global/footer/Footer';
 import './App.css'
 import { games } from './data'
+import {login, logout} from './actions/user'
 
 
 export class App extends Component {
@@ -21,6 +22,7 @@ export class App extends Component {
     darkMode: true,
     adminLogin: false,
     userLogin: true,
+    currUser: null, 
     userInfo: null
   }
 
@@ -31,34 +33,12 @@ export class App extends Component {
     console.log(this.state.darkMode)
   }
 
-  login = (username, password) => {
-    /* siteAdmin */ 
-    if (username === 'admin1@admin.com' && password === 'admin1') 
-      this.setState({
-        adminLogin: true,
-        userLogin: false
-      })
-    /* gameAdmin */
-    else if (username === 'admin2@admin.com' && password === 'admin2') 
-      this.setState({
-        adminLogin: true,
-        userLogin: false
-      })
-    else if (username === 'user@user.com' && password === 'user') {
-      this.setState({
-        userLogin: true,
-        adminLogin: false
-      })
-      return;
-    }
+  appLogin = (username, password) => {
+    login(username, password, this);
   }
-
-  logout = () => {
-    this.setState({
-      userLogin: false,
-      adminLogin: false
-    })
-    console.log(this.state.userLogin, this.state.adminLogin)
+  
+  appLogout = () => {
+    logout(this);
   }
 
   render() {
@@ -87,22 +67,22 @@ export class App extends Component {
                                                                         siteAdminLoggedIn={this.state.adminLogin}/> } /> */}
                 <Route exact path='/' render={ () => <Home /> } />
                 <Route exact path='/login' render={ () => <LoginPage 
-                                                            login={ this.login }
+                                                            login={ this.appLogin }
                                                              /> } />
                 <Route exact path='/signup' render={ () => <SignUpPage /> } />
                 <Route exact path='/personal' render={ () => <PersonalPage
                                                               siteAdminLoggedIn={this.state.adminLogin}
                                                               
-                                                              logout={ this.logout } /> } />     
+                                                              logout={ this.appLogout } /> } />     
                 <Route exact path='/admin' render={ () => <AdminPage
                                                               gameAdminLoggedIn={this.state.adminLogin}
                                                               siteAdminLoggedIn={this.state.adminLogin}
-                                                              logout={ this.logout } /> } />                                      
+                                                              logout={ this.appLogout } /> } />                                      
                 <Route exact path='/user' render={ () => <UserPage
                                                               userLoggedIn={this.state.userLogin} 
                                                               gameAdminLoggedIn={this.state.adminLogin} 
                                                               siteAdminLoggedIn={this.state.adminLogin} 
-                                                              logout={ this.logout } /> } />
+                                                              logout={ this.appLogout } /> } />
               </Switch>
             </Container>
           <Footer />
