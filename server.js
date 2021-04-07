@@ -8,9 +8,27 @@ var session = require('express-session')
 // starting the express server
 const app = express();
 
+// body-parser: middleware for parsing parts of the request into a usable object (onto req.body)
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()) // parsing JSON body
+app.use(bodyParser.urlencoded({ extended: true })); // parsing URL-encoded form data (from form POST requests)
+
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
 if (env !== 'production') { app.use(cors()) }
+
+// multipart middleware: allows you to access uploaded file from req.file
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
+
+// cloudinary: configure using credentials found on your Cloudinary Dashboard
+// sign up for a free account here: https://cloudinary.com/users/register/free
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'dcbaj2gh5',
+    api_key: '613126637958386',
+    api_secret: 'Uad6X0WNYQAM83TFlWzunw6k4kI'
+});
 
 // mongoose and mongo connection
 const { mongoose } = require("./db/mongoose");
@@ -20,14 +38,6 @@ mongoose.set('useFindAndModify', false); // for some deprecation issues
 const Game = require("./models/game");
 const Discussion = require("./models/discussion");
 const User = require("./models/users");
-
-// body-parser: middleware for parsing parts of the request into a usable object (onto req.body)
-const bodyParser = require('body-parser'); 
-const { deleteModel } = require('mongoose');
-const { runInNewContext } = require('vm');
-const { findById } = require('./models/game');
-app.use(bodyParser.json()) // parsing JSON body
-app.use(bodyParser.urlencoded({ extended: true })); // parsing URL-encoded form data (from form POST requests)
 
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
   return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
@@ -138,6 +148,7 @@ app.post('/api/game', mongoChecker, async (req, res) => {
 
 // Get all games
 app.get('/api/games', mongoChecker, (req, res) => {
+  log("Getting to games API")
   Game.find().then((g) => {
 		if (!g) {
 			res.status(404).send("Resource Not Found")
@@ -176,14 +187,15 @@ app.get('/api/search/:game', mongoChecker, (req, res) => {
 
 // Delete a game
 app.delete('/api/game', mongoChecker, async (req, res) => {
-  log(req.body.id)
+  log("In delete Game")
+  log(req)
 
   try {
     const delGame = await Game.findByIdAndRemove(req.body.id)
     if (!delGame) {
 			res.status(404).send()
 		} else {   
-			res.send(delGame)
+			res.send({delGame})
 		}
   } catch(err) {
     if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
@@ -196,27 +208,40 @@ app.delete('/api/game', mongoChecker, async (req, res) => {
 })
 
 // Add new user
-app.post('/api/user', mongoChecker, async (req, res) => {
+app.post('/api/user', multipartMiddleware, async (req, res) => {
   const { username, password } = req.body
+  log(req.files)
+
+  if (username === 'admin') {
+    res.status(400).send('Bad Request. Cannot create account as admin.')
+    return;
+  }
+
   const hashedPassword = await bcrypt.hash(password, 12)
 
-  const newUser = new User({
-    username: username,
-    password: hashedPassword
-  })
+  cloudinary.uploader.upload(
+    req.files.image.path,
+    async function(result) {
+      try {
+        const newUser = new User({
+          username: username,
+          password: hashedPassword,
+          profilePic: result.url,
+        })
 
-  try {
-    // Save the new user
-    const userAdded = await newUser.save()
-    res.send(userAdded)
-  } catch(err) {
-    if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
-      res.status(500).send('Internal server error')
-    } else {
-      log(err)
-      res.status(400).send('Bad Request') // bad request for changing the student.
+        // Save the new user
+        const userAdded = await newUser.save()
+        res.send(userAdded)
+      } catch(err) {
+        if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
+          res.status(500).send('Internal server error')
+        } else {
+          log(err)
+          res.status(400).send('Bad Request') // bad request for changing the student.
+        }
+      }
     }
-  }
+  )
 })
 
 // Find user by id

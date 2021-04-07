@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Box, Typography, Button, Container, AppBar, Toolbar, Tabs, Tab } from '@material-ui/core'
+import { Box, Typography, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { user, admin } from '../data'
 import './PersonalPage.css';
@@ -7,7 +7,6 @@ import ProfileTab from './ProfileTab';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
-// Inspired by (URL)
 export class UserPage extends Component {
   state={
     page: 1
@@ -23,11 +22,6 @@ export class UserPage extends Component {
     const showProfile = () => {if (isLoggedIn) {
       return (
         <Box>
-            <Box>
-                <img 
-                  className='cover-image'
-                  src={ process.env.PUBLIC_URL + profile.coverPic } />
-            </Box>
             <Box 
               my={3} 
               display='flex' 
@@ -39,7 +33,7 @@ export class UserPage extends Component {
                 className='personal-picture'
                 src={ process.env.PUBLIC_URL + profile.profilePic } />
               <Typography variant="h4">
-                @{ themarkyone }
+                @themarkyone
                 {(isAdmin) ? <SupervisorAccountIcon /> : ""}
               </Typography>
               <Typography className="userBio" variant="body1">
