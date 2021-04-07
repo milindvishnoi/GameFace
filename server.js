@@ -10,12 +10,16 @@ const app = express();
 
 // body-parser: middleware for parsing parts of the request into a usable object (onto req.body)
 const bodyParser = require('body-parser');
-app.use(express.json()) // parsing JSON body
-app.use(express.urlencoded({ extended: true })); // parsing URL-encoded form data (from form POST requests)
+app.use(bodyParser.json()) // parsing JSON body
+app.use(bodyParser.urlencoded({ extended: true })); // parsing URL-encoded form data (from form POST requests)
 
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
 if (env !== 'production') { app.use(cors()) }
+
+// multipart middleware: allows you to access uploaded file from req.file
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
 
 // cloudinary: configure using credentials found on your Cloudinary Dashboard
 // sign up for a free account here: https://cloudinary.com/users/register/free
@@ -203,9 +207,9 @@ app.delete('/api/game', mongoChecker, async (req, res) => {
 })
 
 // Add new user
-app.post('/api/user', mongoChecker, async (req, res) => {
-  const { username, password, profilePic } = req.body
-  log(req.body)
+app.post('/api/user', multipartMiddleware, async (req, res) => {
+  const { username, password } = req.body
+  log(req.files)
 
   if (username === 'admin') {
     res.status(400).send('Bad Request. Cannot create account as admin.')
@@ -215,7 +219,7 @@ app.post('/api/user', mongoChecker, async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 12)
 
   cloudinary.uploader.upload(
-    req.files.profilePic.path,
+    req.files.image.path,
     async function(result) {
       try {
         const newUser = new User({

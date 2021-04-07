@@ -3,21 +3,24 @@ import ENV from '../config.js'
 const API_HOST = ENV.api_host
 const log = console.log
 
-export const signUp = (page) => {
+export const signUp = (form, page) => {
   // the URL for the request
   const url = `${API_HOST}/api/user`;
 
   // Get all the state
   const { password, username, profilePic } = page.state
 
-  const req = new FormData()
-  req.append('username', username)
-  req.append('password', password)
-  req.append('profilePic', profilePic)
+  console.log(form.image)
+
+  const data = new FormData()
+  data.append('username', username)
+  data.append('password', password)
+  data.append('image', form.image.files[0])
+  console.log(data)
 
   const request = new Request(url, {
     method: "post",
-    body: req,
+    body: data,
   });
 
   fetch(request)
