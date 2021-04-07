@@ -50,6 +50,14 @@ const UserSchema = mongoose.Schema({
         required: true,
         default: ''
     },
+    bio: {
+        type: String,
+        default: ''
+    },
+    country: {
+        type: String,
+        default: ''
+    },
     gamerTags: [gamerTagSchema]
 })
 
