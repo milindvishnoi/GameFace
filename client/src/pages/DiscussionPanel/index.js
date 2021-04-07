@@ -6,9 +6,6 @@ import Post from '../../components/post';
 
 export class DiscussionPanel extends Component {
      //hardcoded data for testing.
-    state = {
-      gamePosts: [posts[0], posts[1]]
-    }
 
     addLike = (post) => {
       console.log(post == this.state.gamePosts[1])
@@ -43,20 +40,19 @@ export class DiscussionPanel extends Component {
     }
 
   render() {
-    const { index, page, gameAdminLoggedIn, siteAdminLoggedIn, userLoggedIn } = this.props
-    const { gamePosts } = this.state
+    const { index, page, gameAdminLoggedIn, siteAdminLoggedIn, userLoggedIn, user } = this.props
 
     return (
       <div> 
         {
           index === page && (
           <div>
-            {gamePosts.map((post) => {
+            {user.discussions.map((post) => {
               return (
                 <Post 
                   key={uid(post)}
                   post={post}
-                  loggedIn={userLoggedIn || gameAdminLoggedIn || siteAdminLoggedIn}
+                  loggedIn={userLoggedIn}
                   addLike={this.addLike}
                   disLike={this.disLike}
                   isAdmin={ gameAdminLoggedIn || siteAdminLoggedIn }/>

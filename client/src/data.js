@@ -216,8 +216,7 @@ const user = {
   username: "mills1020",
   country: "country1",
   nickname: "nickname1",
-  bio: "I am a gamer who loves to play Sport games from FIFA to NBA, I would \
-        love to play with you. Although my favourite game is Madien 2k22.",
+  bio: "I am a gamer who loves to play Sport games from FIFA to NBA, I would love to play with you. Although my favourite game is Madien 2k22.",
   games: [{gameName: "NBA2K22", ign: "LBJ"},
           {gameName: "game2", ign: "bestplayer"},
           {gameName: "game3", ign: "worstplayer"}],

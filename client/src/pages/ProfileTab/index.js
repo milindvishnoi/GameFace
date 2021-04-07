@@ -14,11 +14,10 @@ export class ProfileTab extends Component {
     this.setState({
       page: val
     })
-
   }
 
   render() {
-    const { gameAdminLoggedIn, siteAdminLoggedIn, userLoggedIn } = this.props;
+    const { gameAdminLoggedIn, siteAdminLoggedIn, userLoggedIn, user } = this.props;
     
 
     return (
@@ -36,12 +35,14 @@ export class ProfileTab extends Component {
             </Tabs>
         </AppBar>
         <ProfileTabPanel 
+          user={user}
           isSiteAdmin={gameAdminLoggedIn || siteAdminLoggedIn}
           index={0}
           page={this.state.page}
         />
 
         <DiscussionPanel 
+          user={user}
           index={1}
           page={this.state.page}
           userLoggedIn={userLoggedIn}

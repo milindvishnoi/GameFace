@@ -30,12 +30,12 @@ export class LoginButton extends Component {
   }
 
   render() {
-    const { adminLogin, userLogin } = this.props
+    const { adminLogin, user} = this.props
     const { anchor } = this.state
 
     return (
       <div>
-        { (adminLogin || userLogin) ?
+        { (adminLogin || user) ?
           <div className='user'>
             <ButtonBase 
               size='medium'
@@ -43,7 +43,7 @@ export class LoginButton extends Component {
               onClick={this.handleClick}>
                 <img 
                   className='user' 
-                  src={ process.env.PUBLIC_URL + '/images/user.jpeg' }
+                  src={ user.profilePic }
                   alt='profile' />
             </ButtonBase>
             <Menu
@@ -52,9 +52,16 @@ export class LoginButton extends Component {
               open={Boolean(anchor)}
               onClose={this.handleClose}
             >
-              <Link to='/personal'>
-                <MenuItem onClick={this.handleClose}>My account</MenuItem>
-              </Link>
+              {
+                adminLogin ? 
+                <Link to='/admin'>
+                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                </Link>
+                :
+                <Link to='/personal'>
+                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                </Link>
+              }
               <MenuItem onClick={this.closeAndLogOut}>Logout</MenuItem>
             </Menu>
           </div> 

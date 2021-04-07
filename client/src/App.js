@@ -21,7 +21,7 @@ export class App extends Component {
   state = {
     darkMode: true,
     adminLogin: false,
-    userLogin: true,
+    userLogin: false,
     currUser: null, 
     userInfo: null
   }
@@ -42,17 +42,17 @@ export class App extends Component {
   }
 
   render() {
-    const { darkMode, adminLogin, userLogin } = this.state
+    const { darkMode, adminLogin, user, currUser } = this.state
 
     return (
       <ThemeProvider theme={ darkMode ? darkTheme : lightTheme }>
         <CssBaseline>
           <Navbar 
             adminLogin={ adminLogin }
-            userLogin={ userLogin }
+            user={ currUser }
             currentTheme={ darkMode } 
             toggleTheme={ this.toggleTheme }
-            logout={ this.logout } />
+            logout={ this.appLogout } />
             <Container>
               <Switch>
               <Route exact path='/games/:gameTitle' render={ ({ match }) => (<Game
@@ -62,17 +62,16 @@ export class App extends Component {
                                                                         )}
                                                                         gameAdminLoggedIn={this.state.adminLogin} 
                                                                         siteAdminLoggedIn={this.state.adminLogin}/>) } />
-                {/* <Route exact path='/games/nba2k22' render={ () => <Game userLoggedIn={this.state.userLogin}  
-                                                                        gameAdminLoggedIn={this.state.adminLogin} 
-                                                                        siteAdminLoggedIn={this.state.adminLogin}/> } /> */}
                 <Route exact path='/' render={ () => <Home /> } />
                 <Route exact path='/login' render={ () => <LoginPage 
                                                             login={ this.appLogin }
                                                              /> } />
                 <Route exact path='/signup' render={ () => <SignUpPage /> } />
-                <Route exact path='/personal' render={ () => <PersonalPage
-                                                              siteAdminLoggedIn={this.state.adminLogin}
-                                                              
+                <Route exact path='/personal' render={ () => <UserPage
+                                                              user={currUser}
+                                                              userLoggedIn={this.state.userLogin} 
+                                                              gameAdminLoggedIn={this.state.adminLogin} 
+                                                              siteAdminLoggedIn={this.state.adminLogin} 
                                                               logout={ this.appLogout } /> } />     
                 <Route exact path='/admin' render={ () => <AdminPage
                                                               gameAdminLoggedIn={this.state.adminLogin}

@@ -12,9 +12,6 @@ export class ProfileTabPanel extends Component {
 
     //hardcoded data for testing.
     state = {
-        username: currentUser.username,
-        nickname: currentUser.nickname,
-        country: currentUser.country,
         canEditName: true
     }
 
@@ -35,9 +32,9 @@ export class ProfileTabPanel extends Component {
   }
 
   render() {
-    const { index, page, isSiteAdmin} = this.props
+    const { index, page, user} = this.props
 
-    if (isSiteAdmin === true && this.state.canEditName === true) {
+    if (user !== null) {
       this.setState({
         canEditName: false
       })
@@ -71,11 +68,11 @@ export class ProfileTabPanel extends Component {
           <div>
           <div className="infoPanel">
             <div className="infoTitle w-100">
-              <Typography variant='h5'> Username: {this.state.username} </Typography>
+              <Typography variant='h5'> Username: {user.username} </Typography>
               {addEditUsername()}
             </div>
             <div className="infoTitle">
-              <Typography variant='h5'> Nickname: {this.state.nickname} </Typography>
+              <Typography variant='h5'> Nickname: {user.nickname} </Typography>
               <TextForm
                 buttonName="Edit Nickname"
                 buttonVar="outlined"
@@ -92,7 +89,7 @@ export class ProfileTabPanel extends Component {
               />
             </div>
             <div className="infoTitle">
-              <Typography variant='h5'> Country: {this.state.country} </Typography>
+              <Typography variant='h5'> Country: {user.country} </Typography>
               <TextForm
                 buttonName="Edit Country"
                 buttonVar="outlined"

@@ -40,12 +40,12 @@ export const signUp = (form, page) => {
 // A function to send a POST request with the user to be logged in
 export const login = (user, pass, app) => {
   // Create our request constructor with all the parameters we need
-  const request = new Request(`${API_HOST}/users/login`, {
+  const request = new Request(`${API_HOST}/api/login`, {
       method: "post",
-      body: {
+      body: JSON.stringify({
         username: user,
         password: pass
-      },
+      }),
       headers: {
           Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json"
@@ -56,7 +56,7 @@ export const login = (user, pass, app) => {
   fetch(request)
       .then(res => {
           if (res.status === 200) {
-              return res.json();
+            return res.json();
           }
       })
       .then(json => {

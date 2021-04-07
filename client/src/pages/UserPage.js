@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { user, admin } from '../data'
 import './PersonalPage.css';
 import ProfileTab from './ProfileTab';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
 export class UserPage extends Component {
@@ -13,11 +12,9 @@ export class UserPage extends Component {
   }
 
   render() {
-    const { logout, userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn } = this.props;
+    const { userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn, user } = this.props;
     const isLoggedIn = userLoggedIn || gameAdminLoggedIn || siteAdminLoggedIn;
     const isAdmin = gameAdminLoggedIn || siteAdminLoggedIn;
-
-    const profile = isAdmin ? admin : user
 
     const showProfile = () => {if (isLoggedIn) {
       return (
@@ -31,13 +28,12 @@ export class UserPage extends Component {
               >
               <img 
                 className='personal-picture'
-                src={ process.env.PUBLIC_URL + profile.profilePic } />
+                src={ user.profilePic } />
               <Typography variant="h4">
-                @themarkyone
-                {(isAdmin) ? <SupervisorAccountIcon /> : ""}
+                { user.username }
               </Typography>
               <Typography className="userBio" variant="body1">
-                { profile.bio }
+                { user.bio }
               </Typography>
               <Box mb={2} />
             </Box>
@@ -47,18 +43,9 @@ export class UserPage extends Component {
           <ProfileTab 
             gameAdminLoggedIn={gameAdminLoggedIn} 
             siteAdminLoggedIn={siteAdminLoggedIn} 
-            userLoggedIn={userLoggedIn}/>
-          <Box
-            my={3}
-            display='flex' 
-            flexDirection='column' 
-            justifyContent='center' 
-            alignItems='center'
-          >
-            <Link to='/'>
-              <Button variant='outlined' className="logout-button" onClick={ logout }>Logout</Button>
-            </Link>
-          </Box>
+            userLoggedIn={userLoggedIn}
+            user={user}
+            />
       </Box>
       )
     }}
