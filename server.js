@@ -10,8 +10,8 @@ const app = express();
 
 // body-parser: middleware for parsing parts of the request into a usable object (onto req.body)
 const bodyParser = require('body-parser');
-app.use(bodyParser.json()) // parsing JSON body
-app.use(bodyParser.urlencoded({ extended: true })); // parsing URL-encoded form data (from form POST requests)
+app.use(express.json()) // parsing JSON body
+app.use(express.urlencoded({ extended: true })); // parsing URL-encoded form data (from form POST requests)
 
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
@@ -183,7 +183,7 @@ app.get('/api/search/:game', mongoChecker, (req, res) => {
 // Delete a game
 app.delete('/api/game', mongoChecker, async (req, res) => {
   log("In delete Game")
-  log(req.body)
+  log(req)
 
   try {
     const delGame = await Game.findByIdAndRemove(req.body.id)
