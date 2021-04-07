@@ -21,7 +21,7 @@ export class App extends Component {
   state = {
     darkMode: true,
     adminLogin: false,
-    userLogin: true,
+    userLogin: false,
     currUser: null, 
     userInfo: null
   }
