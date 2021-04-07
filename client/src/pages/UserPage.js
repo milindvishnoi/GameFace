@@ -22,11 +22,6 @@ export class UserPage extends Component {
     const showProfile = () => {if (isLoggedIn) {
       return (
         <Box>
-            <Box>
-                <img 
-                  className='cover-image'
-                  src={ process.env.PUBLIC_URL + profile.coverPic } />
-            </Box>
             <Box 
               my={3} 
               display='flex' 

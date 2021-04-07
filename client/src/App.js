@@ -20,7 +20,8 @@ export class App extends Component {
   state = {
     darkMode: true,
     adminLogin: false,
-    userLogin: true
+    userLogin: true,
+    userInfo: null
   }
 
   toggleTheme = () => {

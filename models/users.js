@@ -26,10 +26,6 @@ const UserSchema = mongoose.Schema({
 		unique: true,
         required: true
     },
-    nickname: {
-        type: String,
-        minlength: 1
-    },
     country: {
         type: String,
         minlength: 2
@@ -44,12 +40,9 @@ const UserSchema = mongoose.Schema({
         ref: "Discussion",
 		default: []
   	}],
-    profilePicSrc: {
+    profilePic: {
         type: String,
-        default: ''
-    },
-    backgroundPicSrc: {
-        type: String,
+        required: true,
         default: ''
     },
     gamerTags: [gamerTagSchema]

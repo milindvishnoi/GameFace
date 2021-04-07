@@ -17,6 +17,15 @@ app.use(bodyParser.urlencoded({ extended: true })); // parsing URL-encoded form 
 const cors = require('cors')
 if (env !== 'production') { app.use(cors()) }
 
+// cloudinary: configure using credentials found on your Cloudinary Dashboard
+// sign up for a free account here: https://cloudinary.com/users/register/free
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'dcbaj2gh5',
+    api_key: '613126637958386',
+    api_secret: 'Uad6X0WNYQAM83TFlWzunw6k4kI'
+});
+
 // mongoose and mongo connection
 const { mongoose } = require("./db/mongoose");
 mongoose.set('useFindAndModify', false); // for some deprecation issues
@@ -195,26 +204,39 @@ app.delete('/api/game', mongoChecker, async (req, res) => {
 
 // Add new user
 app.post('/api/user', mongoChecker, async (req, res) => {
-  const { username, password } = req.body
+  const { username, password, profilePic } = req.body
+  log(req.body)
+
+  if (username === 'admin') {
+    res.status(400).send('Bad Request. Cannot create account as admin.')
+    return;
+  }
+
   const hashedPassword = await bcrypt.hash(password, 12)
 
-  const newUser = new User({
-    username: username,
-    password: hashedPassword
-  })
+  cloudinary.uploader.upload(
+    req.files.profilePic.path,
+    async function(result) {
+      try {
+        const newUser = new User({
+          username: username,
+          password: hashedPassword,
+          profilePic: result.url,
+        })
 
-  try {
-    // Save the new user
-    const userAdded = await newUser.save()
-    res.send(userAdded)
-  } catch(err) {
-    if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
-      res.status(500).send('Internal server error')
-    } else {
-      log(err)
-      res.status(400).send('Bad Request') // bad request for changing the student.
+        // Save the new user
+        const userAdded = await newUser.save()
+        res.send(userAdded)
+      } catch(err) {
+        if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
+          res.status(500).send('Internal server error')
+        } else {
+          log(err)
+          res.status(400).send('Bad Request') // bad request for changing the student.
+        }
+      }
     }
-  }
+  )
 })
 
 // Find user by id

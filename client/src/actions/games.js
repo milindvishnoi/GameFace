@@ -71,12 +71,12 @@ export const deleteGame = (page) => {
   const url = `${API_HOST}/api/game`
   const id = deleteId
 
-  log(url)
-  log(JSON.stringify(id))
+  const req = new FormData()
+  req.append('id', deleteId)
 
   const request = new Request(url, {
     method: "delete",
-    body: JSON.stringify(id),
+    body: req,
   })
 
   fetch(request)

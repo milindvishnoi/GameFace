@@ -6,30 +6,24 @@ import { Box,
          Container, 
          Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { signUp } from '../actions/user'
 
 // Inspired by (https://material-ui.com/getting-started/templates/sign-up/)
 export class SignUpPage extends Component {
   state={
-    email: '',
-    emailError: false,
-    emailErrorMessage: ''
+    profilePic: null,
+    password: '',
+    username: ''
   }
 
-  validate = (event) => {
-    const target = event.target
-    const value = target.value
-    const name = target.name
-    let reg = new RegExp(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/).test(value)
-    console.log(reg)
-    reg ? this.setState({
-        [name]: value,
-        emailErrorMessage: "",
-        error: false
-      }) : this.setState({
-        [name]: value,
-        emailErrorMessage: "Please fill in a valid email.",
-        error: true
-      })
+  changeHandler = (e) => {
+    e.preventDefault();
+    const target = e.target;
+    const name = target.id;
+    if (name === 'profilePic')
+      this.setState({[name]: target.files[0]});
+    else
+      this.setState({[name]: target.value});
   }
 
   render() {
@@ -52,48 +46,20 @@ export class SignUpPage extends Component {
           spacing={1}
           justify="center"
           >
-          <Grid item sm={6} xs={12}>
-            <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="fname"
-                label="First Name"
-                name="fname"
-                autoComplete="first_name"
-                autoFocus
-                />
-          </Grid>
-          <Grid item sm={6} xs={12}>
-            <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                required
-                id="lname"
-                label="Last Name"
-                name="lname"
-                autoComplete="last_name"
-                autoFocus
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    required
-                    onChange={this.validate}
-                    value={this.state.email}
-                    error={this.state.error}
-                    helperText={ this.state.emailErrorMessage }
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                />
+            <Grid item sm={12}>
+              <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  value={this.state.username}
+                  onChange={this.changeHandler}
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                  />
             </Grid>
             <Grid item xs={12}>
                 <TextField
@@ -101,12 +67,20 @@ export class SignUpPage extends Component {
                 margin="normal"
                 fullWidth
                 required
+                onChange={this.changeHandler}
+                value={this.state.password}
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
                 />
+            </Grid>
+            <Grid item xs={12}>
+              <Box m={2}>
+                <label htmlFor="uploadFile">Upload profile photos</label>
+                <input type="file" name='image' id="profilePic" onChange={this.changeHandler}/>
+              </Box>
             </Grid>
           </Grid>
           <Box mb={2}>
@@ -115,9 +89,12 @@ export class SignUpPage extends Component {
                 fullWidth
                 variant="contained"
                 color="primary"
-                disabled={!this.state.error}
+                onClick={(e) => {
+                                  e.preventDefault();
+                                  signUp(this) 
+                                }}
             >
-                Sign In
+                Sign Up
             </Button>
           </Box>
           <Link to='/login'>
