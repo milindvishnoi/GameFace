@@ -8,7 +8,7 @@ export const signUp = (form, page) => {
   const url = `${API_HOST}/api/user`;
 
   // Get all the state
-  const { password, username, profilePic } = page.state
+  const { password, username } = page.state
 
   console.log(form.image)
 
@@ -86,11 +86,12 @@ export const logout = (app) => {
   fetch(url)
       .then(res => {
           app.setState({
-              currentUser: null,
+              currUser: null,
               adminLogin: false,
               userLogin: false 
               //message: { type: "", body: "" }
           });
+          window.location.href = '/'
       })
       .catch(error => {
           console.log(error);

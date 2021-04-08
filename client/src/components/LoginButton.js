@@ -59,11 +59,10 @@ export class LoginButton extends Component {
                   <MenuItem onClick={this.handleClose}>Manage</MenuItem>
                 </Link>
                 :
-               ""
-              }
-              <Link to='/personal'>
+                <Link to='/personal'>
                   <MenuItem onClick={this.handleClose}>My account</MenuItem>
-              </Link>
+                </Link>
+              }
               <MenuItem onClick={this.closeAndLogOut}>Logout</MenuItem>
             </Menu>
           </div> 

@@ -10,6 +10,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 export class Game extends Component {
     state = {
       gamePosts: posts,
+
     }
 
     // Requires a server call to update Posts list
@@ -61,7 +62,7 @@ export class Game extends Component {
     }
 
     render() {
-      const {userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn, displayGame} = this.props;
+      const {userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn, displayGame, currUser} = this.props;
 
       const splitDescription = (str) => {
         /* Splits <str> appropriatley depending on where \n is in the text */
@@ -106,7 +107,7 @@ export class Game extends Component {
           </Box>
           {addPostMaker()}
           <Box id="postsSection">
-            {this.state.gamePosts.map((post) => {
+            {displayGame.discussions.map((post) => {
               return (
                 <Post post={post}
                       loggedIn={isLoggedIn}

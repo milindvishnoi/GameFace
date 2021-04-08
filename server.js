@@ -74,6 +74,24 @@ const authenticate = async (req, res, next) => {
   }
 }
 
+const authenticateAuth = async (req, res, next) => {
+  if (!res.session.user_id) {
+    res.status(401).send("Unauthorized")
+  }
+
+  try {
+    const user = await User.findById(req.session.user_id)
+    if (!user.isAdmin)
+      res.status(401).send("Unauthorized")
+    else {
+      req.user = user
+      next()
+    }
+  } catch {
+    res.status(401).send("Unauthorized")
+  }
+}
+
 /*** Auth Session **********************************/
 app.use(session({
   secret: 'Rand Secret',
@@ -96,7 +114,6 @@ app.post('/api/login', mongoChecker, async (req, res) => {
       req.session.user_id = user._id;
       req.session.username = user.username;
       req.session.is_admin = user.isAdmin;
-      log(req.session)
       res.send({ currentUser: user, adminPriv: user.isAdmin})
       return
     }
@@ -207,15 +224,171 @@ app.delete('/api/game', mongoChecker, async (req, res) => {
   }
 })
 
+// Add game tag
+app.post('/api/game/tag', mongoChecker, authenticateAuth, (req, res) => {
+  Game.findByIdAndUpdate({ _id: req.body.game_id }, {$push: { 'tags': req.game_tag }}, { new: true, useFindAndModify: false })
+	.then((g) => {
+		if (!g) {
+			res.status(404).send('Resource not found')
+		} else {   
+			res.send({
+				tags: g.tags
+			})
+		}
+	})
+	.catch((e) => {
+		log(e)
+		if (isMongoError(e)) { 
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request')
+		}
+	})
+})
+
+// Add a discussion
+app.post('/api/discussion', mongoChecker, authenticate, (req, res) => {
+  log(req.body)
+
+  const discussion = new Discussion({
+    author: req.user._id,
+    body: req.body
+  })
+
+  Game.findByIdAndUpdate({ _id: req.body.game_id }, {$push: { 'discussions': discussion }}, { new: true, useFindAndModify: false })
+	.then((g) => {
+		if (!g) {
+			res.status(404).send('Resource not found')
+		} else {   
+			res.send({
+				discussion: g.discussions
+			})
+		}
+	})
+	.catch((e) => {
+		log(e)
+		if (isMongoError(e)) { 
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request')
+		}
+	})
+})
+
+// Add a reply
+app.post('/api/game/reply', mongoChecker, authenticate, (req, res) => {
+  const reply = req.body.reply
+
+  Game.findByIdAndUpdate({ _id: req.body.game_id }, {$push: { 'replies': reply }}, { new: true, useFindAndModify: false })
+	.then((g) => {
+		if (!g) {
+			res.status(404).send('Resource not found')
+		} else {   
+			res.send({
+				replies: g.replies
+			})
+		}
+	})
+	.catch((e) => {
+		log(e)
+		if (isMongoError(e)) { 
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request')
+		}
+	})
+})
+
+// Edit game
+app.patch('/api/game', mongoChecker, authenticateAuth, async (req, res) => {
+  const fieldsToUpdate = {
+    'description': req.description,
+    'title': req.title,
+  }
+
+  try {
+    const game = await Game.findByIdAndUpdate({_id: req.body.game_id}, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})
+    if (!game) {
+			res.status(404).send('Resource not found')
+		} else
+			res.send(game)
+    } catch (error) {
+      log(error)
+      if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+        res.status(500).send('Internal server error')
+      } else {
+        res.status(400).send('Bad Request') // bad request for changing the student.
+      }
+    }
+})
+
+// Update user info
+app.patch('/api/user', mongoChecker, authenticateAuth, async (req, res) => {
+  const fieldsToUpdate = {
+    'username': req.username,
+    'bio': req.bio,
+    'country': req.country,
+    'gamerTags': req.gamerTags
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate({_id: req.body.game_id}, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})
+    if (!user) {
+			res.status(404).send('Resource not found')
+		} else
+			res.send(user)
+    } catch (error) {
+      log(error)
+      if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+        res.status(500).send('Internal server error')
+      } else {
+        res.status(400).send('Bad Request') // bad request for changing the student.
+      }
+    }
+})
+
+// Add Like
+app.post('/api/game/discussion/like', mongoChecker, authenticateAuth, async (req, res) => {
+  try {
+    const game = await Game.findByIdAndUpdate({_id: req.body.game_id}, {$set: {'likes': req.body.likes}}, {new: true, useFindAndModify: false})
+    if (!game) {
+			res.status(404).send('Resource not found')
+		} else {
+      res.send(game)
+    }
+    } catch (error) {
+      log(error)
+      if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+        res.status(500).send('Internal server error')
+      } else {
+        res.status(400).send('Bad Request') // bad request for changing the student.
+      }
+    }
+})
+
+// Add Dislike
+app.post('/api/game/discussion/like', mongoChecker, authenticateAuth, async (req, res) => {
+  try {
+    const game = await Game.findByIdAndUpdate({_id: req.body.game_id}, {$set: {'dislikes': req.body.likes}}, {new: true, useFindAndModify: false})
+    if (!game) {
+			res.status(404).send('Resource not found')
+		} else {
+      res.send(game)
+    }
+    } catch (error) {
+      log(error)
+      if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+        res.status(500).send('Internal server error')
+      } else {
+        res.status(400).send('Bad Request') // bad request for changing the student.
+      }
+    }
+})
+
 // Add new user
 app.post('/api/user', multipartMiddleware, async (req, res) => {
   const { username, password } = req.body
   log(req.files)
-
-  if (username === 'admin') {
-    res.status(400).send('Bad Request. Cannot create account as admin.')
-    return;
-  }
 
   const hashedPassword = await bcrypt.hash(password, 12)
 
@@ -228,6 +401,7 @@ app.post('/api/user', multipartMiddleware, async (req, res) => {
           password: hashedPassword,
           profilePic: result.url,
         })
+        log(newUser)
 
         // Save the new user
         const userAdded = await newUser.save()

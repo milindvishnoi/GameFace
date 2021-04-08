@@ -42,7 +42,7 @@ export class App extends Component {
   }
 
   render() {
-    const { darkMode, adminLogin, user, currUser } = this.state
+    const { darkMode, adminLogin, currUser } = this.state
 
     return (
       <ThemeProvider theme={ darkMode ? darkTheme : lightTheme }>
@@ -60,6 +60,7 @@ export class App extends Component {
                                                                         displayGame={games.find(g => 
                                                                           '/games/'.concat(match.params.gameTitle) === g.link
                                                                         )}
+                                                                        currUser={currUser}
                                                                         gameAdminLoggedIn={this.state.adminLogin} 
                                                                         siteAdminLoggedIn={this.state.adminLogin}/>) } />
                 <Route exact path='/' render={ () => <Home /> } />

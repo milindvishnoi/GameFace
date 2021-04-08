@@ -24,7 +24,7 @@ export default class TopGames extends Component {
           >
             <img 
               className="image" 
-              src={process.env.PUBLIC_URL + imgSrc}
+              src={imgSrc}
               alt={title + "'s Image Button"} 
               />
             <span

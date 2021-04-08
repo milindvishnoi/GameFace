@@ -16,7 +16,6 @@ const repliesSchema = mongoose.Schema({
 const discussionSchema = mongoose.Schema({
     pinned: {
         type: Boolean,
-        required: true,
         default: false
     }, 
     author: {
@@ -29,16 +28,14 @@ const discussionSchema = mongoose.Schema({
         required: true,
         default: ''
     },
-    likes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+    likes: {
+        type: Number,
         default: 0
-    }],
-    dislikes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+    },
+    dislikes: {
+        type: Number,
         default: 0
-    }],
+    },
     replies: [repliesSchema]
 });
 

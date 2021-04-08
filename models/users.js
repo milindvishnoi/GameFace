@@ -19,7 +19,6 @@ const gamerTagSchema = mongoose.Schema({
 const UserSchema = mongoose.Schema({
     isAdmin: {
         type: Boolean,
-        required: true,
         default: false
     },
     username: {
