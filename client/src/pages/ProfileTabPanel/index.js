@@ -3,17 +3,12 @@ import { Box, Button, Chip,  Grid, Typography } from '@material-ui/core'
 import TextForm from '../../components/textform'
 import EditIcon from '@material-ui/icons/Edit';
 import "./styles.css";
-import { user } from '../../data'
-
-//For test convenience.
-const currentUser = user;
 
 export class ProfileTabPanel extends Component {
 
-    //hardcoded data for testing.
-    state = {
-        canEditName: true
-    }
+  state = {
+    canEditName: true
+  }
 
   updateState = (attr, newAttr) => {
     if (attr === "user") {
@@ -34,7 +29,7 @@ export class ProfileTabPanel extends Component {
   render() {
     const { index, page, user} = this.props
 
-    if (user !== null) {
+    if (user.isAdmin && this.state.canEditName) {
       this.setState({
         canEditName: false
       })

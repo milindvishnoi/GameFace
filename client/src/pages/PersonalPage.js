@@ -14,11 +14,9 @@ export class PersonalPage extends Component {
   }
 
   render() {
-    const { logout, userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn } = this.props;
+    const { logout, userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn, user } = this.props;
     const isLoggedIn = userLoggedIn || gameAdminLoggedIn || siteAdminLoggedIn;
     const isAdmin = gameAdminLoggedIn || siteAdminLoggedIn;
-
-    const profile = isAdmin ? admin : user
 
     const showProfile = () => {if (isLoggedIn) {
       return (
@@ -26,7 +24,7 @@ export class PersonalPage extends Component {
             <Box>
                 <img 
                   className='cover-image'
-                  src={ process.env.PUBLIC_URL + profile.coverPic } />
+                  src={ process.env.PUBLIC_URL + user.profilePic } />
             </Box>
             <Box 
               my={3} 
@@ -37,13 +35,13 @@ export class PersonalPage extends Component {
               >
               <img 
                 className='personal-picture'
-                src={ process.env.PUBLIC_URL + profile.profilePic } />
+                src={ process.env.PUBLIC_URL + user.profilePic } />
               <Typography variant="h4">
-                @{ profile.username }
+                @{ user.username }
                 {(isAdmin) ? <SupervisorAccountIcon /> : ""}
               </Typography>
               <Typography className="userBio" variant="body1">
-                { profile.bio }
+                { user.bio }
               </Typography>
               <Box mb={2} />
             </Box>
