@@ -1,7 +1,7 @@
 "use strict";
 const log = console.log;
 const env = process.env.NODE_ENV
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const path = require('path')
 const express = require("express");
 var session = require('express-session')

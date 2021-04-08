@@ -3,16 +3,17 @@ import { Box, Button, Chip,  Grid, Typography } from '@material-ui/core'
 import TextForm from '../../components/textform'
 import EditIcon from '@material-ui/icons/Edit';
 import "./styles.css";
-import { user } from '../../data'
 
-//For test convenience.
-const currentUser = user;
 
 export class ProfileTabPanel extends Component {
 
-    //hardcoded data for testing.
+    
     state = {
-        canEditName: true
+        readProps: false, 
+        canEditName: true,
+        username: null,
+        nickname: "no nickname in model",
+        country: null
     }
 
   updateState = (attr, newAttr) => {
@@ -34,9 +35,11 @@ export class ProfileTabPanel extends Component {
   render() {
     const { index, page, user} = this.props
 
-    if (user !== null) {
+    if (this.state.readProps === false) {
       this.setState({
-        canEditName: false
+        readProps: true,
+        username: user.username,
+        country: user.country
       })
     }
 
@@ -68,11 +71,11 @@ export class ProfileTabPanel extends Component {
           <div>
           <div className="infoPanel">
             <div className="infoTitle w-100">
-              <Typography variant='h5'> Username: {user.username} </Typography>
+              <Typography variant='h5'> Username: {this.state.username} </Typography>
               {addEditUsername()}
             </div>
             <div className="infoTitle">
-              <Typography variant='h5'> Nickname: {user.nickname} </Typography>
+              <Typography variant='h5'> Nickname: {this.state.nickname} </Typography>
               <TextForm
                 buttonName="Edit Nickname"
                 buttonVar="outlined"
@@ -89,7 +92,7 @@ export class ProfileTabPanel extends Component {
               />
             </div>
             <div className="infoTitle">
-              <Typography variant='h5'> Country: {user.country} </Typography>
+              <Typography variant='h5'> Country: {this.state.country} </Typography>
               <TextForm
                 buttonName="Edit Country"
                 buttonVar="outlined"
