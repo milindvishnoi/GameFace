@@ -5,6 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import "./styles.css";
 
 
+
 export class ProfileTabPanel extends Component {
 
     
@@ -15,6 +16,7 @@ export class ProfileTabPanel extends Component {
         nickname: "no nickname in model",
         country: null
     }
+
 
   updateState = (attr, newAttr) => {
     if (attr === "user") {
@@ -36,6 +38,7 @@ export class ProfileTabPanel extends Component {
     const { index, page, user} = this.props
 
     if (this.state.readProps === false) {
+
       this.setState({
         readProps: true,
         username: user.username,
