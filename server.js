@@ -367,7 +367,7 @@ app.post('/api/game/discussion/like', mongoChecker, authenticateAuth, async (req
 })
 
 // Add Dislike
-app.post('/api/game/discussion/like', mongoChecker, authenticateAuth, async (req, res) => {
+app.post('/api/game/discussion/dislike', mongoChecker, authenticateAuth, async (req, res) => {
   try {
     const game = await Game.findByIdAndUpdate({_id: req.body.game_id}, {$set: {'dislikes': req.body.likes}}, {new: true, useFindAndModify: false})
     if (!game) {
