@@ -300,11 +300,13 @@ app.post('/api/game/reply', mongoChecker, authenticate, (req, res) => {
 })
 
 // Edit game
-app.patch('/api/game', mongoChecker, authenticateAuth, async (req, res) => {
+app.post('/api/game/edit', mongoChecker, async (req, res) => {
   const fieldsToUpdate = {
-    'description': req.description,
-    'title': req.title,
+    'description': req.body.description,
+    'title': req.body.title,
   }
+
+  log(req.body)
 
   try {
     const game = await Game.findByIdAndUpdate({_id: req.body.game_id}, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})

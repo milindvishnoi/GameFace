@@ -10,7 +10,6 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 export class Game extends Component {
     state = {
       gamePosts: posts,
-
     }
 
     // Requires a server call to update Posts list
@@ -107,7 +106,7 @@ export class Game extends Component {
           </Box>
           {addPostMaker()}
           <Box id="postsSection">
-            {displayGame.discussions.map((post) => {
+            {this.state.gamePosts.map((post) => {
               return (
                 <Post post={post}
                       loggedIn={isLoggedIn}

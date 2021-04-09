@@ -94,10 +94,50 @@ export const deleteGame = (page) => {
     .then(json => {
       // the resolved promise with the JSON body
       if (json) {
-        const updatedGameList = gameList.filter(game => game !== json.delGame)
-        page.setState({ 
-          gameList: updatedGameList
-        });
+        getAllGames(page)
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+export const editGameInfo = (page) => {
+  const { game, title, description } = page.state
+
+  const url = `${API_HOST}/api/game/edit`
+
+  const req = {
+    game_id: game._id,
+    title: title,
+    description: description
+  }
+
+  const request = new Request(url, {
+    method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(req),
+  })
+
+  fetch(request)
+    .then(res => {
+      if (res.status === 200) {
+        // return a promise that resolves with the JSON body
+        return res.json();
+      } else {
+        alert("Could not delete game");
+      }
+    })
+    .then(json => {
+      // the resolved promise with the JSON body
+      if (json) {
+        getAllGames(page)
+        page.setState({
+          open: false
+        })
       }
     })
     .catch(err => {
