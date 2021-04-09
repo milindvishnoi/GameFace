@@ -12,22 +12,60 @@ import Box from '@material-ui/core/Box';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Typography from '@material-ui/core/Typography';
+import { Dialog, DialogContent, DialogContentText, Button, DialogTitle, DialogActions, TextField } from '@material-ui/core';
 // Importing actions/required methods
-import { getAllGames, deleteGame } from "../actions/games";
+import { getAllGames, deleteGame, editGameInfo } from "../actions/games";
 import { IconButton } from '@material-ui/core';
 
 export class AdminPage extends Component {
-  state = {
-    gameList: [],
-    deleteId: ""
+  constructor(props){
+    super(props)
+    this.state = {
+      gameList: [],
+      deleteId: "",
+      open: false,
+      game: null,
+      title: null,
+      description: null
+    }
+  }
+  
+
+  handleChange = (e) => {
+    e.preventDefault()
+    const id = e.target.id
+    const value = e.target.value
+
+    console.log(id, value, this)
+
+    this.setState({
+      [id]: value
+    })
+  }
+
+  handleClose = () => {
+    this.setState({
+      open: false
+    })
+  }
+
+  handleSubmit = () => {
+    editGameInfo(this)
   }
 
   componentDidMount() {
     getAllGames(this)
   }
 
-  editGame() {
+  editGame(game) {
+    this.setState({
+      title: game.title,
+      description: game.description,
+      game: game,
+      open: true
+    })
 
+    console.log(this.state.open)
   }
 
   deleteGameAPICall(id) {
@@ -67,7 +105,7 @@ export class AdminPage extends Component {
                     {game.title}
                   </TableCell>
                   <TableCell align="right">
-                    <IconButton onClick={() => this.editGame}>
+                    <IconButton onClick={() => this.editGame(game)}>
                       <EditIcon />
                     </IconButton>
                   </TableCell>
@@ -82,6 +120,43 @@ export class AdminPage extends Component {
           </Table>
         </TableContainer>
         </Paper>
+
+        <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Change Game</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            You can edit the game title and it's description.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="title"
+            label="Title"
+            type="text"
+            value={this.state.title}
+            onChange={this.handleChange}
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="description"
+            label="Description"
+            value={this.state.description}
+            onChange={this.handleChange}
+            type="text"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={this.handleSubmit} color="primary">
+            Change Game Info
+          </Button>
+        </DialogActions>
+      </Dialog>
       </Box>
     )}
 }

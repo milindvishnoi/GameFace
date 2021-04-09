@@ -14,8 +14,6 @@ export class LoginPage extends Component {
     const id = event.target.id
     const value = event.target.value
 
-    console.log(id, value)
-
     this.setState({
       [id]: value
     })

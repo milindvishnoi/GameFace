@@ -17,7 +17,7 @@ export class ProfileTab extends Component {
   }
 
   render() {
-    const { gameAdminLoggedIn, siteAdminLoggedIn, userLoggedIn, user } = this.props;
+    const { gameAdminLoggedIn, siteAdminLoggedIn, userLoggedIn, user, updateInfo } = this.props;
     
 
     return (
@@ -39,6 +39,7 @@ export class ProfileTab extends Component {
           isSiteAdmin={gameAdminLoggedIn || siteAdminLoggedIn}
           index={0}
           page={this.state.page}
+          updateInfo={updateInfo}
         />
 
         <DiscussionPanel 
