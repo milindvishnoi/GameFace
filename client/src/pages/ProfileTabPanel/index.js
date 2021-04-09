@@ -13,7 +13,7 @@ export class ProfileTabPanel extends Component {
         readProps: false, 
         canEditName: true,
         username: null,
-        nickname: "no nickname in model",
+        nickname: null,
         country: null
     }
 
@@ -44,6 +44,7 @@ export class ProfileTabPanel extends Component {
       this.setState({
         readProps: true,
         username: user.username,
+        nickname: user.nickname,
         country: user.country
       })
     }
@@ -80,7 +81,7 @@ export class ProfileTabPanel extends Component {
               {addEditUsername()}
             </div>
             <div className="infoTitle">
-              <Typography variant='h5'> Nickname: {this.state.nickname} </Typography>
+              <Typography variant='h5'> Nickname: {user.nickname} </Typography>
               <TextForm
                 buttonName="Edit Nickname"
                 buttonVar="outlined"
@@ -97,7 +98,7 @@ export class ProfileTabPanel extends Component {
               />
             </div>
             <div className="infoTitle">
-              <Typography variant='h5'> Country: {this.state.country} </Typography>
+              <Typography variant='h5'> Country: {user.country} </Typography>
               <TextForm
                 buttonName="Edit Country"
                 buttonVar="outlined"

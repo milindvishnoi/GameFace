@@ -57,6 +57,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         default: ''
     },
+    nickname: {
+        type: String,
+        default: ''
+    },
     gamerTags: [gamerTagSchema]
 })
 
