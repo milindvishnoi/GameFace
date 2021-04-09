@@ -16,7 +16,7 @@ In Phase 1, the information on our web app is hard coded, and now we have implem
 
 
 # Testing Accounts
-Admin1: 
+Admin: 
 - username: admin
 - password: admin
 
