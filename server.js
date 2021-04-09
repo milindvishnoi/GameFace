@@ -121,7 +121,7 @@ app.post('/api/login', mongoChecker, async (req, res) => {
       res.send({ currentUser: user, adminPriv: user.isAdmin})
       return
     }
-    res.send(404).send('Username or Password is incorrect. Please try again!')
+    res.status(404).send('Username or Password is incorrect. Please try again!')
   } catch(err) {
     if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
       res.status(500).send('Internal server error')
