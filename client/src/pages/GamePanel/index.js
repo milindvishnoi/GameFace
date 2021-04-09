@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
-import { user } from '../../data'
 import GameAddForm from "./GameAddForm"
 import GameList from "./GameList"
 import {addGame} from "./actions"
+import { Button } from '@material-ui/core'
 
-const usergames = user.games
+
 export class GamePanel extends Component {
      //hardcoded data for testing.
     state = {
+        readList: false,
         gameName: "",
         ign: "",
-        games: usergames
+        games: []
     };
 
     handleInputChange = event => {
@@ -26,7 +27,14 @@ export class GamePanel extends Component {
 
 
   render() {
-    const { index, page } = this.props
+    const { index, page, user } = this.props
+    if (this.state.readList === false) {
+
+      this.setState({
+        readList: true,
+        games: user.playlist
+      })
+    }
 
     return (
       <div> 
@@ -45,6 +53,15 @@ export class GamePanel extends Component {
               gamePan = {this}
             
             />
+
+            <Button
+            variant="contained"
+            color="primary"
+            onClick={this.props.updateInfo("playlist", this.state.games)}
+            className="game-form__submit-button"
+          >
+            Save
+          </Button>
           </div>
          )
       }  

@@ -5,6 +5,7 @@ import TextForm from '../components/textform'
 // The appropriate game data to be imported from a server (description is from the PS4 website for 2K21)
 import { updateServerLikes, updateServerDislikes, createPost } from '../actions/discussion'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import { Post } from '../components/post'
 
 export class Game extends Component {
     state = {

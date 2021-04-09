@@ -52,6 +52,8 @@ export class ProfileTab extends Component {
         />
         
         <GamePanel
+          user={user}
+          updateInfo={updateInfo}
           index={2}
           page={this.state.page}
         />

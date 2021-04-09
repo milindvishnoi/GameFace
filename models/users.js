@@ -61,6 +61,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         default: ''
     },
+    playlist: {
+        type: Array,
+        default: []
+    },
     gamerTags: [gamerTagSchema]
 })
 
