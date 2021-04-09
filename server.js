@@ -4,7 +4,7 @@ const env = process.env.NODE_ENV
 const bcrypt = require('bcryptjs')
 const path = require('path')
 const express = require("express");
-var session = require('express-session')
+const session = require("express-session");
 // starting the express server
 const app = express();
 
@@ -59,12 +59,10 @@ const mongoChecker = (req, res, next) => {
 
 // Middleware for authenticating
 const authenticate = async (req, res, next) => {
-  if (!res.session.user_id) {
-    res.status(401).send("Unauthorized")
-  }
+  log(req.session)
 
   try {
-    const user = await User.findById(req.session.user_id)
+    const user = await User.findById(req.session.user)
     if (!user)
       res.status(401).send("Unauthorized")
     else {
@@ -77,13 +75,10 @@ const authenticate = async (req, res, next) => {
 }
 
 const authenticateAuth = async (req, res, next) => {
-  if (!res.session.user_id) {
-    res.status(401).send("Unauthorized")
-  }
-
+  log(req.session)
   try {
-    const user = await User.findById(req.session.user_id)
-    if (!user.isAdmin)
+    const user = await User.findById(req.session.user)
+    if (!user || !user.isAdmin)
       res.status(401).send("Unauthorized")
     else {
       req.user = user
@@ -100,11 +95,18 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-      expires: 100000000,
+      expires: 600000,
       httpOnly: true
-  },
-  store: env === 'production' ? new MongoStore({ mongooseConnection: mongoose.connection }) : null  
+  }
 }))
+
+app.get("/users/check-session", (req, res) => {
+  if (req.session.user) {
+    res.send({ currentUser: req.session.user });
+  } else {
+    res.status(401).send();
+  }
+});
 
 app.post('/api/login', mongoChecker, async (req, res) => {
   const { username, password } = req.body
@@ -113,7 +115,7 @@ app.post('/api/login', mongoChecker, async (req, res) => {
     // get the user
     const user = await User.findAndValidate(username, password)
     if (user) {
-      req.session.user_id = user._id;
+      req.session.user = user._id;
       req.session.username = user.username;
       req.session.is_admin = user.isAdmin;
       res.send({ currentUser: user, adminPriv: user.isAdmin})
@@ -131,10 +133,13 @@ app.post('/api/login', mongoChecker, async (req, res) => {
 })
 
 app.post('/api/logout', mongoChecker, async (req, res) => {
-  req.session.destroy()
-  log(req.session)
-  res.send('Logged out')
-  // res.redirect('/')
+  req.session.destroy(error => {
+    if (error) {
+        res.status(500).send(error);
+    } else {
+        res.send()
+    }
+  });
 })
 
 /*** API routes below **********************************/
@@ -302,7 +307,7 @@ app.post('/api/game/reply', mongoChecker, authenticate, (req, res) => {
 })
 
 // Edit game
-app.post('/api/game/edit', mongoChecker, async (req, res) => {
+app.post('/api/game/edit', mongoChecker, authenticateAuth, async (req, res) => {
   const fieldsToUpdate = {
     'description': req.body.description,
     'title': req.body.title,

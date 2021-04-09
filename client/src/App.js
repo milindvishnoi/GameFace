@@ -13,8 +13,8 @@ import { darkTheme, lightTheme } from './theme'
 import Navbar from './components/global/header/Navbar';
 import Footer from './components/global/footer/Footer';
 import './App.css'
-import { games } from './data'
 import {login, logout, updateUserInfo} from './actions/user'
+import {getAllGames} from './actions/games'
 
 
 export class App extends Component {
@@ -23,7 +23,12 @@ export class App extends Component {
     adminLogin: false,
     userLogin: false,
     currUser: null, 
-    userInfo: null
+    userInfo: null,
+    gameList: []
+  }
+
+  componentDidMount() {
+    getAllGames(this)
   }
 
   toggleTheme = () => {
@@ -61,7 +66,7 @@ export class App extends Component {
               <Switch>
               <Route exact path='/games/:gameTitle' render={ ({ match }) => (<Game
                                                                         userLoggedIn={this.state.userLogin}  
-                                                                        displayGame={games.find(g => 
+                                                                        displayGame={this.state.gameList.find(g => 
                                                                           '/games/'.concat(match.params.gameTitle) === g.link
                                                                         )}
                                                                         currUser={currUser}

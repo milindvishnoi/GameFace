@@ -115,10 +115,6 @@ export const editGameInfo = (page) => {
 
   const request = new Request(url, {
     method: "post",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
     body: JSON.stringify(req),
   })
 
@@ -128,7 +124,7 @@ export const editGameInfo = (page) => {
         // return a promise that resolves with the JSON body
         return res.json();
       } else {
-        alert("Could not delete game");
+        alert("Could not edit game");
       }
     })
     .then(json => {
