@@ -258,8 +258,10 @@ app.post('/api/discussion', mongoChecker, authenticate, (req, res) => {
   log(req.body)
 
   const discussion = new Discussion({
-    author: req.user._id,
-    body: req.body
+    title: req.body.title,
+    author: req.body.name,
+    authorImgURL: req.body.imgLink,
+    body: req.body.content
   })
 
   Game.findByIdAndUpdate({ _id: req.body.game_id }, {$push: { 'discussions': discussion }}, { new: true, useFindAndModify: false })
@@ -367,7 +369,7 @@ app.patch('/api/user', mongoChecker, async (req, res) => {
 })
 
 // Add Like
-app.post('/api/game/discussion/like', mongoChecker, authenticateAuth, async (req, res) => {
+app.patch('/api/game/discussion/like', mongoChecker, authenticateAuth, async (req, res) => {
   try {
     const game = await Game.findByIdAndUpdate({_id: req.body.game_id}, {$set: {'likes': req.body.likes}}, {new: true, useFindAndModify: false})
     if (!game) {
@@ -386,7 +388,7 @@ app.post('/api/game/discussion/like', mongoChecker, authenticateAuth, async (req
 })
 
 // Add Dislike
-app.post('/api/game/discussion/dislike', mongoChecker, authenticateAuth, async (req, res) => {
+app.patch('/api/game/discussion/dislike', mongoChecker, authenticateAuth, async (req, res) => {
   try {
     const game = await Game.findByIdAndUpdate({_id: req.body.game_id}, {$set: {'dislikes': req.body.likes}}, {new: true, useFindAndModify: false})
     if (!game) {

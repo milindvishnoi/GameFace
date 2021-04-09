@@ -100,8 +100,8 @@ export class Post extends Component {
                         return(
                             <ReplyPost
                                 key={uid(post)}
-                                username={post.username}
-                                content={post.replyContent}/>
+                                username={post.author}
+                                content={post.reply}/>
                         )
                     })}
                 </Box>

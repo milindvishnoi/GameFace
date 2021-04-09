@@ -2,9 +2,12 @@ const mongoose = require("mongoose");
 
 const repliesSchema = mongoose.Schema({
     author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+        type: String,
+        required: true
+    },
+    authorImgURL: {
+        type: String,
+        required: true
     }, 
     reply: {
         type: String,
@@ -17,12 +20,20 @@ const discussionSchema = mongoose.Schema({
     pinned: {
         type: Boolean,
         default: false
+    },
+    title: {
+        type: String,
+        required: true,
+        default: ''
     }, 
     author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: String,
         required: true
     },
+    authorImgURL: {
+        type: String,
+        required: true
+    }, 
     body: {
         type: String,
         required: true,
