@@ -5,28 +5,17 @@ import Post from '../components/post'
 import TextForm from '../components/textform'
 // The appropriate game data to be imported from a server (description is from the PS4 website for 2K21)
 import { posts } from '../data'
+import { updateServerLikes, updateServerDislikes, createPost } from '../actions/discussion'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 
 export class Game extends Component {
     state = {
-      gamePosts: posts,
-
+      pageStateIsSet: false,
+      gamePosts: [],
     }
 
-    // Requires a server call to update Posts list
-    pushPost = (user, title_, content) => {
-      const copy = this.state.gamePosts.map((item) => item);
-      copy.push({
-          username: user,
-          title: title_,
-          postContent: content,
-          likes: "0",
-          dislikes: "0",
-          replies: []
-      });
-      this.setState({
-        gamePosts: copy
-      });
+    pushPost = (title_, content) => {
+      createPost(title_, content, this);
     }
 
     addLike = (post) => {
@@ -43,6 +32,7 @@ export class Game extends Component {
       this.setState({
         gamePosts: copy
       })
+      updateServerLikes(this.props.displayGame, count)
     }
 
     disLike = (post) => {
@@ -59,10 +49,18 @@ export class Game extends Component {
       this.setState({
         gamePosts: copy
       })
+      updateServerDislikes(this.props.displayGame, count)
     }
 
     render() {
       const {userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn, displayGame, currUser} = this.props;
+
+      if (this.state.pageStateIsSet === false) {
+        this.setState({
+          pageStateIsSet: true,
+          gamePosts: displayGame.discussions
+        })
+      }
 
       const splitDescription = (str) => {
         /* Splits <str> appropriatley depending on where \n is in the text */
@@ -107,7 +105,7 @@ export class Game extends Component {
           </Box>
           {addPostMaker()}
           <Box id="postsSection">
-            {displayGame.discussions.map((post) => {
+            {console.log(displayGame)/*displayGame.discussions.map((post) => {
               return (
                 <Post post={post}
                       loggedIn={isLoggedIn}
@@ -115,7 +113,7 @@ export class Game extends Component {
                       disLike={this.disLike}
                       isAdmin={ gameAdminLoggedIn || siteAdminLoggedIn }/>
               )
-            })}
+            })*/}
           </Box>
         </div>
       )

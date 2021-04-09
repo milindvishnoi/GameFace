@@ -78,7 +78,7 @@ export class TextForm extends Component {
 
         const handleSubmit = () => {
             if (hasTitle && this.state.title !== "" && this.state.content !== "") {
-                onSubmit("sample_username", this.state.title, this.state.content);
+                onSubmit(this.state.title, this.state.content);
             } else if (buttonName === "Reply" && this.state.content !== "") {
                 onSubmit("sample_username", this.state.content);
             } else if (buttonName === "Edit Username" && this.state.content !== "") {
