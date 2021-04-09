@@ -12,7 +12,7 @@ export class UserPage extends Component {
   }
 
   render() {
-    const { userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn, user } = this.props;
+    const { userLoggedIn, gameAdminLoggedIn, siteAdminLoggedIn, user, updateInfo } = this.props;
     const isLoggedIn = userLoggedIn || gameAdminLoggedIn || siteAdminLoggedIn;
     const isAdmin = gameAdminLoggedIn || siteAdminLoggedIn;
 
@@ -45,6 +45,7 @@ export class UserPage extends Component {
             siteAdminLoggedIn={siteAdminLoggedIn} 
             userLoggedIn={userLoggedIn}
             user={user}
+            updateInfo={updateInfo}
             />
       </Box>
       )

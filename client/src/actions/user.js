@@ -52,6 +52,7 @@ export const login = (user, pass, app) => {
       }
   });
 
+  
   // Send the request with fetch()
   fetch(request)
       .then(res => {
@@ -92,6 +93,40 @@ export const logout = (app) => {
               //message: { type: "", body: "" }
           });
           window.location.href = '/'
+      })
+      .catch(error => {
+          console.log(error);
+      });
+};
+
+export const updateUserInfo = (app, id, field, value) => {
+  // the URL for the request
+  const url = `${API_HOST}/api/user`;
+
+
+  const request = new Request(url, {
+    method: 'PATCH',
+    body: JSON.stringify([
+      { "id": id, "op": "replace", "path": field, "value": value }
+    ]),
+    headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json"
+    }
+});
+
+  fetch(request)
+      .then(res => {
+          if (res.status === 200) {
+            return res.json();
+          }
+      })
+      .then(json => {
+          if (json.currentUser !== undefined) {
+              app.setState({ 
+                  currUser: json.currentUser
+              });
+          }
       })
       .catch(error => {
           console.log(error);

@@ -14,7 +14,7 @@ import Navbar from './components/global/header/Navbar';
 import Footer from './components/global/footer/Footer';
 import './App.css'
 import { games } from './data'
-import {login, logout} from './actions/user'
+import {login, logout, updateUserInfo} from './actions/user'
 
 
 export class App extends Component {
@@ -39,6 +39,10 @@ export class App extends Component {
   
   appLogout = () => {
     logout(this);
+  }
+
+  appUpdate = (field, value) => {
+    updateUserInfo(this, this.state.currUser._id, field, value); 
   }
 
   render() {
@@ -73,7 +77,8 @@ export class App extends Component {
                                                               userLoggedIn={this.state.userLogin} 
                                                               gameAdminLoggedIn={this.state.adminLogin} 
                                                               siteAdminLoggedIn={this.state.adminLogin} 
-                                                              logout={ this.appLogout } /> } />     
+                                                              logout={ this.appLogout }
+                                                              updateInfo={ this.appUpdate } /> } />      
                 <Route exact path='/admin' render={ () => <AdminPage
                                                               gameAdminLoggedIn={this.state.adminLogin}
                                                               siteAdminLoggedIn={this.state.adminLogin}

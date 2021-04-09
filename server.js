@@ -34,6 +34,8 @@ cloudinary.config({
 const { mongoose } = require("./db/mongoose");
 mongoose.set('useFindAndModify', false); // for some deprecation issues
 
+// to validate object IDs
+const { ObjectID } = require('mongodb')
 // import the mongoose models
 const Game = require("./models/game");
 const Discussion = require("./models/discussion");
@@ -322,29 +324,39 @@ app.patch('/api/game', mongoChecker, authenticateAuth, async (req, res) => {
     }
 })
 
-// Update user info
-app.patch('/api/user', mongoChecker, authenticateAuth, async (req, res) => {
-  const fieldsToUpdate = {
-    'username': req.username,
-    'bio': req.bio,
-    'country': req.country,
-    'gamerTags': req.gamerTags
-  }
+//Update user info.
+app.patch('/api/user', mongoChecker, async (req, res) => {
+	const id = (req.body)[0].id
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send()
+		return;  // so that we don't run the rest of the handler.
+	}
 
-  try {
-    const user = await User.findByIdAndUpdate({_id: req.body.game_id}, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})
-    if (!user) {
+
+	// Find the fields to update and their values.
+	const fieldsToUpdate = {}
+	req.body.map((change) => {
+		const propertyToChange = change.path // getting rid of the '/' character
+		fieldsToUpdate[propertyToChange] = change.value
+	})
+
+	// Update the student by their id.
+	try {
+		const user = await User.findOneAndUpdate({_id: id}, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})
+		if (!user) {
 			res.status(404).send('Resource not found')
-		} else
-			res.send(user)
-    } catch (error) {
-      log(error)
-      if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
-        res.status(500).send('Internal server error')
-      } else {
-        res.status(400).send('Bad Request') // bad request for changing the student.
-      }
-    }
+		} else {   
+			res.send({ currentUser: user})
+		}
+	} catch (error) {
+		log(error)
+		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request') // bad request for changing the student.
+		}
+	}
+
 })
 
 // Add Like

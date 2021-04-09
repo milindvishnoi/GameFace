@@ -18,21 +18,23 @@ export class ProfileTabPanel extends Component {
     }
 
 
-  updateState = (attr, newAttr) => {
-    if (attr === "user") {
-      this.setState({
-        username: newAttr
-      })
-    } else if (attr === "nick") {
-      this.setState({
-        nickname: newAttr
-      })
-    } else if (attr === "count") {
-      this.setState({
-        country: newAttr
-      })
+    updateState = (attr, newAttr) => {
+      if (attr === "username") {
+        this.setState({
+          username: newAttr
+        })
+      } else if (attr === "nickname") {
+        this.setState({
+          nickname: newAttr
+        })
+      } else if (attr === "country") {
+        this.setState({
+          country: newAttr
+        })
+      }
+  
+      this.props.updateInfo(attr, newAttr)
     }
-  }
 
   render() {
     const { index, page, user} = this.props
@@ -60,7 +62,7 @@ export class ProfileTabPanel extends Component {
               sendFormName="Edit"
               defaultText={this.state.username}
               hasTitle={false}
-              onSubmit={(attr) => this.updateState("user", attr)}
+              onSubmit={(attr) => this.updateState("username", attr)}
               siconType={<EditIcon />}
             />
         )
@@ -74,7 +76,7 @@ export class ProfileTabPanel extends Component {
           <div>
           <div className="infoPanel">
             <div className="infoTitle w-100">
-              <Typography variant='h5'> Username: {this.state.username} </Typography>
+              <Typography variant='h5'> Username: {user.username} </Typography>
               {addEditUsername()}
             </div>
             <div className="infoTitle">
@@ -90,7 +92,7 @@ export class ProfileTabPanel extends Component {
                 sendFormName="Edit"
                 defaultText={this.state.nickname}
                 hasTitle={false}
-                onSubmit={(attr) => this.updateState("nick", attr)}
+                onSubmit={(attr) => this.updateState("nickname", attr)}
                 siconType={<EditIcon />}
               />
             </div>
@@ -107,7 +109,7 @@ export class ProfileTabPanel extends Component {
                 sendFormName="Edit"
                 defaultText={this.state.country}
                 hasTitle={false}
-                onSubmit={(attr) => this.updateState("count", attr)}
+                onSubmit={(attr) => this.updateState("country", attr)}
                 siconType={<EditIcon />}
               />
             </div>
