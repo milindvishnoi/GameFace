@@ -105,7 +105,7 @@ export class Game extends Component {
           </Box>
           {addPostMaker()}
           <Box id="postsSection">
-            {console.log(displayGame)/*displayGame.discussions.map((post) => {
+            {displayGame.discussions.map((post) => {
               return (
                 <Post post={post}
                       loggedIn={isLoggedIn}
@@ -113,7 +113,7 @@ export class Game extends Component {
                       disLike={this.disLike}
                       isAdmin={ gameAdminLoggedIn || siteAdminLoggedIn }/>
               )
-            })*/}
+            })}
           </Box>
         </div>
       )

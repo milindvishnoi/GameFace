@@ -12,20 +12,25 @@ export const createPost = (title_, content_, page) => {
             name: page.props.currUser.username, 
             imgLink: page.props.currUser.profilePic,
             content: content_
-        })
+        }),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
     });
 
     // Send the request with fetch()
     fetch(request)
         .then(res => {
             if (res.status === 200) {
+                log(res)
                 return res.json();
             }
         })
         .then(json => {
-            if (json.discussion !== undefined) {
+            if (json.discussions !== undefined) {
                 page.setState({ 
-                    gamePosts: json.discussion
+                    gamePosts: json.discussions
                 });
             } 
         })
