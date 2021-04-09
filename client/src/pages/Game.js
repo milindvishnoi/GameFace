@@ -1,10 +1,8 @@
 import { Box, Button, Chip,  Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import './GamePage.css'
-import Post from '../components/post'
 import TextForm from '../components/textform'
 // The appropriate game data to be imported from a server (description is from the PS4 website for 2K21)
-import { posts } from '../data'
 import { updateServerLikes, updateServerDislikes, createPost } from '../actions/discussion'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 

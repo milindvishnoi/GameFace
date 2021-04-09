@@ -121,7 +121,7 @@ app.post('/api/login', mongoChecker, async (req, res) => {
       res.send({ currentUser: user, adminPriv: user.isAdmin})
       return
     }
-    res.send(404).send('Username or Password is incorrect. Please try again!')
+    res.status(404).send('Username or Password is incorrect. Please try again!')
   } catch(err) {
     if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
       res.status(500).send('Internal server error')
@@ -144,19 +144,18 @@ app.post('/api/logout', mongoChecker, async (req, res) => {
 
 /*** API routes below **********************************/
 // Add Game
-app.post('/api/game', mongoChecker, async (req, res) => {
-  log(req.body)
-
-  const game = new Game({
-    title: req.body.title,
-    score: req.body.score,
-    link: req.body.link,
-    imgSrc: req.body.imgSrc,
-    description: req.body.description,
-    tags: req.body.tags
-  })
-
-  try {
+app.post('/api/game', multipartMiddleware, mongoChecker, async (req, res) => {
+  cloudinary.uploader.upload(
+    req.files.image.path,
+    async function(result) {
+      try {
+        const game = new Game({
+          title: req.body.title,
+          imgSrc: result.url,
+          description: req.body.description,
+          tags: [],
+          score: 50
+        })
     // Save the game
     const newGame = await game.save()
     res.send(newGame)
@@ -168,6 +167,7 @@ app.post('/api/game', mongoChecker, async (req, res) => {
       res.status(400).send('Bad Request') // bad request for changing the student.
     }
   }
+  })
 })
 
 // Get all games

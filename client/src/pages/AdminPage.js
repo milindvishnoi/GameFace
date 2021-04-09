@@ -16,6 +16,7 @@ import { Dialog, DialogContent, DialogContentText, Button, DialogTitle, DialogAc
 // Importing actions/required methods
 import { getAllGames, deleteGame, editGameInfo } from "../actions/games";
 import { IconButton } from '@material-ui/core';
+import { Link } from 'react-router-dom'
 
 export class AdminPage extends Component {
   constructor(props){
@@ -84,8 +85,16 @@ export class AdminPage extends Component {
 
     return (
       <Box>
-        <Box className="my-8">
+        <Box className="my8">
           <Typography variant='h1' color='primary'>Edit All Games</Typography>
+        </Box>
+
+        <Box align='right'>
+          <Link to="/create-new-game">
+            <Button color='primary'>
+              Create New Game
+            </Button>
+          </Link>
         </Box>
 
         <Paper>

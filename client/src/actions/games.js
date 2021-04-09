@@ -140,3 +140,42 @@ export const editGameInfo = (page) => {
       console.log(err);
     });
 }
+
+export const addNewGame = (form, page) => {
+  // the URL for the request
+  const url = `${API_HOST}/api/game`;
+
+  console.log(form.image.files[0])
+
+  // Get all the state
+  const { title, description } = page.state
+
+  const data = new FormData()
+  data.append('title', title)
+  data.append('description', description)
+  data.append('image', form.image.files[0])
+
+  const request = new Request(url, {
+    method: "post",
+    body: data
+  })
+
+  fetch(request)
+    .then(res => {
+      if (res.status === 200) {
+        // return a promise that resolves with the JSON body
+        return res.json();
+      } else {
+        alert("Could add a game");
+      }
+    })
+    .then(json => {
+      // the resolved promise with the JSON body
+      if (json) {
+        alert(`Added ${json.title}!`)
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}

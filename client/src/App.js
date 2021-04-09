@@ -5,7 +5,6 @@ import Home from './pages/Home'
 import Game from './pages/Game'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
-import PersonalPage from './pages/PersonalPage'
 import AdminPage from './pages/AdminPage'
 import UserPage from './pages/UserPage'
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -15,6 +14,7 @@ import Footer from './components/global/footer/Footer';
 import './App.css'
 import {login, logout, updateUserInfo} from './actions/user'
 import {getAllGames} from './actions/games'
+import NewGame from './pages/NewGame'
 
 
 export class App extends Component {
@@ -93,6 +93,8 @@ export class App extends Component {
                                                               gameAdminLoggedIn={this.state.adminLogin} 
                                                               siteAdminLoggedIn={this.state.adminLogin} 
                                                               logout={ this.appLogout } /> } />
+
+                <Route exact path='/create-new-game' render={() => <NewGame />} />
               </Switch>
             </Container>
           <Footer />
