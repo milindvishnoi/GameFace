@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import GameAddForm from "./GameAddForm"
 import GameList from "./GameList"
 import {addGame} from "./actions"
-import { Button } from '@material-ui/core'
+import { Box, Button } from '@material-ui/core'
 
 
 export class GamePanel extends Component {
@@ -53,15 +53,18 @@ export class GamePanel extends Component {
               gamePan = {this}
             
             />
+           <Box textAlign='center'>
+             <Button
+                variant="contained"
+                color="primary"
+                onClick={() => this.props.updateInfo("playlist", this.state.games)}
+                className="game-form__submit-button"
+             >
+                Save
+             </Button>
 
-            <Button
-            variant="contained"
-            color="primary"
-            onClick={this.props.updateInfo("playlist", this.state.games)}
-            className="game-form__submit-button"
-          >
-            Save
-          </Button>
+          </Box>
+
           </div>
          )
       }  
