@@ -65,14 +65,14 @@ export class Post extends Component {
                 {addAdminCommands()}
                 <Box className="opUserInfo">
                     <img className='opProfilePic' 
-                         src={process.env.PUBLIC_URL + '/images/user.jpeg'}/>
+                         src={process.env.PUBLIC_URL + post.authorImgURL}/>
                     <Box className='opUsername'>
-                        <Typography variant="h5">@{ post.username }</Typography>
+                        <Typography variant="h5">@{ post.author }</Typography>
                     </Box>
                 </Box>
                 <Typography variant="h4">{ post.title }</Typography>
                 <Box className="postTextContent">
-                    <Typography>{ post.postContent }</Typography>
+                    <Typography>{ post.body }</Typography>
                 </Box>
                 <Box id="responsesSection">
                     <Box className="upvoteButtonsPanel">

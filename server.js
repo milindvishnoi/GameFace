@@ -3,8 +3,8 @@ const log = console.log;
 const env = process.env.NODE_ENV
 const bcrypt = require('bcryptjs')
 const path = require('path')
-const express = require("express");
-const session = require("express-session");
+const express = require("express"); // to store session information on the database in production
+
 // starting the express server
 const app = express();
 
@@ -40,6 +40,9 @@ const { ObjectID } = require('mongodb')
 const Game = require("./models/game");
 const Discussion = require("./models/discussion");
 const User = require("./models/users");
+
+const session = require("express-session");
+const MongoStore = require('connect-mongo');
 
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
   return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
@@ -97,7 +100,10 @@ app.use(session({
   cookie: {
       expires: 600000,
       httpOnly: true
-  }
+  }, 
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI || 'mongodb+srv://admin:admin@cluster0.zxmpa.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+  })
 }))
 
 app.get("/users/check-session", (req, res) => {
@@ -254,7 +260,7 @@ app.post('/api/game/tag', mongoChecker, authenticateAuth, (req, res) => {
 })
 
 // Add a discussion
-app.post('/api/discussion', mongoChecker, authenticate, (req, res) => {
+app.post('/api/discussion', mongoChecker, (req, res) => {
   log(req.body)
 
   const discussion = new Discussion({
@@ -269,9 +275,7 @@ app.post('/api/discussion', mongoChecker, authenticate, (req, res) => {
 		if (!g) {
 			res.status(404).send('Resource not found')
 		} else {   
-			res.send({
-				discussion: g.discussions
-			})
+			res.send(g)
 		}
 	})
 	.catch((e) => {
@@ -467,6 +471,19 @@ app.get('/api/user/:id', mongoChecker, async (req, res) => {
 /*** Webpage routes below **********************************/
 // Serve the build
 app.use(express.static(path.join(__dirname, "./client/build")));
+
+// All routes other than above will go to index.html
+app.get("*", (req, res) => {
+  // check for page routes that we expect in the frontend to provide correct status code.
+  //const goodPageRoutes = ["/", "/login", "/dashboard"];
+  //if (!goodPageRoutes.includes(req.url)) {
+      // if url not in expected page routes, set status to 404.
+  //    res.status(404);
+  //}
+
+  // send index.html
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
+});
 
 /*************************************************/
 // Express server listening...
