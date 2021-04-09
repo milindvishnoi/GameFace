@@ -15,6 +15,7 @@ import './App.css'
 import {login, logout, updateUserInfo} from './actions/user'
 import {getAllGames} from './actions/games'
 import NewGame from './pages/NewGame'
+import {checkSession} from './actions/user'
 
 
 export class App extends Component {
@@ -29,6 +30,7 @@ export class App extends Component {
 
   componentDidMount() {
     getAllGames(this)
+    checkSession(this) 
   }
 
   toggleTheme = () => {
@@ -64,12 +66,10 @@ export class App extends Component {
             logout={ this.appLogout } />
             <Container>
               <Switch>
-              <Route exact path='/games/:gameTitle' render={ ({ match }) => (<Game
+              <Route exact path='/games/:id' render={ ({ match }) => (<Game
                                                                         userLoggedIn={this.state.userLogin}  
-                                                                        displayGame={this.state.gameList.find(g => 
-                                                                          '/games/'.concat(match.params.gameTitle) === g.link
-                                                                        )}
                                                                         currUser={currUser}
+                                                                        match={match}
                                                                         gameAdminLoggedIn={this.state.adminLogin} 
                                                                         siteAdminLoggedIn={this.state.adminLogin}/>) } />
                 <Route exact path='/' render={ () => <Home /> } />
@@ -77,24 +77,27 @@ export class App extends Component {
                                                             login={ this.appLogin }
                                                              /> } />
                 <Route exact path='/signup' render={ () => <SignUpPage /> } />
-                <Route exact path='/personal' render={ () => <UserPage
-                                                              user={currUser}
-                                                              userLoggedIn={this.state.userLogin} 
-                                                              gameAdminLoggedIn={this.state.adminLogin} 
-                                                              siteAdminLoggedIn={this.state.adminLogin} 
-                                                              logout={ this.appLogout }
-                                                              updateInfo={ this.appUpdate } /> } />      
-                <Route exact path='/admin' render={ () => <AdminPage
-                                                              gameAdminLoggedIn={this.state.adminLogin}
-                                                              siteAdminLoggedIn={this.state.adminLogin}
-                                                              logout={ this.appLogout } /> } />                                      
-                <Route exact path='/user' render={ () => <UserPage
-                                                              userLoggedIn={this.state.userLogin} 
-                                                              gameAdminLoggedIn={this.state.adminLogin} 
-                                                              siteAdminLoggedIn={this.state.adminLogin} 
-                                                              logout={ this.appLogout } /> } />
-
-                <Route exact path='/create-new-game' render={() => <NewGame />} />
+                {
+                  currUser ? 
+                    <Route exact path='/personal' render={ () => <UserPage
+                      user={currUser}
+                      userLoggedIn={this.state.userLogin} 
+                      gameAdminLoggedIn={this.state.adminLogin} 
+                      siteAdminLoggedIn={this.state.adminLogin} 
+                      logout={ this.appLogout }
+                      updateInfo={ this.appUpdate } /> } /> : null
+                }
+                {
+                  adminLogin ? 
+                    <Route exact path='/admin' render={ () => <AdminPage
+                      gameAdminLoggedIn={this.state.adminLogin}
+                      siteAdminLoggedIn={this.state.adminLogin}
+                      logout={ this.appLogout } /> } />  : null  
+                }
+                {
+                  adminLogin ?
+                  <Route exact path='/create-new-game' render={() => <NewGame />} /> : null
+                }
               </Switch>
             </Container>
           <Footer />

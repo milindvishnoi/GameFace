@@ -5,18 +5,11 @@ import './topGames.css'
 import { Link } from 'react-router-dom'
 
 export default class TopGames extends Component {
-  static propTypes = {
-    title: PropTypes.string,
-    imgSrc: PropTypes.string,
-    link: PropTypes.string,
-    gameIndex: PropTypes.number
-  }
-
   render() {
-    const {title, imgSrc, link, gameIndex} = this.props
+    const {title, imgSrc, game, gameIndex} = this.props
     return (
       <Grid item xs={12} sm={6} md={4}>
-        <Link to={link}>
+        <Link to={`/games/${game._id}`}>
           <ButtonBase
             focusRipple
             key={title}

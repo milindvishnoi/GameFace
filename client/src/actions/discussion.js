@@ -1,3 +1,4 @@
+import Post from '../components/post.js';
 import ENV from '../config.js'
 const API_HOST = ENV.api_host
 const log = console.log
@@ -7,7 +8,8 @@ export const createPost = (title_, content_, page) => {
     const request = new Request(`${API_HOST}/api/discussion`, {
         method: "post",
         body: JSON.stringify({
-            game_id: page.props.displayGame._id,
+            game_id: page.state.displayGame._id,
+            user_id: page.props.currUser._id,
             title: title_, 
             name: page.props.currUser.username, 
             imgLink: page.props.currUser.profilePic,
@@ -29,7 +31,8 @@ export const createPost = (title_, content_, page) => {
         })
         .then(json => {
             if (json.discussions !== undefined) {
-                page.setState({ 
+                page.setState({
+                    displayGame: json, 
                     gamePosts: json.discussions
                 });
             } 
@@ -39,12 +42,52 @@ export const createPost = (title_, content_, page) => {
         });
 }
 
-export const updateServerLikes = (game, liks) => {
+export const pushServerReply = (repl, post, page) => {
+    // Create our request constructor with all the parameters we need
+    const request = new Request(`${API_HOST}/api/game/reply`, {
+        method: "post",
+        body: JSON.stringify({
+            post_id: post._id,
+            reply: repl
+        }),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    // Send the request with fetch()
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                log(res)
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json.replies !== undefined) {
+                log("here in replies")
+                page.setState({ 
+                    postReplies: json.replies
+                });
+                //window.location.href = `/games/${page.props.gameID}`;
+            } 
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+export const updateServerLikes = (post, liks, gameid) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`${API_HOST}/api/game/discussion/like`, {
-        method: "patch",
+        method: "post",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-          game_id: game._id,
+          post_id: post._id,
           likes: liks
         })
     });
@@ -53,22 +96,25 @@ export const updateServerLikes = (game, liks) => {
     fetch(request)
         .then(res => {
             if (res.status === 200) {
-              return true;
+                return;
             }
         })
         .catch(error => {
             console.log(error);
         });
-    return false;
   };
   
-export const updateServerDislikes = (game, dislikes) => {
+export const updateServerDislikes = (post, disliks, gameid) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`${API_HOST}/api/game/discussion/dislike`, {
-        method: "patch",
+        method: "post",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-          game_id: game._id,
-          likes: dislikes
+            post_id: post._id,
+            dislikes: disliks
         })
     });
   
@@ -76,11 +122,10 @@ export const updateServerDislikes = (game, dislikes) => {
     fetch(request)
         .then(res => {
             if (res.status === 200) {
-              return true;
+                return;
             }
         })
         .catch(error => {
             console.log(error);
         });
-    return false;
   };

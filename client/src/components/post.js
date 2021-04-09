@@ -7,6 +7,7 @@ import React, { Component } from 'react'
 import { uid } from "react-uid";
 import './post.css'
 import TextForm from './textform'
+import { pushServerReply } from '../actions/discussion'
 
 export class Post extends Component {
     state = {
@@ -14,19 +15,16 @@ export class Post extends Component {
     }
 
     // Requires a server call to update reply list
-    pushReply = (user, reply) => {
-        const copy = this.state.postReplies.map((item) => item);
-        copy.push({
-            username: user,
-            replyContent: reply
-        });
-        this.setState({
-            postReplies: copy
-        });
+    pushReply = (repli) => {
+        const replyObj = {
+            author: this.props.currUser.username,
+            reply: repli
+        };
+        pushServerReply(replyObj, this.props.post, this);
     }
 
     render() {
-        const { post, loggedIn, isAdmin, addLike, disLike} = this.props;
+        const { post, loggedIn, isAdmin, addLike, disLike, currUser, gameID} = this.props;
 
         if (this.state.postReplies.length === 0 && post.replies.length !== 0) {
             this.setState({

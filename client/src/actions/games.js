@@ -26,6 +26,34 @@ export const getAllGames = (page) => {
     });
 };
 
+export const searchGameById = (game_id, page) => {
+  // the URL for the request
+  const url = `${API_HOST}/api/searchbyid/${game_id}`;
+
+  // Since this is a GET request, simply call fetch on the URL
+  fetch(url)
+    .then(res => {
+      if (res.status === 200) {
+        // return a promise that resolves with the JSON body
+        return res.json();
+      } 
+    })
+    .then(json => {
+      // the resolved promise with the JSON body
+      if (json) {
+        page.setState({ 
+          displayGame: json.game,
+          gamePosts: json.game.discussions
+         }, () => {
+          return
+        });
+      }
+    })
+    .catch(err => {
+      log(err);
+    });
+};
+
 export const searchGame = (page) => {
   log('reaching searchgame')
   // the URL for the request
@@ -115,6 +143,10 @@ export const editGameInfo = (page) => {
 
   const request = new Request(url, {
     method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(req),
   })
 
