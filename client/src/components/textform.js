@@ -80,7 +80,7 @@ export class TextForm extends Component {
             if (hasTitle && this.state.title !== "" && this.state.content !== "") {
                 onSubmit(this.state.title, this.state.content);
             } else if (buttonName === "Reply" && this.state.content !== "") {
-                onSubmit("sample_username", this.state.content);
+                onSubmit(this.state.content);
             } else if (buttonName === "Edit Username" && this.state.content !== "") {
               onSubmit(this.state.content);
             } else if (buttonName === "Edit Nickname" && this.state.content !== "") {

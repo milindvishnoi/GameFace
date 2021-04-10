@@ -43,6 +43,7 @@ const User = require("./models/users");
 
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
+//const { user } = require('./client/src/data');
 
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
   return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
@@ -106,9 +107,9 @@ app.use(session({
   })
 }))
 
-app.get("/users/check-session", (req, res) => {
+app.get("/api/users/check-session", (req, res) => {
   if (req.session.user) {
-    res.send({ currentUser: req.session.user });
+    res.send({ currentUser: req.session.user, adminPriv: req.session.user.isAdmin})
   } else {
     res.status(401).send();
   }
@@ -121,7 +122,7 @@ app.post('/api/login', mongoChecker, async (req, res) => {
     // get the user
     const user = await User.findAndValidate(username, password)
     if (user) {
-      req.session.user = user._id;
+      req.session.user = user;
       req.session.username = user.username;
       req.session.is_admin = user.isAdmin;
       res.send({ currentUser: user, adminPriv: user.isAdmin})
@@ -150,7 +151,7 @@ app.post('/api/logout', mongoChecker, async (req, res) => {
 
 /*** API routes below **********************************/
 // Add Game
-app.post('/api/game', multipartMiddleware, mongoChecker, async (req, res) => {
+app.post('/api/game', multipartMiddleware, mongoChecker, authenticateAuth, async (req, res) => {
   cloudinary.uploader.upload(
     req.files.image.path,
     async function(result) {
@@ -215,8 +216,28 @@ app.get('/api/search/:game', mongoChecker, (req, res) => {
 	})
 })
 
+// Search game by game id
+app.get('/api/searchbyid/:game_id', mongoChecker, (req, res) => {
+  Game.findById(req.params.game_id)
+  .then((g) => {
+		if (!g) {
+			res.status(404).send("Resource Not Found")
+			return
+		}
+		res.send({game: g})
+	})
+	.catch((err) => {
+		if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
+      res.status(500).send('Internal server error')
+    } else {
+      log(err)
+      res.status(400).send('Bad Request') // bad request for changing the student.
+    }
+	})
+})
+
 // Delete a game
-app.delete('/api/game', mongoChecker, async (req, res) => {
+app.delete('/api/game', mongoChecker, authenticateAuth, async (req, res) => {
   log("In delete Game")
   log(req)
 
@@ -237,79 +258,74 @@ app.delete('/api/game', mongoChecker, async (req, res) => {
   }
 })
 
-// Add game tag
-app.post('/api/game/tag', mongoChecker, authenticateAuth, (req, res) => {
-  Game.findByIdAndUpdate({ _id: req.body.game_id }, {$push: { 'tags': req.game_tag }}, { new: true, useFindAndModify: false })
-	.then((g) => {
-		if (!g) {
-			res.status(404).send('Resource not found')
-		} else {   
-			res.send({
-				tags: g.tags
-			})
-		}
-	})
-	.catch((e) => {
-		log(e)
-		if (isMongoError(e)) { 
-			res.status(500).send('Internal server error')
-		} else {
-			res.status(400).send('Bad Request')
-		}
-	})
-})
-
 // Add a discussion
-app.post('/api/discussion', mongoChecker, (req, res) => {
+app.post('/api/discussion', mongoChecker, authenticate, async (req, res) => {
   log(req.body)
 
   const discussion = new Discussion({
     title: req.body.title,
+    authorID: req.body.user_id,
+    gameID: req.body.game_id,
     author: req.body.name,
     authorImgURL: req.body.imgLink,
     body: req.body.content
   })
 
-  Game.findByIdAndUpdate({ _id: req.body.game_id }, {$push: { 'discussions': discussion }}, { new: true, useFindAndModify: false })
-	.then((g) => {
-		if (!g) {
-			res.status(404).send('Resource not found')
-		} else {   
-			res.send(g)
-		}
-	})
-	.catch((e) => {
-		log(e)
+  try {
+    const discuss = await discussion.save();
+    const game = await Game.findByIdAndUpdate({ _id: req.body.game_id }, {$push: { 'discussions': discuss }}, { new: true, useFindAndModify: false })
+    const user = await User.findOneAndUpdate({ username: req.body.name }, {$push: { 'discussions': discuss }}, { new: true, useFindAndModify: false })
+    if (!game) {
+      res.status(404).send('Resource not found')
+    } else {   
+      res.send(game)
+    }
+  } catch(err) {
+    log(e)
 		if (isMongoError(e)) { 
 			res.status(500).send('Internal server error')
 		} else {
 			res.status(400).send('Bad Request')
 		}
-	})
+  }
 })
 
 // Add a reply
-app.post('/api/game/reply', mongoChecker, authenticate, (req, res) => {
+app.post('/api/game/reply', mongoChecker, authenticate, async (req, res) => {
   const reply = req.body.reply
+  console.log(reply)
 
-  Game.findByIdAndUpdate({ _id: req.body.game_id }, {$push: { 'replies': reply }}, { new: true, useFindAndModify: false })
-	.then((g) => {
-		if (!g) {
-			res.status(404).send('Resource not found')
-		} else {   
-			res.send({
-				replies: g.replies
-			})
+  try {
+    const discussion = await Discussion.findByIdAndUpdate({ _id: req.body.post_id }, {$push: { 'replies': reply }}, { new: true, useFindAndModify: false });
+    if (!discussion) {
+			res.status(404).send('Resource not found');
 		}
-	})
-	.catch((e) => {
-		log(e)
-		if (isMongoError(e)) { 
+    const game = await Game.update(
+      {
+          _id : discussion.gameID,
+          "discussions._id": discussion._id
+      },
+      {
+          $push: {"discussions.$.replies": reply }
+      }
+    );
+    const user = await User.update(
+      {
+          _id : discussion.authorID,
+          "discussions._id": discussion._id
+      },
+      {
+          $push: {"discussions.$.replies": reply }
+      }
+    );
+    res.send(discussion);
+  } catch (e) {
+    if (isMongoError(e)) { 
 			res.status(500).send('Internal server error')
 		} else {
 			res.status(400).send('Bad Request')
 		}
-	})
+  }
 })
 
 // Edit game
@@ -338,7 +354,7 @@ app.post('/api/game/edit', mongoChecker, authenticateAuth, async (req, res) => {
 })
 
 //Update user info.
-app.patch('/api/user', mongoChecker, async (req, res) => {
+app.patch('/api/user', mongoChecker, authenticate, async (req, res) => {
 	const id = (req.body)[0].id
 	if (!ObjectID.isValid(id)) {
 		res.status(404).send()
@@ -373,13 +389,37 @@ app.patch('/api/user', mongoChecker, async (req, res) => {
 })
 
 // Add Like
-app.patch('/api/game/discussion/like', mongoChecker, authenticateAuth, async (req, res) => {
+app.post('/api/game/discussion/like', mongoChecker, authenticate, async (req, res) => {
   try {
-    const game = await Game.findByIdAndUpdate({_id: req.body.game_id}, {$set: {'likes': req.body.likes}}, {new: true, useFindAndModify: false})
-    if (!game) {
+    const disc = await Discussion.findOneAndUpdate({_id: req.body.post_id}, {$set: {'likes': req.body.likes}}, {new: true, useFindAndModify: false})
+    if (!disc) {
 			res.status(404).send('Resource not found')
 		} else {
-      res.send(game)
+      const game = await Game.update(
+        {
+            _id : disc.gameID,
+            "discussions._id": disc._id
+        },
+        {
+            $set: {"discussions.$.likes": disc.likes }
+        }
+      );
+      if (!game) {
+        res.status(404).send('Resource not found')
+      } 
+      const user = await User.update(
+        {
+            _id : disc.authorID,
+            "discussions._id": disc._id
+        },
+        {
+            $set: {"discussions.$.likes": disc.likes }
+        }
+      );
+      if (!user) {
+        res.status(404).send('Resource not found')
+      } 
+      res.send(disc)
     }
     } catch (error) {
       log(error)
@@ -392,13 +432,37 @@ app.patch('/api/game/discussion/like', mongoChecker, authenticateAuth, async (re
 })
 
 // Add Dislike
-app.patch('/api/game/discussion/dislike', mongoChecker, authenticateAuth, async (req, res) => {
+app.post('/api/game/discussion/dislike', mongoChecker, authenticate, async (req, res) => {
   try {
-    const game = await Game.findByIdAndUpdate({_id: req.body.game_id}, {$set: {'dislikes': req.body.likes}}, {new: true, useFindAndModify: false})
-    if (!game) {
+    const disc = await Discussion.findOneAndUpdate({_id: req.body.post_id}, {$set: {'dislikes': req.body.dislikes}}, {new: true, useFindAndModify: false})
+    if (!disc) {
 			res.status(404).send('Resource not found')
 		} else {
-      res.send(game)
+      const game = await Game.update(
+        {
+            _id : disc.gameID,
+            "discussions._id": disc._id
+        },
+        {
+            $set: {"discussions.$.dislikes": disc.dislikes }
+        }
+      );
+      if (!game) {
+        res.status(404).send('Resource not found')
+      } 
+      const user = await User.update(
+        {
+            _id : disc.authorID,
+            "discussions._id": disc._id
+        },
+        {
+            $set: {"discussions.$.dislikes": disc.dislikes }
+        }
+      );
+      if (!user) {
+        res.status(404).send('Resource not found')
+      } 
+      res.send(disc)
     }
     } catch (error) {
       log(error)

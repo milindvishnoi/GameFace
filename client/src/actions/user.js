@@ -3,6 +3,38 @@ import ENV from '../config.js'
 const API_HOST = ENV.api_host
 const log = console.log
 
+export const checkSession = (app) => {
+  const url = `${API_HOST}/api/users/check-session`;
+
+  fetch(url)
+      .then(res => {
+          if (res.status === 200) {
+              return res.json();
+          }
+      })
+      .then(json => {
+        console.log(json)
+        if(json) {
+          if (json.currentUser !== undefined && json.adminPriv === true) {
+            app.setState({ 
+                currUser: json.currentUser,
+                adminLogin: true,
+                userLogin: false 
+            });
+            } else if (json.currentUser !== undefined && json.adminPriv === false) {
+              app.setState({ 
+                  currUser: json.currentUser,
+                  adminLogin: false,
+                  userLogin: true 
+              });
+            }
+        }
+      })
+      .catch(error => {
+          console.log(error);
+      });
+};
+
 export const signUp = (form, page) => {
   // the URL for the request
   const url = `${API_HOST}/api/user`;
@@ -80,11 +112,11 @@ export const login = (user, pass, app) => {
       });
 };
 
-// A function to send a GET request to logout the current user
+// A function to send a POST request to logout the current user
 export const logout = (app) => {
-  const url = `${API_HOST}/users/logout`;
+  const url = `${API_HOST}/api/logout`;
 
-  fetch(url)
+  fetch(url, { method: 'post' })
       .then(res => {
           app.setState({
               currUser: null,

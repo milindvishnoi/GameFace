@@ -52,6 +52,7 @@ export class DiscussionPanel extends Component {
                 <Post 
                   key={uid(post)}
                   post={post}
+                  currUser={user}
                   loggedIn={userLoggedIn}
                   addLike={this.addLike}
                   disLike={this.disLike}

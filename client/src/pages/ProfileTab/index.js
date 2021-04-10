@@ -42,14 +42,6 @@ export class ProfileTab extends Component {
           updateInfo={updateInfo}
         />
 
-        <DiscussionPanel 
-          user={user}
-          index={1}
-          page={this.state.page}
-          userLoggedIn={userLoggedIn}
-          gameAdminLoggedIn={gameAdminLoggedIn} 
-          siteAdminLoggedIn={siteAdminLoggedIn}
-        />
         
         <GamePanel
           user={user}

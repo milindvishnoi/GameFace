@@ -5,10 +5,6 @@ const repliesSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    authorImgURL: {
-        type: String,
-        required: true
-    }, 
     reply: {
         type: String,
         required: true,
@@ -25,6 +21,16 @@ const discussionSchema = mongoose.Schema({
         type: String,
         required: true,
         default: ''
+    },
+    authorID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    gameID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Game",
+        required: true
     }, 
     author: {
         type: String,

@@ -16,7 +16,7 @@ export class SearchBar extends Component {
       searchField: '',
       gameList: [],
       displaySearch: false,
-      currentLink: null
+      curr_id: null
   }
 
   componentDidMount() {
@@ -54,9 +54,9 @@ export class SearchBar extends Component {
             onChange={(e, value, reason) => { 
               reason === 'select-option' ?
               this.setState({
-                currentLink: value.link
+                curr_id: value._id
               }) : this.setState({
-                currentLink: null
+                curr_id: null
               })
               }
             }
@@ -72,8 +72,8 @@ export class SearchBar extends Component {
         </Box>
 
         {
-          this.state.currentLink !== null ?
-          <Link to={this.state.currentLink}>
+          this.state.curr_id !== null ?
+          <Link to={`/games/${this.state.curr_id}`}>
             <Button  
               startIcon={<SearchIcon />}
               >

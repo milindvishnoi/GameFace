@@ -72,7 +72,7 @@ export class Home extends Component {
           {this.state.gameList.map((game, index) => (
             <TopGames imgSrc={game.imgSrc}
                       title={game.title}
-                      link={game.link}
+                      game={game}
                       gameIndex={index}
                       key={index} />
           ))}
