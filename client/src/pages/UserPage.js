@@ -5,6 +5,8 @@ import { user, admin } from '../data'
 import './PersonalPage.css';
 import ProfileTab from './ProfileTab';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import EditIcon from '@material-ui/icons/Edit';
+import TextForm from '../components/textform'
 
 export class UserPage extends Component {
   state={
@@ -33,8 +35,25 @@ export class UserPage extends Component {
                 { user.username }
               </Typography>
               <Typography className="userBio" variant="body1">
-                { user.bio }
-              </Typography>
+
+                  <TextForm
+                    buttonName=""
+                    buttonVar="outlined"
+                    buttonColor="primary"
+                    formTitle="Update Your bio"
+                    formInstructions="New bio:" 
+                    formLabel="" 
+                    formRows={1} 
+                    sendFormName="Edit"
+                    defaultText={""}
+                    hasTitle={false}
+                    onSubmit={(attr) => this.props.updateInfo("bio", attr)}
+                    siconType={<EditIcon />}
+                  />
+                  { user.bio }
+                 </Typography>
+             
+              
               <Box mb={2} />
             </Box>
 

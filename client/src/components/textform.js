@@ -87,6 +87,8 @@ export class TextForm extends Component {
               onSubmit(this.state.content);
             } else if (buttonName === "Edit Country" && this.state.content !== "") {
               onSubmit(this.state.content);
+            } else if (buttonName === "" && this.state.content !== "") {
+              onSubmit(this.state.content);
             }
             this.closePopup();
         }

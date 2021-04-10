@@ -2,11 +2,11 @@ import { Box, Button, Chip,  Grid, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import './GamePage.css'
 import TextForm from '../components/textform'
-import Post from '../components/post'
 // The appropriate game data to be imported from a server (description is from the PS4 website for 2K21)
 import { updateServerLikes, updateServerDislikes, createPost } from '../actions/discussion'
 import { searchGameById } from '../actions/games'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import { Post } from '../components/post'
 
 export class Game extends Component {
     state = {

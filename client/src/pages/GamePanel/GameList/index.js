@@ -14,7 +14,7 @@ export class GameList extends Component {
     return (
       <div>
        
-            {games.map((game) => {
+            {games ? games.map((game) => {
                 return (
                 
                         <GameInfo 
@@ -26,7 +26,10 @@ export class GameList extends Component {
                         />
                    
                 )
-            })}
+            })
+            :
+            ""
+            }
        
         
       </div>
