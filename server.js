@@ -151,7 +151,7 @@ app.post('/api/logout', mongoChecker, async (req, res) => {
 
 /*** API routes below **********************************/
 // Add Game
-app.post('/api/game', multipartMiddleware, mongoChecker, async (req, res) => {
+app.post('/api/game', multipartMiddleware, mongoChecker, authenticateAuth, async (req, res) => {
   cloudinary.uploader.upload(
     req.files.image.path,
     async function(result) {
@@ -237,7 +237,7 @@ app.get('/api/searchbyid/:game_id', mongoChecker, (req, res) => {
 })
 
 // Delete a game
-app.delete('/api/game', mongoChecker, async (req, res) => {
+app.delete('/api/game', mongoChecker, authenticateAuth, async (req, res) => {
   log("In delete Game")
   log(req)
 
@@ -259,7 +259,7 @@ app.delete('/api/game', mongoChecker, async (req, res) => {
 })
 
 // Add a discussion
-app.post('/api/discussion', mongoChecker, async (req, res) => {
+app.post('/api/discussion', mongoChecker, authenticate, async (req, res) => {
   log(req.body)
 
   const discussion = new Discussion({
@@ -291,7 +291,7 @@ app.post('/api/discussion', mongoChecker, async (req, res) => {
 })
 
 // Add a reply
-app.post('/api/game/reply', mongoChecker, async (req, res) => {
+app.post('/api/game/reply', mongoChecker, authenticate, async (req, res) => {
   const reply = req.body.reply
   console.log(reply)
 
@@ -354,7 +354,7 @@ app.post('/api/game/edit', mongoChecker, authenticateAuth, async (req, res) => {
 })
 
 //Update user info.
-app.patch('/api/user', mongoChecker, async (req, res) => {
+app.patch('/api/user', mongoChecker, authenticate, async (req, res) => {
 	const id = (req.body)[0].id
 	if (!ObjectID.isValid(id)) {
 		res.status(404).send()
@@ -389,7 +389,7 @@ app.patch('/api/user', mongoChecker, async (req, res) => {
 })
 
 // Add Like
-app.post('/api/game/discussion/like', mongoChecker, async (req, res) => {
+app.post('/api/game/discussion/like', mongoChecker, authenticate, async (req, res) => {
   try {
     const disc = await Discussion.findOneAndUpdate({_id: req.body.post_id}, {$set: {'likes': req.body.likes}}, {new: true, useFindAndModify: false})
     if (!disc) {
@@ -432,7 +432,7 @@ app.post('/api/game/discussion/like', mongoChecker, async (req, res) => {
 })
 
 // Add Dislike
-app.post('/api/game/discussion/dislike', mongoChecker, authenticateAuth, async (req, res) => {
+app.post('/api/game/discussion/dislike', mongoChecker, authenticate, async (req, res) => {
   try {
     const disc = await Discussion.findOneAndUpdate({_id: req.body.post_id}, {$set: {'dislikes': req.body.dislikes}}, {new: true, useFindAndModify: false})
     if (!disc) {
@@ -447,6 +447,9 @@ app.post('/api/game/discussion/dislike', mongoChecker, authenticateAuth, async (
             $set: {"discussions.$.dislikes": disc.dislikes }
         }
       );
+      if (!game) {
+        res.status(404).send('Resource not found')
+      } 
       const user = await User.update(
         {
             _id : disc.authorID,
@@ -456,6 +459,9 @@ app.post('/api/game/discussion/dislike', mongoChecker, authenticateAuth, async (
             $set: {"discussions.$.dislikes": disc.dislikes }
         }
       );
+      if (!user) {
+        res.status(404).send('Resource not found')
+      } 
       res.send(disc)
     }
     } catch (error) {
