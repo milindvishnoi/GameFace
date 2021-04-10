@@ -333,6 +333,7 @@ app.post('/api/game/edit', mongoChecker, authenticateAuth, async (req, res) => {
   const fieldsToUpdate = {
     'description': req.body.description,
     'title': req.body.title,
+    'tags': req.body.tags
   }
 
   log(req.body)
@@ -522,25 +523,6 @@ app.get('/api/user/:id', mongoChecker, async (req, res) => {
     // get the user
     const user = await User.findById(userId)
     res.send(user)
-  } catch(err) {
-    if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
-      res.status(500).send('Internal server error')
-    } else {
-      log(err)
-      res.status(400).send('Bad Request') // bad request for changing the student.
-    }
-  }
-})
-
-// Add tag to Game
-app.post('/api/game/addtag/:game_id', mongoChecker, async (req, res) => {
-  const game_id = req.params.game_id
-  log(game_id, req.body.tag)
-
-  try {
-    // get the user
-    const game = await Game.update({_id : game_id},{$push: {"tags": req.body.tag }})
-    res.send(game)
   } catch(err) {
     if (isMongoError(err)) { // check for if mongo server suddenly disconnected before this request.
       res.status(500).send('Internal server error')

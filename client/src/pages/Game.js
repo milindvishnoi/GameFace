@@ -135,56 +135,17 @@ export class Game extends Component {
       const { gameTitle, description, rating, isLoggedIn, 
               siteAdminLoggedIn, gameAdminLoggedIn, gTags, imgUrl} = this.props;
 
-      const addEditGameInfoButton = () => {
-        if (siteAdminLoggedIn === true) {
-          return (
-            <Box className="rightBox">
-            <TextForm
-                buttonName="Edit"
-                buttonVar="outlined"
-                buttonColor="primary"
-                formTitle="Edit Game Info"
-                formInstructions="New Description: " 
-                formLabel="" 
-                formRows={10} 
-                sendFormName="Edit"
-                hasTitle={true}
-                titleInstr="New Game Title: "
-              />
-            </Box>
-          )
-        }
-      }
 
       const addTags = () => {
-        if (siteAdminLoggedIn === true || gameAdminLoggedIn === true) {
-          return (
-            <Box display='flex'>
-              {gTags.map((tagContent) => (
+        return (
+          <Box display='flex'>
+            {gTags.map((tagContent) => (
                 <Box mr={1}>
-                  <Chip label={tagContent} onDelete={() => {}} size='medium' />
+                  <Chip label={tagContent} size='medium' />
                 </Box>
               ))}
-              <Box mr={1}>
-                  <Chip variant="outlined"
-                        label="Add Tag" 
-                        onDelete={() => {}} 
-                        deleteIcon={<AddCircleOutlineIcon />}
-                        size='medium' />
-              </Box>
-            </Box>
-          )
-        } else {
-          return (
-            <Box display='flex'>
-              {gTags.map((tagContent) => (
-                  <Box mr={1}>
-                    <Chip label={tagContent} size='medium' />
-                  </Box>
-                ))}
-            </Box>
-          )
-        }
+          </Box>
+        )
       }
 
       return (
@@ -202,7 +163,6 @@ export class Game extends Component {
                   { gameTitle }
                 </Typography>
                 <Typography><br/>{ description() }<br/></Typography>
-                {addEditGameInfoButton()}
                 {addTags()}
               </Grid>
             </Grid>

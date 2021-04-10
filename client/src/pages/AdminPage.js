@@ -27,11 +27,20 @@ export class AdminPage extends Component {
       open: false,
       game: null,
       title: null,
+      tags: null,
       description: null
     }
   }
-  
 
+  tagsToStr = (tags) => {
+    return tags.reduce((finalStr, item) => {
+      const s1 = finalStr.concat(", ");
+      const s2 = s1.concat(item);
+      console.log(s2);
+      return s2;
+    }, "");
+  }
+  
   handleChange = (e) => {
     e.preventDefault()
     const id = e.target.id
@@ -59,9 +68,13 @@ export class AdminPage extends Component {
   }
 
   editGame(game) {
+    console.log(game.tags)
+    const sTags = this.tagsToStr(game.tags);
+    console.log(sTags)
     this.setState({
       title: game.title,
       description: game.description,
+      tags: sTags,
       game: game,
       open: true
     })
@@ -152,6 +165,16 @@ export class AdminPage extends Component {
             id="description"
             label="Description"
             value={this.state.description}
+            onChange={this.handleChange}
+            type="text"
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="tags"
+            label="tags"
+            value={this.state.tags}
             onChange={this.handleChange}
             type="text"
             fullWidth

@@ -130,14 +130,21 @@ export const deleteGame = (page) => {
     });
 }
 
+function preprocTags(strTags) {
+  const pre1 = strTags.split(",");
+  return pre1;
+}
+
 export const editGameInfo = (page) => {
-  const { game, title, description } = page.state
-
+  const { game, title, description, tags } = page.state
+  const tagsToSend = preprocTags(tags);
+  console.log("Final: ")
+  console.log(tagsToSend)
   const url = `${API_HOST}/api/game/edit`
-
   const req = {
     game_id: game._id,
     title: title,
+    tags: tagsToSend,
     description: description
   }
 
