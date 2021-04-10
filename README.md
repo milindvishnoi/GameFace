@@ -67,6 +67,194 @@ Search Bar
 Dark/Light Mode
 - The web app could be switched between dark mode and light mode, simply by click on the button between the search bar and the personal profile image. 
 
+# API Calls
+```
+POST /api/login
+
+Purpose: Logging in a user
+
+Expected Type: raw JSON
+
+Expected Data: {
+    "username": "user"
+    "password": "user"
+}
+
+Returns: {
+    currentUser: user, 
+    adminPriv: user.isAdmin
+}
+```
+
+```
+POST /api/game
+
+Purpose: Adding Game
+
+Authorization: need to be logged in as an admin
+
+Expected Type: form-data
+
+Expected Data: Expected Data:
+
+| key         | type | value                                    |
+|-------------|------|------------------------------------------|
+| image       | File | game.jpg                                 |
+| title       | Text | Call of Duty                             |
+| description | Text | A nice game to play when bored           |
+
+Returns: The new game added
+```
+
+```
+get /api/games
+
+Purpose: Getting all game info
+
+Expected Type: raw JSON
+
+Expected Data: null
+
+Returns: {
+    "gameList": [allGameObjects]
+}
+```
+
+```
+GET /api/search/:game
+
+Purpose: Searching a game that contains 'game' in it's title
+
+Expected Type: raw JSON
+
+Expected Data: a valid string
+
+Returns: {
+    "gameList": [GameObjects]
+}
+```
+
+```
+GET /api/searchbyid/:game_id
+
+Purpose: Search a game by it's id
+
+Expected Type: raw JSON
+
+Expected Data: a valid game id
+
+Returns: {
+    "game": gameObject
+}
+```
+
+```
+DELETE /api/game
+
+Purpose: Logging in a user
+
+Authorization: need to be logged in as an admin
+
+Expected Type: raw JSON
+
+Expected Data: {
+  "id": game.id
+}
+
+Returns: The delete game
+```
+
+```
+POST /api/discussion
+
+Purpose: Add a discussion to a game
+
+Authorization: need to be logged in as a user or an admin
+
+Expected Data:
+
+| key       | type |
+|-----------|------|
+| title     | Text |
+| authorID  | Text |
+| email     | Text |
+| firstName | Text |
+| lastName  | Text |
+| password  | Text |
+
+Returns: The game object that was editted
+```
+
+```
+POST /api/game/reply
+
+Purpose: Add a reply to a discussion
+
+Authorization: need to be logged in as a user or an admin
+
+Expected Type: raw JSON
+
+Expected Data: {
+    "reply": "replying with this :)",
+    "post_id": discussion.id
+}
+
+Returns: {
+    "discussion": discussionObject
+}
+```
+
+```
+POST /api/game/edit
+
+Authorization: need to be logged in as an admin
+
+Purpose: Edit game info
+
+Expected Type: raw JSON
+
+Expected Data: {
+    "description": "Latest game in the market"
+    "title": "New Game"
+}
+
+Returns: The updated game info
+```
+
+```
+PATCH /api/user
+
+Purpose: Updates the user info
+
+Expected Type: raw JSON
+
+Expected Data: {
+    "username": "user",
+    "bio": "bio"
+}
+
+Returns: {
+    "currentUser": "user"
+}
+```
+
+```
+POST /api/game/discussion/like
+
+Purpose: Logging in a user
+
+Authorization: need to be logged in as a user or an admin
+
+Expected Type: raw JSON
+
+Expected Data: {
+    "post_id": discussion._id
+    "likes": 10
+}
+
+Returns: The updated discussion
+```
+
 # Folder Structure
 ```
 team40
