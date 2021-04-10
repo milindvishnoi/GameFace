@@ -78,7 +78,7 @@ export const pushServerReply = (repl, post, page) => {
         });
 }
 
-export const updateServerLikes = (post, liks, gameid) => {
+export const updateServerLikes = (post, liks) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`${API_HOST}/api/game/discussion/like`, {
         method: "post",
@@ -104,7 +104,7 @@ export const updateServerLikes = (post, liks, gameid) => {
         });
   };
   
-export const updateServerDislikes = (post, disliks, gameid) => {
+export const updateServerDislikes = (post, disliks) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`${API_HOST}/api/game/discussion/dislike`, {
         method: "post",

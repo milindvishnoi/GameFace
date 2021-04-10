@@ -48,7 +48,7 @@ export class Game extends Component {
       this.setState({
         gamePosts: copy
       })
-      updateServerLikes(post, count, this.state.displayGame._id)
+      updateServerLikes(post, count)
     }
 
     disLike = (post) => {
@@ -65,7 +65,7 @@ export class Game extends Component {
       this.setState({
         gamePosts: copy
       })
-      updateServerDislikes(post, count, this.state.displayGame._id)
+      updateServerDislikes(post, count)
     }
 
     render() {
@@ -117,7 +117,6 @@ export class Game extends Component {
             {this.state.displayGame.discussions.map((post) => {
               return (
                 <Post post={post}
-                      gameID={this.state.displayGame._id}
                       loggedIn={isLoggedIn}
                       currUser={currUser}
                       addLike={this.addLike}

@@ -24,7 +24,7 @@ export class Post extends Component {
     }
 
     render() {
-        const { post, loggedIn, isAdmin, addLike, disLike, currUser, gameID} = this.props;
+        const { post, loggedIn, isAdmin, addLike, disLike, currUser} = this.props;
 
         if (this.state.postReplies.length === 0 && post.replies.length !== 0) {
             this.setState({

@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import "./styles.css";
-import { posts } from '../../data'
 import { uid } from "react-uid";
+import { updateServerLikes, updateServerDislikes } from '../../actions/discussion'
 import Post from '../../components/post';
+import { Box } from '@material-ui/core'
 
 export class DiscussionPanel extends Component {
-     //hardcoded data for testing.
+    state = {
+      pageStateIsSet: false,
+      gamePosts: [],
+    }
 
     addLike = (post) => {
       console.log(post == this.state.gamePosts[1])
@@ -21,6 +25,7 @@ export class DiscussionPanel extends Component {
       this.setState({
         gamePosts: copy
       })
+      updateServerLikes(post, count)
     }
 
     disLike = (post) => {
@@ -37,33 +42,41 @@ export class DiscussionPanel extends Component {
       this.setState({
         gamePosts: copy
       })
+      updateServerDislikes(post, count)
     }
 
   render() {
     const { index, page, gameAdminLoggedIn, siteAdminLoggedIn, userLoggedIn, user } = this.props
 
+    if (this.state.pageStateIsSet === false && user.discussions.length > 0) {
+      this.setState({
+        pageStateIsSet: true,
+        gamePosts: user.discussions
+      })
+    }
+
+    const listPosts = () => {
+      return (
+        <Box>
+        {user.discussions.map((post) => {
+          return (
+            <Post 
+              key={uid(post)}
+              post={post}
+              currUser={user}
+              loggedIn={userLoggedIn}
+              addLike={this.addLike}
+              disLike={this.disLike}
+              isAdmin={ gameAdminLoggedIn || siteAdminLoggedIn }/>
+          )
+        })}
+        </Box>)
+    }
+
     return (
-      <div> 
-        {
-          index === page && (
-          <div>
-            {user.discussions.map((post) => {
-              return (
-                <Post 
-                  key={uid(post)}
-                  post={post}
-                  currUser={user}
-                  loggedIn={userLoggedIn}
-                  addLike={this.addLike}
-                  disLike={this.disLike}
-                  isAdmin={ gameAdminLoggedIn || siteAdminLoggedIn }/>
-              )
-            })}
-          </div>
-         )
-      }  
-        
-      </div>   
+      <Box> 
+        {index === page ? listPosts() : <div></div>}  
+      </Box>   
     )
   }
 }
