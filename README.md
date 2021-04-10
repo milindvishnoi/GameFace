@@ -2,7 +2,7 @@
 name(github id)
 - Gabriel Libozada Anover(anoverga17)
 - Renxi Sheng(putongzhongdan)
-- Milind Vishnoi(Milind V.)
+- Milind Vishnoi(milindvishnoi)
 - Yicheng Yin(themarkyone)
 
 # Major Updates Since Phase 1 
@@ -72,11 +72,11 @@ Dark/Light Mode
 team40
   |
   |-- client (frontend)
-  |	    |-- public (icons and images)
+  |     |-- public (icons and images)
   |     |-- src
-  |			  |-- actions
-  |			  |-- components
-  |			  |-- pages
+  |          |-- actions
+  |          |-- components
+  |          |-- pages
   |-- db
   |-- models
 ```
