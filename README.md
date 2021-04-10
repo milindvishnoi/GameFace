@@ -55,14 +55,28 @@ Personal Page(User)
 - The user could edit all these informations here. 
 
 
-Personal Page(Admin)
+Manage Page(Admin)
 - This page is simple as it is just for the admin to manager everything. 
 - The admin will be able to edit the description and information about a game, and they could remove a game. 
 
 
 Search Bar
-- All users and admins could find the game that they are looking for by type in keyword into the search bar.
+- Anyone could find the game that they are looking for by type in keyword into the search bar.
 
 
 Dark/Light Mode
 - The web app could be switched between dark mode and light mode, simply by click on the button between the search bar and the personal profile image. 
+
+# Folder Structure
+```
+team40
+  |
+  |-- client (frontend)
+  |	    |-- public (icons and images)
+  |     |-- src
+  |			  |-- actions
+  |			  |-- components
+  |			  |-- pages
+  |-- db
+  |-- models
+```
