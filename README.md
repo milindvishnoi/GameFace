@@ -57,7 +57,21 @@ Personal Page(User)
 
 Manage Page(Admin)
 - This page is simple as it is just for the admin to manager everything. 
-- The admin will be able to edit the description and information about a game, and they could remove a game. 
+- The admin will be able to edit the description and title about a game, and they could remove a game. 
+- When editing the tags, the admin should take care to only type each tag separated with a comma (e.g. tag1,tag2,tag3,etc.)
+- Each time the admin edits the game, they should make sure the tag field has that format or empty tags and tags with whitespace will appear
+
+
+Game Page(User)
+- This page shows you a brief summary of a game as well as it's rating and related tags
+- Users can post their reviews of the game by logging in and clicking the create post button
+- Users may also comment on a review and upvote and downvote a review as many times as they want. This fosters open and expressive discussion among those in the forum
+
+
+Game Page(Admin)
+- This page has no additional functionality for an admin than a user
+- The original plan was that admins would be able to pin games and delete posts but these were unable to be implemented
+- There was also a plan for site admins to promote users to game admins to manage game discussion but this was also unimplmented
 
 
 Search Bar
@@ -84,6 +98,14 @@ Returns: {
     currentUser: user, 
     adminPriv: user.isAdmin
 }
+```
+
+```
+POST /api/logout
+
+Purpose: Logout user
+
+Returns: Nothing. It just destroys session
 ```
 
 ```
@@ -151,7 +173,7 @@ Returns: {
 ```
 DELETE /api/game
 
-Purpose: Logging in a user
+Purpose: Delete a game
 
 Authorization: need to be logged in as an admin
 
@@ -241,7 +263,7 @@ Returns: {
 ```
 POST /api/game/discussion/like
 
-Purpose: Logging in a user
+Purpose: liking a post
 
 Authorization: need to be logged in as a user or an admin
 
@@ -253,6 +275,50 @@ Expected Data: {
 }
 
 Returns: The updated discussion
+```
+
+```
+POST /api/game/discussion/dislike
+
+Purpose: liking a post
+
+Authorization: need to be logged in as a user or an admin
+
+Expected Type: raw JSON
+
+Expected Data: {
+    "post_id": discussion._id
+    "dislikes": 10
+}
+
+Returns: The updated discussion
+```
+
+```
+POST /api/user
+
+Purpose: Creating a new user
+
+Expected Type: raw JSON
+
+Expected Data: 
+| key         | type | value                                    |
+|-------------|------|------------------------------------------|
+| image       | File | sample.jpg                               |
+| username    | Text | user                                     |
+| password    | Text | user                                     |
+
+Returns: user added
+```
+
+```
+GET /api/user/:id
+
+Purpose: Searching for a user
+
+Expected Type: User object id
+
+Returns: Found User
 ```
 
 # Folder Structure
