@@ -1,4 +1,13 @@
-# GameFace
+<div align="center">
+  <p align="center" width="100%">
+      <a href="https://evening-cove-91552.herokuapp.com/">
+        <img src="https://github.com/milindvishnoi/GameFace/blob/main/client/public/gamepad192.png" width="200px" align="center">
+      </a>
+  </p>
+  <h1 align="center">GameFace</h1>
+  <h4>The goal is to help consumers identify good games currently on the market and see what games other people like.</h4>
+</div>
+
 
 # Contributors
 - Gabriel Libozada Anover (anoverga17)
