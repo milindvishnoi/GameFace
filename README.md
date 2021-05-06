@@ -1,15 +1,10 @@
-# team40
-name(github id)
-- Gabriel Libozada Anover(anoverga17)
-- Renxi Sheng(putongzhongdan)
-- Milind Vishnoi(milindvishnoi)
-- Yicheng Yin(themarkyone)
+# GameFace
 
-# Major Updates Since Phase 1 
-There are some leftover issues in Phase 1, such as crashes in game page, and some visual problems, we began Phase 2 with fixing all these problems. 
-
-In Phase 1, the information on our web app is hard coded, and now we have implement backend and database into the app, route the API calls and integrate with the frontend. 
-
+# Contributors
+- Gabriel Libozada Anover (anoverga17)
+- Renxi Sheng (putongzhongdan)
+- Milind Vishnoi (milindvishnoi)
+- Yicheng Yin (themarkyone)
 
 # Demo Page
 https://evening-cove-91552.herokuapp.com/
